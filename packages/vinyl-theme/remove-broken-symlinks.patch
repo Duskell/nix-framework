@@ -1,0 +1,24 @@
+Subject: [PATCH] fix: Remove broken symlinks
+
+The `start-here-kde.svg` icon under `icons/src/places/scalable`
+does not exist, and it's used as the target for the
+`start-here-kde-plasma.svg` symlink.
+
+Remove it from `links.txt` so the built package does not contain
+any symlinks.
+---
+ icons/src/places/scalable/links.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/icons/src/places/scalable/links.txt b/icons/src/places/scalable/links.txt
+index 3a43060..4c48898 100644
+--- a/icons/src/places/scalable/links.txt
++++ b/icons/src/places/scalable/links.txt
+@@ -23,4 +23,3 @@ folder-temp.svg ./folder-recent.svg
+ folder-text.svg ./folder-txt.svg
+ folder-videos.svg ./folder-video.svg
+ network-workgroup.svg ./network-server.svg
+-start-here-kde.svg ./start-here-kde-plasma.svg
+-- 
+2.51.0
+

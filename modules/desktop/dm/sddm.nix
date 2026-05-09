@@ -1,0 +1,82 @@
+{
+  config,
+  lib,
+  pkgs,
+  nixos-framework,
+  ...
+}@inputs:
+let
+  inherit (lib) mkIf mkMerge mkOption types;
+  inherit (nixos-framework.lib) desktops;
+  cfg = config.nixos-framework.desktop.sddm;
+in
+{
+  # some options directly from the sddm package
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/display-managers/sddm.nix
+  options.nixos-framework.desktop.sddm = {
+    enable = lib.mkEnableOption "Whether to enable sddm as the display manager.";
+
+    wayland.compositor = mkOption {
+      type = types.enum [ "kwim" "weston" ];
+      default = "weston";
+      description = ''
+        The compositor to use: kwim, weston
+      '';
+    };
+
+    settings = mkOption {
+      type = types.anything;
+      default = { };
+      example = {
+        Autologin = {
+          User = "john";
+          Session = "plasma.desktop";
+        };
+      };
+      description = ''
+        Extra settings merged in and overwriting defaults in sddm.conf.
+      '';
+    };
+
+    theme = mkOption {
+      type = types.str;
+      default = "";
+      example = lib.literalExpression "\"\${pkgs.where-is-my-sddm-theme.override { variants = [ \"qt5\" ]; }}/share/sddm/themes/where_is_my_sddm_theme_qt5\"";
+      description = ''
+        Greeter theme to use.
+      '';
+    };
+
+    extraPackages = mkOption {
+      type = types.listOf types.package;
+      default = [ ];
+      defaultText = "[]";
+      description = ''
+        Extra Qt plugins / QML libraries to add to the environment.
+      '';
+    };
+
+  };
+
+  config =
+    let
+      de = desktops.environmentByName config.nixos-framework.desktop.environment;
+      wayland = desktops.usesWayland de;
+    in
+    mkIf cfg.enable (mkMerge [
+
+      {
+        services.displayManager.sddm.enable = true;
+
+        services.displayManager.sddm.wayland.enable = wayland; # Wayland support is experimental still
+        services.displayManager.sddm.wayland.compositor = cfg.wayland.compositor;
+
+        services.displayManager.sddm.settings = cfg.settings;
+
+        services.displayManager.sddm.extraPackages = cfg.extraPackages;
+
+        services.displayManager.sddm.theme = cfg.theme;
+      }
+
+    ]);
+}

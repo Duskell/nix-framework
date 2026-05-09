@@ -1,0 +1,44 @@
+# my-dotfiles | Copyright (C) 2025 eth-p
+# Repository: https://github.com/eth-p/my-dotfiles
+#
+# Configuration for treefmt.
+# To be run within devenv shell.
+#
+# Program: https://treefmt.com/latest/
+excludes = [
+    "*.md",
+    "*.png",
+    "*.lock",
+    "Makefile",
+
+    # system
+    ".DS_Store",
+
+    # unsupported
+    ".envrc",
+    ".editorconfig",
+    ".git*",
+
+    # ignored files
+    ".devenv/**",
+    ".idea/**",
+]
+
+[formatter.shfmt]
+command = "shfmt"
+options = ["-w", "--indent=0", "--language-dialect=bash"]
+excludes = []
+includes = [
+    "scripts/*",
+    "management/bin/*",
+    "*.sh",
+    "*.bash",
+    "*.envrc",
+    "*.envrc.*",
+]
+
+[formatter.nixfmt]
+command = "nixfmt"
+options = []
+excludes = []
+includes = ["*.nix"]

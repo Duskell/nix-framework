@@ -1,0 +1,107 @@
+# Source: https://github.com/keenanweaver/nix-config/blob/c61e031d6bc873c366fbf8f90cc05539d5458971/packages/gpu-screen-recorder/gsr.nix
+#
+# A screen recorder that has minimal impact on system performance by recording
+# your monitor using the GPU only, similar to shadowplay on Windows.
+#
+# Homepage: https://git.dec05eba.com/gpu-screen-recorder/about/
+{
+  stdenv,
+  lib,
+  fetchgit,
+  makeWrapper,
+  meson,
+  ninja,
+  addDriverRunpath,
+  pkg-config,
+  libXcomposite,
+  libpulseaudio,
+  dbus,
+  ffmpeg,
+  wayland,
+  wayland-scanner,
+  vulkan-headers,
+  pipewire,
+  libdrm,
+  libva,
+  libglvnd,
+  libXdamage,
+  libXi,
+  libXrandr,
+  libXfixes,
+  wrapperDir ? "/run/wrappers/bin",
+  gitUpdater,
+  callPackage,
+}:
+
+stdenv.mkDerivation rec {
+  pname = "gpu-screen-recorder";
+  version = "5.10.2";
+
+  src = fetchgit {
+    url = "https://repo.dec05eba.com/${pname}";
+    tag = version;
+    hash = "sha256-HJ8erNraZTMa80/88NoHAHe0exhCUbHEJlyKTun8HH8=";
+  };
+
+  nativeBuildInputs = [
+    pkg-config
+    makeWrapper
+    meson
+    ninja
+  ];
+
+  buildInputs = [
+    libXcomposite
+    libpulseaudio
+    dbus
+    ffmpeg
+    pipewire
+    wayland
+    wayland-scanner
+    vulkan-headers
+    libdrm
+    libva
+    libXdamage
+    libXi
+    libXrandr
+    libXfixes
+  ];
+
+  mesonFlags = [
+    # Install the upstream systemd unit
+    (lib.mesonBool "systemd" true)
+    # Enable Wayland support
+    (lib.mesonBool "portal" true)
+    # Handle by the module
+    (lib.mesonBool "capabilities" false)
+    (lib.mesonBool "nvidia_suspend_fix" false)
+  ];
+
+  postInstall = ''
+    mkdir $out/bin/.wrapped
+    mv $out/bin/gpu-screen-recorder $out/bin/.wrapped/
+    makeWrapper "$out/bin/.wrapped/gpu-screen-recorder" "$out/bin/gpu-screen-recorder" \
+      --prefix LD_LIBRARY_PATH : "${
+        lib.makeLibraryPath [
+          libglvnd
+          addDriverRunpath.driverLink
+        ]
+      }" \
+      --prefix PATH : "${wrapperDir}" \
+      --suffix PATH : "$out/bin"
+  '';
+
+  passthru.updateScript = gitUpdater { };
+
+  meta = {
+    description = "Screen recorder that has minimal impact on system performance by recording a window using the GPU only";
+    homepage = "https://git.dec05eba.com/gpu-screen-recorder/about/";
+    license = lib.licenses.gpl3Only;
+    mainProgram = "gpu-screen-recorder";
+    maintainers = with lib.maintainers; [
+      babbaj
+      js6pak
+    ];
+    platforms = [ "x86_64-linux" ];
+  };
+}

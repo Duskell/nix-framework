@@ -1,0 +1,16 @@
+.DS_Store
+
+# IDE
+.vscode
+.idea
+*.iml
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
