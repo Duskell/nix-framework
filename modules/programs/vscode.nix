@@ -26,10 +26,9 @@ in
             "workbench.iconTheme" = "material-icon-theme";
             "editor.fontFamily" = "JetBrains Mono";
             "editor.fontLigatures" = true;
-            "editor.tabSize": 2;
             "git.enableSmartCommit" = true;
             "git.confirmSync" = false;
-            "editor.tabSize" = 4;
+            "editor.tabSize" = 2;
             "intelephense.stubs" = [
               "apache"
               "bcmath"

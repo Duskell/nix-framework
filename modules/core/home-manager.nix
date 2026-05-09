@@ -17,7 +17,7 @@
       useGlobalPkgs = true;
       useUserPackages = true;
 
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = { inherit inputs config; };
       
       users.${config.nixos-framework.core.primaryUser} = {
         home.stateVersion = config.system.stateVersion;

@@ -10,5 +10,6 @@ inputs: {
     ./starship.nix
     ./vscode.nix
     ./dev.nix
+    ./neovim.nix
   ];
 }

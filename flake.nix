@@ -118,5 +118,43 @@
         };
       };
 
+      # For debugging purposes
+      checks =
+        let
+          systems = [
+            "x86_64-linux"
+            "aarch64-linux"
+          ];
+
+          forEachSystem = nixpkgs.lib.genAttrs systems;
+        in
+        forEachSystem (
+          system:
+          let
+            pkgs = import nixpkgs {
+              inherit system;
+            };
+
+            eval = nixpkgs.lib.nixosSystem {
+              inherit system;
+
+              specialArgs = {
+                inherit inputs self;
+              };
+
+              modules = [
+                self.nixosModules.nixos-framework
+
+                {
+                  networking.hostName = "test";
+                  system.stateVersion = "25.05";
+                }
+              ];
+            };
+          in
+          {
+            framework = eval.config.system.build.toplevel;
+          }
+        );
     };
 }
