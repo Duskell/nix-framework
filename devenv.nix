@@ -5,8 +5,7 @@
   config,
   inputs,
   ...
-}:
-{
+}: {
   options.fast = lib.mkOption {
     type = lib.types.bool;
     default = false;
@@ -26,7 +25,7 @@
 
       # https://devenv.sh/tasks/
       tasks = {
-        "nixos-framework:format" = {
+        "framework:format" = {
           exec = "treefmt";
         };
       };
@@ -36,16 +35,15 @@
     (lib.mkIf (!config.fast) (
       let
         system = pkgs.stdenv.system;
-      in
-      {
+      in {
         packages = [
           inputs.nix-options-doc.packages.${system}.default
         ];
 
         # https://devenv.sh/tasks/
         tasks = {
-          "nixos-famework:docs" = {
-            before = [ "framework:format" ];
+          "framework:docs" = {
+            before = ["framework:format"];
             exec = ''
               nix-options-doc \
                 --path "." \
@@ -62,3 +60,4 @@
     ))
   ];
 }
+

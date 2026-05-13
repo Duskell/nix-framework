@@ -31,7 +31,7 @@ in
         enable = true;
         editor = lib.mkForce false;
       };
-      boot.swapDevices = [
+      swapDevices = [
         {
           device = "/swapfile";
           size = 1024 * 8;

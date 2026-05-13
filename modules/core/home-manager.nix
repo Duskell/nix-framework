@@ -1,25 +1,20 @@
-{ inputs, config, lib, ... }:
+{ inputs, config, lib, nixos-framework, ... }:
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.backupFileExtension = "hm-backup";
-        home-manager.overwriteBackup = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit nixcord self;
-        };
-      }];
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   config = {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
+      backupFileExtension = "hm-backup";
+      overwriteBackup = true;
 
-      extraSpecialArgs = { inherit inputs config; };
+      extraSpecialArgs = { 
+        inherit nixos-framework inputs;
+        sysConfig = config;
+      };
       
-      users.${config.nixos-framework.core.primaryUser} = {
+      users.${config.nixos-framework.primaryUser} = {
         home.stateVersion = config.system.stateVersion;
       };
     };

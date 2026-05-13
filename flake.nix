@@ -56,6 +56,10 @@
       url                    = "github:eth-p/gamedownsights";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url                    = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = 
@@ -135,19 +139,17 @@
               inherit system;
             };
 
-            eval = nixpkgs.lib.nixosSystem {
-              inherit system;
-
-              specialArgs = {
-                inherit inputs self;
-              };
-
+            eval = lib.nixos.mkNixSystem {
+              hostname = "test";
+              system = system;
+              stateVersion = "25.05";
+              primaryUser = "duskell";
               modules = [
-                self.nixosModules.nixos-framework
-
                 {
-                  networking.hostName = "test";
-                  system.stateVersion = "25.05";
+                  fileSystems."/" = {
+                    device = "/dev/disk/by-label/nixos"; # or a UUID
+                    fsType = "ext4";
+                  };
                 }
               ];
             };

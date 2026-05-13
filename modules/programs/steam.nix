@@ -8,7 +8,7 @@
 let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.nixos-framework.programs.steam;
-  primaryUser = config.nixos-framework.core.primaryUser;
+  primaryUser = config.nixos-framework.primaryUser;
 in
 {
   options.nixos-framework.programs.steam = {

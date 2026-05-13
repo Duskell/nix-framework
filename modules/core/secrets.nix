@@ -1,4 +1,7 @@
 { inputs, config, lib, pkgs, nixos-framework, ... }:
+let
+  cfg = config.nixos-framework.core.secrets;
+in
 {
   imports = [ inputs.agenix.nixosModules.default ];
 
@@ -30,11 +33,11 @@
           };
           owner = lib.mkOption {
             type = lib.types.str;
-            default = config.nixos-framework.core.primaryUser;
+            default = config.nixos-framework.primaryUser;
           };
           group = lib.mkOption {
             type = lib.types.str;
-            default = config.nixos-framework.core.primaryUser;
+            default = config.nixos-framework.primaryUser;
           };
         };
       }));
@@ -45,7 +48,7 @@
     # make agenix use the machine's inherent SSH host key for decryption
     age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-    environment.systemPackages = lib.optional  config.nixos-framework.core.secrets.cli inputs.agenix.packages.${pkgs.system}.default;
+    environment.systemPackages = lib.optional  config.nixos-framework.core.secrets.cli inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     age.secrets = lib.mapAttrs (name: secretConfig: {
       file = secretConfig.file;

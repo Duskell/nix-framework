@@ -6,11 +6,12 @@
   ...
 }:
 let
-  imports = [ inputs.copyparty.nixosModules.default ];
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.nixos-framework.services.copyparty;
 in
 {
+  imports = [ inputs.copyparty.nixosModules.default ];
+
   options.nixos-framework.services.copyparty = {
     enable = lib.mkEnableOption "enable Copyparty";
   };

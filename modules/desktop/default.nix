@@ -34,8 +34,6 @@ in
     mkIf cfg.enable (mkMerge [
 
       {
-        nixos-framework.desktop.${de.dm}.enable = true;
-        nixos-framework.desktop.${de.flavor}.enable = true;
         services.displayManager.defaultSession = de.flavor;
       }
 

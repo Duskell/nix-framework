@@ -8,5 +8,4 @@
   ./linux
   ./network
   ./core
-  ./flatpak
 ]

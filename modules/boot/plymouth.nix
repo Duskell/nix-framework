@@ -22,10 +22,7 @@ in
 
     themePackages = mkOption {
         type = types.listOf types.package;
-        default = with pkgs; [
-          (plymouth-themes {
-            selected_themes = ["kuro-the-cat"];
-          })];
+        default = [ (pkgs.plymouth-themes.override { selected_themes = ["kuro-the-cat"]; })]; 
         description = "list of packages that correspond to the set themes";
     };
   };
@@ -35,7 +32,7 @@ in
       boot.plymouth = {
         enable = true;
         theme = cfg.theme;
-        themePackages = cfg.themePackages
+        themePackages = cfg.themePackages;
       };
     }
   ]);

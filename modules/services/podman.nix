@@ -6,24 +6,24 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkMerge mkDefault;
+  inherit (lib) mkIf mkMerge mkDefault mkEnableOption types;
   cfg = config.nixos-framework.services.podman;
 in
 {
   options.nixos-framework.services.podman = {
-    enable = lib.mkEnableOption "install Podman";
-    tui = lib.mkEnableOption "Add Podman-Tui package" // {
+    enable = mkEnableOption "install Podman";
+    tui = mkEnableOption "Add Podman-Tui package" // {
       default = true;
     };
     dockerComp = lib.mkOption {
-        type = lib.types.submodule {
+        type = types.submodule {
             options = {
-              enable =  lib.mkEnableOption "Create Docker drop-in replacement" // {
+              enable =  mkEnableOption "Create Docker drop-in replacement" // {
                 default = true;
               };
 
               trusted-users = lib.mkOption {
-                type = lib.types.listOf lib.types.str;
+                type = types.listOf types.str;
                 description = "users allowed to communicate with the Podman daemon";
                 default = [ ];
               };

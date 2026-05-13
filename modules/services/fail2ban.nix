@@ -5,7 +5,7 @@
   ...
 }@inputs:
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge mkEnableOption;
   cfg = config.nixos-framework.services.fail2ban;
 in
 {

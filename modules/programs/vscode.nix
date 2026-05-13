@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.nixos-framework.programs.dev.vscode;
-  primaryUser = config.nixos-framework.core.primaryUser;
+  primaryUser = config.nixos-framework.primaryUser;
 in
 {
   options.nixos-framework.programs.dev.vscode = {

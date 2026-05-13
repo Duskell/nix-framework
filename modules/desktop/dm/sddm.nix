@@ -14,8 +14,6 @@ in
   # some options directly from the sddm package
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/display-managers/sddm.nix
   options.nixos-framework.desktop.sddm = {
-    enable = lib.mkEnableOption "Whether to enable sddm as the display manager.";
-
     wayland.compositor = mkOption {
       type = types.enum [ "kwim" "weston" ];
       default = "weston";
@@ -58,25 +56,19 @@ in
 
   };
 
-  config =
-    let
-      de = desktops.environmentByName config.nixos-framework.desktop.environment;
-      wayland = desktops.usesWayland de;
-    in
-    mkIf cfg.enable (mkMerge [
+  config = let
+    chosenEnv = desktops.environmentByName config.nixos-framework.desktop.environment;
+    wayland = if chosenEnv != null then chosenEnv.wayland else false;
+  in mkIf (config.nixos-framework.desktop.enable && chosenEnv.dm == "sddm") {
+    services.displayManager.sddm.enable = true;
 
-      {
-        services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.wayland.enable = wayland; # Wayland support is experimental still
+    services.displayManager.sddm.wayland.compositor = cfg.wayland.compositor;
 
-        services.displayManager.sddm.wayland.enable = wayland; # Wayland support is experimental still
-        services.displayManager.sddm.wayland.compositor = cfg.wayland.compositor;
+    services.displayManager.sddm.settings = cfg.settings;
 
-        services.displayManager.sddm.settings = cfg.settings;
+    services.displayManager.sddm.extraPackages = cfg.extraPackages;
 
-        services.displayManager.sddm.extraPackages = cfg.extraPackages;
-
-        services.displayManager.sddm.theme = cfg.theme;
-      }
-
-    ]);
+    services.displayManager.sddm.theme = cfg.theme;
+  };
 }

@@ -8,7 +8,7 @@
 let
   inherit (lib) mkDefault mkEnableOption optional optionals;
   cfg = config.nixos-framework.programs.dev;
-  primaryUser = config.nixos-framework.core.primaryUser;
+  primaryUser = config.nixos-framework.primaryUser;
 in
 {
   options.nixos-framework.programs.dev = {
@@ -21,7 +21,7 @@ in
   };
 
   config = {
-      home-manager.users.${primaryUser}.packages =
+      home-manager.users.${primaryUser}.home.packages =
         (optionals cfg.core.enable [
             pkgs.gcc
             pkgs.gnumake

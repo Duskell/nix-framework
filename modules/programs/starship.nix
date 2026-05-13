@@ -6,7 +6,9 @@
 }:
 let
   cfg = config.nixos-framework.programs.starship;
-  primaryUser = config.nixos-framework.core.primaryUser;
+  primaryUser = config.nixos-framework.primaryUser;
+  colors = config.lib.stylix.colors;
+  sysConfig = config;
 in
 {
   options.nixos-framework.programs.starship = {
@@ -16,10 +18,12 @@ in
   config = lib.mkIf cfg.enable {
 
     home-manager.users.${primaryUser} =
-      { config, ... }:
+      { config, ... }@hm:
       {
-        programs.starship = {
+        programs.starship = lib.mkForce {
           enable = true;
+          enableInteractive = true;
+          enableBashIntegration = true;
           settings = {
             add_newline = true;
             command_timeout = 1300;
@@ -42,16 +46,16 @@ in
 
             palette = "stylix";
             palettes.stylix = {
-              color_fg0 = "#${config.lib.stylix.colors.base01}";
-              color_bg1 = "#${config.lib.stylix.colors.base02}";
-              color_bg3 = "#${config.lib.stylix.colors.base03}";
-              color_blue = "#${config.lib.stylix.colors.base0C}";
-              color_purple = "#${config.lib.stylix.colors.base0E}";
-              color_pale_orange = "#${config.lib.stylix.colors.base0B}";
-              color_pale_red = "#${config.lib.stylix.colors.base0D}";
+              color_fg0 = "#${colors.base01}";
+              color_bg1 = "#${colors.base02}";
+              color_bg3 = "#${colors.base03}";
+              color_blue = "#${colors.base0C}";
+              color_purple = "#${colors.base0E}";
+              color_pale_orange = "#${colors.base0B}";
+              color_pale_red = "#${colors.base0D}";
               color_dark_red = "#7A1531";
-              color_red = "#${config.lib.stylix.colors.base08}";
-              color_yellow = "#${config.lib.stylix.colors.base0F}";
+              color_red = "#${colors.base08}";
+              color_yellow = "#${colors.base0F}";
             };
 
             hostname = {

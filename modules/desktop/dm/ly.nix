@@ -12,8 +12,6 @@ let
 in
 {
   options.nixos-framework.desktop.ly = {
-    enable = lib.mkEnableOption "whether to enable ly as the display manager";
-
     package = mkOption {
       type = lib.package;
       default = pkgs.ly;
@@ -27,19 +25,13 @@ in
     };
   };
 
-  config =
-    let
-      de = desktops.environmentByName config.nixos-framework.desktop.environment;
-      wayland = desktops.usesWayland de;
-    in
-    mkIf cfg.enable (mkMerge [
-
-      {
-        services.displayManager.ly.enable = true;
-        services.displayManager.ly.settings = cfg.config;
-        services.displayManager.ly.package = cfg.package;
-        services.displayManager.ly.x11support = !wayland;
-      }
-
-    ]);
+  config = let
+    chosenEnv = desktops.environmentByName config.nixos-framework.desktop.environment;
+    wayland = if chosenEnv != null then chosenEnv.wayland else false;
+  in mkIf (config.nixos-framework.desktop.enable && chosenEnv.dm == "ly") {
+    services.displayManager.ly.enable = true;
+    services.displayManager.ly.settings = cfg.config;
+    services.displayManager.ly.package = cfg.package;
+    services.displayManager.ly.x11Support = !wayland;
+  };
 }

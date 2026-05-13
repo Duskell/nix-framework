@@ -5,19 +5,58 @@
   ...
 }@inputs:
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge mkEnableOption mkOption types;
   cfg = config.nixos-framework.core;
 in
 {
-  options.nixos-framework.core = {
+  options.nixos-framework.primaryUser = lib.mkOption {
+    type = lib.types.str;
+    description = "The main user of the system";
+  };
 
+  options.nixos-framework.core = {
+    timezone = mkOption {
+      type = types.str;
+      default = "Europe/Budapest";
+      description = "System timezone";
+    };
+
+    locale = mkOption {
+      type = types.str;
+      default = "en_US.UTF-8";
+      description = "Default system locale";
+    };
+
+    consoleKeyMap = mkOption {
+      type = types.str;
+      default = "hu";
+      description = "Console keymap";
+    };
+
+    git = {
+      enable = mkEnableOption "configure git" // {
+        default = true;
+      };
+
+      userName = mkOption {
+        type = types.str;
+        default = "Duskell";
+        description = "Git user name";
+      };
+
+      userEmail = mkOption {
+        type = types.str;
+        default = "duskell@proton.me";
+        description = "Git user email";
+      };
+    };
   };
 
   config = mkMerge [
     {
-      time.timeZone = "Europe/Budapest";
+      time.timeZone = cfg.timezone;
 
-      i18n.defaultLocale = "en_US.UTF-8";
+      i18n.defaultLocale = cfg.locale;
       i18n.extraLocaleSettings = {
         LC_TIME = "hu_HU.UTF-8";
         LC_NUMERIC = "hu_HU.UTF-8";
@@ -26,7 +65,7 @@ in
       };
 
       # Configure console keymap
-      console.keyMap = "hu";
+      console.keyMap = cfg.consoleKeyMap;
 
       hardware.enableAllFirmware = true;
 
@@ -36,11 +75,11 @@ in
         enableSSHSupport = true;
       };
 
-      programs.git = {
+      programs.git = mkIf cfg.git.enable {
         enable = true;
         config = {
-          user.name = "Duskell";
-          user.email = "duskell@proton.me";
+          user.name = cfg.git.userName;
+          user.email = cfg.git.userEmail;
           init.defaultBranch = "main";
           pull.rebase = true;
           color.ui = "auto";

@@ -6,11 +6,14 @@
   mkNixSystem =
     {
       hostname,
+      system,
       stateVersion,
-      primaryUser
-      modules,
+      primaryUser,
+      modules ? [],
     }:
     nixpkgs.lib.nixosSystem {
+      inherit system;
+
       modules = [
         inputs.lanzaboote.nixosModules.lanzaboote
         nixos-framework.nixosModules.nixos-framework
@@ -24,8 +27,9 @@
           users.users.${primaryUser} = {
             isNormalUser = true;
             extraGroups = [ "wheel" "networkmanager" "sshkeys" ];
+            initialPassword = "changeme";
           };
-          nixos-framework.core.primaryUser = primaryUser;
+          nixos-framework.primaryUser = primaryUser;
         }
 
         {
@@ -38,8 +42,9 @@
       ++ modules;
 
       specialArgs = {
+        inherit inputs;
         nixos-framework = nixos-framework // {
-          inherit inputs;
+          # placeholder
         };
       };
     };

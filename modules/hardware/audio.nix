@@ -33,7 +33,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      users.extraUsers.${config.nixos-framework.core.primaryUser}.extraGroups = [ "audio" ];
+      users.extraUsers.${config.nixos-framework.primaryUser}.extraGroups = [ "audio" ];
 
       security.rtkit.enable = cfg.rtkit.enable;
     }

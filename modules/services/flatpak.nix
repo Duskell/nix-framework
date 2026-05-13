@@ -9,7 +9,7 @@
 let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.nixos-framework.services.flatpak;
-  primaryUser = config.nixos-framework.core.primaryUser;
+  primaryUser = config.nixos-framework.primaryUser;
 in
 {
   options.nixos-framework.services.flatpak = {

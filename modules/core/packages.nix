@@ -8,8 +8,8 @@ let
   inherit (lib) optional optionals mkMerge mkIf;
   cfg = config.nixos-framework.core.pkgs;
 
-  hasEditor = config.nixos-framework.programs.neovim.enable;
-        # || config.nixos-framework.programs.helix.enable; Here as a reference
+  hasEditor = config.nixos-framework.programs.neovim.default;
+          # || config.nixos-framework.programs.helix.default; Here as a reference
 in
 {
   options.nixos-framework.core.pkgs = {
@@ -75,5 +75,5 @@ in
       environment.systemPackages = [ pkgs.nano ];
       environment.variables.EDITOR = "nano";
     })
-  ]
+  ];
 }

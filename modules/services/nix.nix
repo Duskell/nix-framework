@@ -14,6 +14,10 @@ in
       default = true;
     };
 
+    unfree = lib.mkEnableOption "enable unfree packages" // {
+      default = true;
+    };
+
     command-not-found = lib.mkEnableOption "enable command-not-found" // {
       default = true;
     };
@@ -40,6 +44,11 @@ in
       environment.systemPackages = with pkgs; [
         git # Used to pull flakes
       ];
+    })
+
+    # Allow installing unfree packages.
+    (mkIf cfg.unfree {
+      nixpkgs.config.allowUnfree = true;
     })
 
     # Show potential packages for unknown commands.
