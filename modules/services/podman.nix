@@ -40,14 +40,14 @@ in
       virtualisation.containers.enable = true; 
       virtualisation.podman.enable = true;
       virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
-      virtualisation.podman.dockerCompat.enable = cfg.dockerComp;
-      virtualisation.podman.dockerSocket.enable = cfg.dockerComp;
+      virtualisation.podman.dockerCompat = cfg.dockerComp.enable;
+      virtualisation.podman.dockerSocket.enable = cfg.dockerComp.enable;
 
       environment.systemPackages = with pkgs; ([
         dive           # look into docker image layers
         podman-compose # start group of containers for dev
       ]
-      ++ lib.optional cfg.dockerComp docker-compose
+      ++ lib.optional cfg.dockerComp.enable docker-compose
       ++ lib.optional cfg.tui podman-tui # status of containers in the terminal
       );
     }
