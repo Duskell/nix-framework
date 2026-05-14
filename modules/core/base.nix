@@ -6,15 +6,15 @@
 }@inputs:
 let
   inherit (lib) mkIf mkMerge mkEnableOption mkOption types;
-  cfg = config.nixos-framework.core;
+  cfg = config.framework.core;
 in
 {
-  options.nixos-framework.primaryUser = lib.mkOption {
+  options.framework.primaryUser = lib.mkOption {
     type = lib.types.str;
     description = "The main user of the system";
   };
 
-  options.nixos-framework.core = {
+  options.framework.core = {
     timezone = mkOption {
       type = types.str;
       default = "Europe/Budapest";

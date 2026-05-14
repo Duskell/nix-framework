@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge;
-  inherit (nixos-framework.lib.webwrap) mkChromiumApp;
-  cfg = config.nixos-framework.programs.proton.proton-calendar;
+  inherit (framework.lib.webwrap) mkChromiumApp;
+  cfg = config.framework.programs.proton.proton-calendar;
 in
 {
-  options.nixos-framework.programs.proton.proton-calendar = {
+  options.framework.programs.proton.proton-calendar = {
     enable = lib.mkEnableOption "install a ProtonMail Calendar wrapper";
 
     package = lib.mkOption {

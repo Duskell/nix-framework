@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.nixos-framework.hardware.audio;
+  cfg = config.framework.hardware.audio;
 in
 {
-  options.nixos-framework.hardware.audio = {
+  options.framework.hardware.audio = {
     enable = lib.mkEnableOption "enable audio";
 
     pipewire = lib.mkOption {
@@ -33,7 +33,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      users.extraUsers.${config.nixos-framework.primaryUser}.extraGroups = [ "audio" ];
+      users.extraUsers.${config.framework.primaryUser}.extraGroups = [ "audio" ];
 
       security.rtkit.enable = cfg.rtkit.enable;
     }

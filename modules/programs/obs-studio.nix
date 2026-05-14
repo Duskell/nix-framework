@@ -3,18 +3,18 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
   inherit (lib.strings) escapeShellArg;
-  inherit (nixos-framework.lib.gpus) cardByName isNvidia isAMD;
-  cfg = config.nixos-framework.programs.obs-studio;
-  graphicsCfg = config.nixos-framework.hardware.graphics;
+  inherit (framework.lib.gpus) cardByName isNvidia isAMD;
+  cfg = config.framework.programs.obs-studio;
+  graphicsCfg = config.framework.hardware.graphics;
 in
 {
-  options.nixos-framework.programs.obs-studio = {
+  options.framework.programs.obs-studio = {
     enable = lib.mkEnableOption "enable OBS studio";
 
     accel.nvapi = lib.mkOption {
@@ -90,7 +90,7 @@ in
 
       # Workaround for crashing when opening projector window.
       (lib.mkIf hasNvidiaCard {
-        nixos-framework.programs.obs-studio.environmentVariables = {
+        framework.programs.obs-studio.environmentVariables = {
           __NV_DISABLE_EXPLICIT_SYNC = "1";
         };
       })

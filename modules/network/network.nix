@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkMerge mkEnableOption mkOption types;
-  cfg = config.nixos-framework.network;
+  cfg = config.framework.network;
 in
 {
-  options.nixos-framework.network = {
+  options.framework.network = {
     dns = mkEnableOption "enable DNS with systemd-resolved";
     
     dnsServers = mkOption {

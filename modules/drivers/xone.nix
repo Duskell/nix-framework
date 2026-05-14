@@ -7,11 +7,11 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.nixos-framework.drivers.xone;
+  cfg = config.framework.drivers.xone;
 in
 {
 
-  options.nixos-framework.drivers.xone = {
+  options.framework.drivers.xone = {
     enable = lib.mkEnableOption "install Xbox controller drivers";
 
     resetAdaptersAfterBoot = lib.mkEnableOption "reset USB Xbox controller adapters after boot";

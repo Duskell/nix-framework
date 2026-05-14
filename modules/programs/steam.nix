@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.programs.steam;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.programs.steam;
+  primaryUser = config.framework.primaryUser;
 in
 {
-  options.nixos-framework.programs.steam = {
+  options.framework.programs.steam = {
     enable = lib.mkEnableOption "install Steam";
     enableProtonManager = lib.mkEnableOption "install a Proton management tool" // {
       default = true;
@@ -34,7 +34,7 @@ in
         extraPkgsOptions = [
           {
             # Fix incorrect cursors when using KDE Plasma.
-            enable = config.nixos-framework.desktop.plasma.enable;
+            enable = config.framework.desktop.plasma.enable;
             packages = pkgs': with pkgs'; [ kdePackages.breeze ];
           }
           {
@@ -76,13 +76,13 @@ in
         };
 
         # Install gamepad drivers.
-        nixos-framework.hardware.gamepads.enable = true;
+        framework.hardware.gamepads.enable = true;
 
         # Enable HDR via gamescope.
         programs.gamescope.enable = true;
         environment.systemPackages = with pkgs; [
           gamescope-wsi
-          nixos-framework.inputs.gamedownsights
+          framework.inputs.gamedownsights
         ];
 
         # Enable ntsync driver.

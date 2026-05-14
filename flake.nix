@@ -69,7 +69,7 @@
       lib = (import ./lib/nix) (
         {
           lib   = nixpkgs.lib;
-          nixos-framework = self;          
+          framework = self;          
         }
         // inputs
       );
@@ -117,7 +117,7 @@
 
       # nixosModules provides NixOS modules.
       nixosModules = {
-        nixos-framework = {
+        framework = {
           imports = (import ./modules);
         };
       };

@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge;
-  inherit (nixos-framework.lib) gpus;
-  cfg = config.nixos-framework.hardware.graphics;
+  inherit (framework.lib) gpus;
+  cfg = config.framework.hardware.graphics;
 in
 {
-  options.nixos-framework.hardware.graphics = {
+  options.framework.hardware.graphics = {
     enable = lib.mkEnableOption "enable graphics stack";
     card = lib.mkOption {
       type = lib.types.nullOr (lib.types.enum (builtins.attrNames gpus.cards));
@@ -44,7 +44,7 @@ in
 
       # Enable NVIDIA drivers.
       (mkIf (gpus.isNvidia primaryGPU) {
-        nixos-framework.drivers.nvidia = {
+        framework.drivers.nvidia = {
           enable = true;
           useOpenKernelDrivers = primaryGPU.drivers.nvidia-open;
         };

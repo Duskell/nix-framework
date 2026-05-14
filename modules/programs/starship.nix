@@ -5,13 +5,13 @@
   ...
 }:
 let
-  cfg = config.nixos-framework.programs.starship;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.programs.starship;
+  primaryUser = config.framework.primaryUser;
   colors = config.lib.stylix.colors;
   sysConfig = config;
 in
 {
-  options.nixos-framework.programs.starship = {
+  options.framework.programs.starship = {
     enable = lib.mkEnableOption "Starship shell prompt";
   };
 

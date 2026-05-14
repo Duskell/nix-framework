@@ -8,11 +8,11 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.services.flatpak;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.services.flatpak;
+  primaryUser = config.framework.primaryUser;
 in
 {
-  options.nixos-framework.services.flatpak = {
+  options.framework.services.flatpak = {
     enable = lib.mkEnableOption ''
       Whether to enable flatpak
     '';
@@ -39,7 +39,7 @@ in
       home-manager.users.${primaryUser} =
         { ... }:
         let 
-          cfg = config.nixos-framework.services.flatpak;
+          cfg = config.framework.services.flatpak;
         in
         {
           imports = [

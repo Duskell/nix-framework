@@ -6,10 +6,10 @@
 }@inputs:
 let
   inherit (lib) mkIf mkMerge mkEnableOption;
-  cfg = config.nixos-framework.services.fail2ban;
+  cfg = config.framework.services.fail2ban;
 in
 {
-  options.nixos-framework.services.fail2ban = {
+  options.framework.services.fail2ban = {
     enable = mkEnableOption "enable fail2ban";
 
     ssh.enable = mkEnableOption "enable jail for ssh";

@@ -50,7 +50,7 @@
                 --out OPTIONS.md \
                 --exclude-dir "lib" \
                 --exclude-dir "profiles" \
-                --filter-by-prefix "options.nixos-framework" \
+                --filter-by-prefix "options.framework" \
                 --strip-prefix "options." \
                 --sort
             '';

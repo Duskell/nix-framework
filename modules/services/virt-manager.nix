@@ -7,10 +7,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.services.virt-manager;
+  cfg = config.framework.services.virt-manager;
 in
 {
-  options.nixos-framework.services.virt-manager = {
+  options.framework.services.virt-manager = {
     enable = lib.mkEnableOption "enable virt-manager";
 
     trusted-users = lib.mkOption {

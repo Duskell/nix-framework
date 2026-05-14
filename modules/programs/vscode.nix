@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.nixos-framework.programs.dev.vscode;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.programs.dev.vscode;
+  primaryUser = config.framework.primaryUser;
 in
 {
-  options.nixos-framework.programs.dev.vscode = {
+  options.framework.programs.dev.vscode = {
     enable = lib.mkEnableOption "install visual studio code";
   };
 
@@ -29,6 +29,7 @@ in
             "git.enableSmartCommit" = true;
             "git.confirmSync" = false;
             "editor.tabSize" = 2;
+            "chat.disableAIFeatures" = true;
             "intelephense.stubs" = [
               "apache"
               "bcmath"

@@ -7,11 +7,11 @@
 }@inputs:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.drivers.nvidia;
+  cfg = config.framework.drivers.nvidia;
 in
 {
 
-  options.nixos-framework.drivers.nvidia = {
+  options.framework.drivers.nvidia = {
     enable = lib.mkEnableOption "install NVIDIA drivers";
     package = lib.mkOption {
       default = (import ../patches/linux-nvidia-595.nix inputs);
@@ -82,7 +82,7 @@ in
     })
 
     # Allow Plymouth to take over ASAP.
-    (mkIf (!config.nixos-framework.boot.verbose) {
+    (mkIf (!config.framework.boot.verbose) {
       boot.initrd.availableKernelModules = [
         "nvidia"
         "nvidia_drm"

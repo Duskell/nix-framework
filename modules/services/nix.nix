@@ -6,10 +6,10 @@
 }@inputs:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.nixos-framework.services.nix;
+  cfg = config.framework.services.nix;
 in
 {
-  options.nixos-framework.services.nix = {
+  options.framework.services.nix = {
     flakes = lib.mkEnableOption "enable support for flakes" // {
       default = true;
     };

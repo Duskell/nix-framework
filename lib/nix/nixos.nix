@@ -1,4 +1,4 @@
-{ nixos-framework, nixpkgs, ... }@inputs:
+{ framework, nixpkgs, ... }@inputs:
 {
 
   # mkNixSystem provides a way to create a NixOS system
@@ -16,7 +16,7 @@
 
       modules = [
         inputs.lanzaboote.nixosModules.lanzaboote
-        nixos-framework.nixosModules.nixos-framework
+        framework.nixosModules.framework
 
         {
           networking.hostName = hostname;
@@ -29,13 +29,13 @@
             extraGroups = [ "wheel" "networkmanager" "sshkeys" ];
             initialPassword = "changeme";
           };
-          nixos-framework.primaryUser = primaryUser;
+          framework.primaryUser = primaryUser;
         }
 
         {
           nixpkgs.overlays = [
-            nixos-framework.overlays.default
-            nixos-framework.inputs.nix-cachyos-kernel.overlay
+            framework.overlays.default
+            framework.inputs.nix-cachyos-kernel.overlay
           ];
         }
       ]
@@ -43,7 +43,7 @@
 
       specialArgs = {
         inherit inputs;
-        nixos-framework = nixos-framework // {
+        framework = framework // {
           # placeholder
         };
       };

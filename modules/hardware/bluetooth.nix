@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.nixos-framework.hardware.bluetooth;
+  cfg = config.framework.hardware.bluetooth;
 in
 {
-  options.nixos-framework.hardware.bluetooth = {
+  options.framework.hardware.bluetooth = {
     enable = lib.mkEnableOption "enable Bluetooth stack";
   };
 

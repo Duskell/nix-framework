@@ -7,11 +7,11 @@
 }:
 let
   inherit (lib) mkDefault mkEnableOption optional optionals;
-  cfg = config.nixos-framework.programs.dev;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.programs.dev;
+  primaryUser = config.framework.primaryUser;
 in
 {
-  options.nixos-framework.programs.dev = {
+  options.framework.programs.dev = {
     core.enable = mkEnableOption "install basic dev tools";
     android.enable = mkEnableOption "install Android Studio";
     unity.enable = mkEnableOption "install Unity Hub";

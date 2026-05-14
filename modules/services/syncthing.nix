@@ -8,10 +8,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.services.syncthing;
+  cfg = config.framework.services.syncthing;
 in
 {
-  options.nixos-framework.services.syncthing = {
+  options.framework.services.syncthing = {
     enable = lib.mkEnableOption "enable Syncthing";
   };
 

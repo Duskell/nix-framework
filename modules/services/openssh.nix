@@ -6,10 +6,10 @@
 }@inputs:
 let
   inherit (lib) mkIf mkMerge mkEnableOption;
-  cfg = config.nixos-framework.services.ssh;
+  cfg = config.framework.services.ssh;
 in
 {
-  options.nixos-framework.services.ssh = {
+  options.framework.services.ssh = {
     enable = mkEnableOption "enable openssh server";
 
     passAuth = mkEnableOption "enable authentication via a password";

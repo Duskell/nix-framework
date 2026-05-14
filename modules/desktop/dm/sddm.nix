@@ -2,18 +2,18 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }@inputs:
 let
   inherit (lib) mkIf mkMerge mkOption types;
-  inherit (nixos-framework.lib) desktops;
-  cfg = config.nixos-framework.desktop.sddm;
+  inherit (framework.lib) desktops;
+  cfg = config.framework.desktop.sddm;
 in
 {
   # some options directly from the sddm package
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/display-managers/sddm.nix
-  options.nixos-framework.desktop.sddm = {
+  options.framework.desktop.sddm = {
     wayland.compositor = mkOption {
       type = types.enum [ "kwim" "weston" ];
       default = "weston";
@@ -57,9 +57,9 @@ in
   };
 
   config = let
-    chosenEnv = desktops.environmentByName config.nixos-framework.desktop.environment;
+    chosenEnv = desktops.environmentByName config.framework.desktop.environment;
     wayland = if chosenEnv != null then chosenEnv.wayland else false;
-  in mkIf (config.nixos-framework.desktop.enable && chosenEnv.dm == "sddm") {
+  in mkIf (config.framework.desktop.enable && chosenEnv.dm == "sddm") {
     services.displayManager.sddm.enable = true;
 
     services.displayManager.sddm.wayland.enable = wayland; # Wayland support is experimental still

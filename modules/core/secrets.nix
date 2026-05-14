@@ -1,11 +1,11 @@
-{ inputs, config, lib, pkgs, nixos-framework, ... }:
+{ inputs, config, lib, pkgs, framework, ... }:
 let
-  cfg = config.nixos-framework.core.secrets;
+  cfg = config.framework.core.secrets;
 in
 {
   imports = [ inputs.agenix.nixosModules.default ];
 
-  options.nixos-framework.core.secrets = {
+  options.framework.core.secrets = {
     enable = lib.mkEnableOption "enable agenix secrets management" // {
       default = true;
     };
@@ -21,7 +21,7 @@ in
         options = {
           file = lib.mkOption {
             type = lib.types.str;
-            default = "${nixos-framework}/secrets/${name}.age"; 
+            default = "${framework}/secrets/${name}.age"; 
           };
           path = lib.mkOption {
             type = lib.types.str;
@@ -33,22 +33,22 @@ in
           };
           owner = lib.mkOption {
             type = lib.types.str;
-            default = config.nixos-framework.primaryUser;
+            default = config.framework.primaryUser;
           };
           group = lib.mkOption {
             type = lib.types.str;
-            default = config.nixos-framework.primaryUser;
+            default = config.framework.primaryUser;
           };
         };
       }));
     };
   };
 
-  config = lib.mkIf config.nixos-framework.core.secrets.enable {
+  config = lib.mkIf config.framework.core.secrets.enable {
     # make agenix use the machine's inherent SSH host key for decryption
     age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-    environment.systemPackages = lib.optional  config.nixos-framework.core.secrets.cli inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    environment.systemPackages = lib.optional  config.framework.core.secrets.cli inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     age.secrets = lib.mapAttrs (name: secretConfig: {
       file = secretConfig.file;

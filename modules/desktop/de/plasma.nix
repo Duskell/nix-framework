@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }@inputs:
 let
   inherit (lib) mkIf mkMerge;
-  inherit (nixos-framework.lib) desktops;
-  cfg = config.nixos-framework.desktop.plasma;
+  inherit (framework.lib) desktops;
+  cfg = config.framework.desktop.plasma;
 in
 {
-  options.nixos-framework.desktop.plasma = {
+  options.framework.desktop.plasma = {
     enable = lib.mkEnableOption "install KDE Plasma desktop environment";
 
     useVulkan = lib.mkEnableOption "use Vulkan for the compositing backend" // {
@@ -37,7 +37,7 @@ in
 
   config =
     let
-      de = desktops.environmentByName config.nixos-framework.desktop.environment;
+      de = desktops.environmentByName config.framework.desktop.environment;
       wayland = desktops.usesWayland de;
     in
     mkIf cfg.enable (mkMerge [

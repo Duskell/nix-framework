@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.hardware.logitech;
+  cfg = config.framework.hardware.logitech;
 in
 {
-  options.nixos-framework.hardware.logitech = {
+  options.framework.hardware.logitech = {
     enable = lib.mkEnableOption "enable Logitech hardware support";
 
     keyboard = lib.mkEnableOption "enable Logitech keyboard support" // {

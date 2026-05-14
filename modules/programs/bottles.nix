@@ -5,15 +5,15 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.programs.bottles;
+  cfg = config.framework.programs.bottles;
 in
 {
-  options.nixos-framework.programs.bottles = {
+  options.framework.programs.bottles = {
     enable = lib.mkEnableOption "install Bottles";
   };
 

@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.nixos-framework.programs.alacritty;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.programs.alacritty;
+  primaryUser = config.framework.primaryUser;
 in
 {
-  options.nixos-framework.programs.alacritty = {
+  options.framework.programs.alacritty = {
     enable = lib.mkEnableOption "install alacritty terminal";
   };
 

@@ -6,13 +6,13 @@
 }@inputs:
 let
   inherit (lib) optional optionals mkMerge mkIf;
-  cfg = config.nixos-framework.core.pkgs;
+  cfg = config.framework.core.pkgs;
 
-  hasEditor = config.nixos-framework.programs.neovim.default;
-          # || config.nixos-framework.programs.helix.default; Here as a reference
+  hasEditor = config.framework.programs.neovim.default;
+          # || config.framework.programs.helix.default; Here as a reference
 in
 {
-  options.nixos-framework.core.pkgs = {
+  options.framework.core.pkgs = {
     disk-utils.enable = lib.mkEnableOption "Enable disk utility tools" // {
       default = true;
     };

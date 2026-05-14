@@ -7,10 +7,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault mkEnableOption types;
-  cfg = config.nixos-framework.services.podman;
+  cfg = config.framework.services.podman;
 in
 {
-  options.nixos-framework.services.podman = {
+  options.framework.services.podman = {
     enable = mkEnableOption "install Podman";
     tui = mkEnableOption "Add Podman-Tui package" // {
       default = true;

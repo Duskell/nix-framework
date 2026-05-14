@@ -1,17 +1,17 @@
-{ config, lib, nixos-framework, ... }:
+{ config, lib, framework, ... }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.hardware.gamepads;
+  cfg = config.framework.hardware.gamepads;
 in
 {
-  options.nixos-framework.hardware.gamepads = {
+  options.framework.hardware.gamepads = {
     enable = lib.mkEnableOption "enable gamepad support";
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       # Xbox One Wireless Adapter
-      nixos-framework.drivers.xone.enable = mkDefault true;
+      framework.drivers.xone.enable = mkDefault true;
     }
   ]);
 }

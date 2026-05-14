@@ -6,5 +6,6 @@ inputs: {
     ./logitech.nix
     ./printing.nix
     ./audio.nix
+    ./cpu.nix
   ];
 }

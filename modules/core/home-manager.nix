@@ -1,4 +1,4 @@
-{ inputs, config, lib, nixos-framework, ... }:
+{ inputs, config, lib, framework, ... }:
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
@@ -10,11 +10,11 @@
       overwriteBackup = true;
 
       extraSpecialArgs = { 
-        inherit nixos-framework inputs;
+        inherit framework inputs;
         sysConfig = config;
       };
       
-      users.${config.nixos-framework.primaryUser} = {
+      users.${config.framework.primaryUser} = {
         home.stateVersion = config.system.stateVersion;
       };
     };

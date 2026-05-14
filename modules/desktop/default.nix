@@ -2,13 +2,13 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  inherit (nixos-framework.lib) desktops;
-  cfg = config.nixos-framework.desktop;
+  inherit (framework.lib) desktops;
+  cfg = config.framework.desktop;
 in
 {
   imports = [ 
@@ -16,7 +16,7 @@ in
     ./dm
   ];
 
-  options.nixos-framework.desktop = {
+  options.framework.desktop = {
     enable = lib.mkEnableOption "use a graphical desktop environment";
 
     environment = lib.mkOption {

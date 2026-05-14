@@ -7,10 +7,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.nixos-framework.hardware.print;
+  cfg = config.framework.hardware.print;
 in
 {
-  options.nixos-framework.hardware.print = {
+  options.framework.hardware.print = {
     enable = lib.mkEnableOption "Enable printing";
   };
 

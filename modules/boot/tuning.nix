@@ -6,13 +6,13 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkEnableOption mkOption types;
-  cfg = config.nixos-framework.boot.performance;
+  cfg = config.framework.boot.performance;
 in
 {
-  options.nixos-framework.boot.performance = {
+  options.framework.boot.performance = {
     enable = mkEnableOption "system performance tuning";
     
-    # Memory Management
+    # Memory management
     disableTHP = mkEnableOption "disable Transparent HugePages" // {
       default = true;
     };
@@ -151,9 +151,9 @@ in
       };
     })
 
-    # I/O Scheduler (for rotational disks)
+    # I/O Scheduler (for hdd-s)
     {
-      # Note: NVMe drives ignore these settings
+      # NVMe drives ignore these settings
       boot.kernel.sysctl = {
         "vm.page-cluster" = 3;
         "vm.read_ahead_kb" = cfg.readahead;

@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkMerge;
-  cfg = config.nixos-framework.network.tailscale;
+  cfg = config.framework.network.tailscale;
 in
 {
-  options.nixos-framework.network.tailscale = {
+  options.framework.network.tailscale = {
     enable = lib.mkEnableOption "enable Tailscale";
 
     routingFeatures = lib.mkOption {
@@ -22,14 +22,14 @@ in
 
   config = mkMerge [
     (lib.mkIf cfg.enable {
-      nixos-framework.core.secrets.items."tailscale-key" = {};
+      framework.core.secrets.items."tailscale-key" = {};
         
       services.tailscale = {
         enable = true;
         useRoutingFeatures = cfg.routingFeatures;
         extraUpFlags = cfg.flags;
         
-        authKeyFile = config.nixos-framework.core.secrets.items."tailscale-key".path; 
+        authKeyFile = config.framework.core.secrets.items."tailscale-key".path; 
       };
 
       networking.firewall.trustedInterfaces = [ "tailscale0" ]; 

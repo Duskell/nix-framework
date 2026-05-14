@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkEnableOption mkOption types;
-  cfg = config.nixos-framework.boot.plymouth;
+  cfg = config.framework.boot.plymouth;
 in
 {
-  options.nixos-framework.boot.plymouth = {
+  options.framework.boot.plymouth = {
     enable = mkEnableOption "enable plymouth" // {
       default = true;
     };

@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkMerge;
-  cfg = config.nixos-framework.network.firewall;
+  cfg = config.framework.network.firewall;
 in
 {
-  options.nixos-framework.network.firewall = {
+  options.framework.network.firewall = {
     enable = lib.mkEnableOption "enable firewall" // {
       default = true;
     };

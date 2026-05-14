@@ -7,10 +7,10 @@
 }:
 let
   inherit (lib) mkMerge mkIf;
-  cfg = config.nixos-framework.programs.gpu-screen-recorder;
+  cfg = config.framework.programs.gpu-screen-recorder;
 in
 {
-  options.nixos-framework.programs.gpu-screen-recorder = {
+  options.framework.programs.gpu-screen-recorder = {
     enable = lib.mkEnableOption "install gpu-screen-recorder";
 
     package = lib.mkOption {

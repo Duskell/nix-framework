@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }@inputs:
 let
   inherit (lib) mkIf mkMerge mkOption;
-  inherit (nixos-framework.lib) desktops;
-  cfg = config.nixos-framework.desktop.ly;
+  inherit (framework.lib) desktops;
+  cfg = config.framework.desktop.ly;
 in
 {
-  options.nixos-framework.desktop.ly = {
+  options.framework.desktop.ly = {
     package = mkOption {
       type = lib.package;
       default = pkgs.ly;
@@ -26,9 +26,9 @@ in
   };
 
   config = let
-    chosenEnv = desktops.environmentByName config.nixos-framework.desktop.environment;
+    chosenEnv = desktops.environmentByName config.framework.desktop.environment;
     wayland = if chosenEnv != null then chosenEnv.wayland else false;
-  in mkIf (config.nixos-framework.desktop.enable && chosenEnv.dm == "ly") {
+  in mkIf (config.framework.desktop.enable && chosenEnv.dm == "ly") {
     services.displayManager.ly.enable = true;
     services.displayManager.ly.settings = cfg.config;
     services.displayManager.ly.package = cfg.package;

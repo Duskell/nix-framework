@@ -6,14 +6,12 @@
 }@inputs:
 let
   inherit (lib) mkIf mkMerge;
-  cfg = config.nixos-framework.boot;
+  cfg = config.framework.boot;
 in
 {
-  options.nixos-framework.boot = {
+  options.framework.boot = {
     secure-boot.enable = lib.mkEnableOption "Secure Boot using lanzaboote";
     tpm-unlock.enable = lib.mkEnableOption "use TPM to unlock LUKS-encrypted volumes";
-
-    intel = lib.mkEnableOption "Whether to enable Intel-specific kernel parameters for better performance on Intel CPUs and iGPUs";
 
     verbose = lib.mkOption {
       type = lib.types.bool;
@@ -41,7 +39,7 @@ in
 
     # Use lanzaboote for self-signed Secure Boot.
     # https://github.com/nix-community/lanzaboote
-    (mkIf cfg.secure-boot.enable {
+    (mkIf cfg.tpm-unlock.enable {
       boot.loader.systemd-boot.enable = lib.mkForce false;
       boot.lanzaboote = {
         enable = true;
@@ -63,7 +61,7 @@ in
     (mkIf (!cfg.verbose) {
       boot.plymouth = {
         enable = true;
-        theme = "bgrt";
+        theme = mkDefault "bgrt";
       };
 
       boot.kernelParams = [
@@ -78,13 +76,13 @@ in
       ];
     })
 
-    (mkIf cfg.intel {
+    (mkIf config.framework.hardware.intel.enable {
       boot.kernelParams = [
         "intel_pstate=active"
         "intel_iommu=on"
         "iommu=pt"
-        "i915"
       ];
+      boot.kernelModules = [ "i915" ];
     })
 
   ];

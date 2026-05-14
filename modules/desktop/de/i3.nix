@@ -2,16 +2,16 @@
   config,
   lib,
   pkgs,
-  nixos-framework,
+  framework,
   ...
 }@inputs:
 let
   inherit (lib) mkIf mkMerge;
-  inherit (nixos-framework.lib) desktops;
-  cfg = config.nixos-framework.desktop.i3;
+  inherit (framework.lib) desktops;
+  cfg = config.framework.desktop.i3;
 in
 {
-  options.nixos-framework.desktop.i3 = {
+  options.framework.desktop.i3 = {
     enable = lib.mkEnableOption "install i3 tiling desktop environment";
 
     themes = {
@@ -21,7 +21,7 @@ in
 
   config =
     let
-      de = desktops.environmentByName config.nixos-framework.desktop.environment;
+      de = desktops.environmentByName config.framework.desktop.environment;
     in
     mkIf cfg.enable (mkMerge [
 

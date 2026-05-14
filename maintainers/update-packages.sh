@@ -7,7 +7,7 @@ cd "$(git rev-parse --show-toplevel)"
 
 # Ensure repo does not have staged changes.
 git diff --quiet --staged --ignore-submodules HEAD || {
-	printf "\x1B[31merror: nixos-framework repo has staged changes, cannot proceed\x1B[m\n" 1>&2
+	printf "\x1B[31merror: framework repo has staged changes, cannot proceed\x1B[m\n" 1>&2
 	exit 1
 }
 

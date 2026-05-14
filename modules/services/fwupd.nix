@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkIf mkMerge mkDefault;
-  cfg = config.nixos-framework.services.fwupd;
+  cfg = config.framework.services.fwupd;
 in
 {
-  options.nixos-framework.services.fwupd = {
+  options.framework.services.fwupd = {
     enable = lib.mkEnableOption "enable fwupd";
   };
 

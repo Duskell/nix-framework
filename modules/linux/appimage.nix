@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkMerge mkIf;
-  cfg = config.nixos-framework.linux.appimage;
+  cfg = config.framework.linux.appimage;
 in
 {
-  options.nixos-framework.linux.appimage = {
+  options.framework.linux.appimage = {
     enable = lib.mkEnableOption "add AppImage support" // {
       default = true;
     };

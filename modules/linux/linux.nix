@@ -6,10 +6,10 @@
 }:
 let
   inherit (lib) mkMerge mkIf;
-  cfg = config.nixos-framework.linux;
+  cfg = config.framework.linux;
 in
 {
-  options.nixos-framework.linux = {
+  options.framework.linux = {
     kernel = lib.mkOption {
       type = lib.types.enum [
         "latest"

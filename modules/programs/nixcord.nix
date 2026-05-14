@@ -7,11 +7,11 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.nixos-framework.programs.nixcord;
-  primaryUser = config.nixos-framework.primaryUser;
+  cfg = config.framework.programs.nixcord;
+  primaryUser = config.framework.primaryUser;
 in
 {
-  options.nixos-framework.programs.nixcord = {
+  options.framework.programs.nixcord = {
     enable = mkEnableOption "enable nixcord";
 
     vesktop.enable = mkEnableOption "enable vesktop" // {
