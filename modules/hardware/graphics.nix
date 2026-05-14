@@ -63,7 +63,7 @@ in
             libva-vdpau-driver
           ] else if integratedGPU.vendor == gpus.vendors.amd then [
             libvdpau-va-gl
-            
+            libva-vdpau-driver
           ] else [];
       })
 

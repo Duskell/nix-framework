@@ -1,4 +1,3 @@
-
 # Wiki:     https://wiki.nixos.org/wiki/Bottles
 # Homepage: https://usebottles.com/
 {
