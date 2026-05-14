@@ -8,7 +8,7 @@ let
   inherit (lib) optional optionals mkMerge mkIf;
   cfg = config.framework.core.pkgs;
 
-  hasEditor = config.framework.programs.neovim.default;
+  hasEditor = config.framework.programs.nixvim.default;
           # || config.framework.programs.helix.default; Here as a reference
 in
 {
