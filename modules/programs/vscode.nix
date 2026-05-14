@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  framework,
   ...
 }:
 let
@@ -19,7 +18,7 @@ in
     home-manager.users.${primaryUser} =
       { config, ... }:
       lib.mkMerge [
-        (lib.mkIf config.framework.programs.stylix.enable {programs.stylix.targets.vscode.enable = false;})
+        (lib.mkIf osConfig.framework.programs.stylix.enable {programs.stylix.targets.vscode.enable = false;})
 
         {
           programs.vscode = {
