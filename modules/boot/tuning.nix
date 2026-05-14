@@ -12,6 +12,26 @@ in
   options.framework.boot.performance = {
     enable = mkEnableOption "system performance tuning";
     
+    zram = {
+      enable = mkEnableOption "Enable zRam" // {
+        default = true;
+      };
+      memoryPercent = mkOption {
+        type = types.int;
+        default = 50;
+        description = "Percentage of total RAM to use for zRam device.";
+      };
+    };
+
+    oomKiller = {
+      enable = mkEnableOption "Enable systemd-oomd userspace OOM killer" // {
+        default = true;
+      };
+      enableManagedOOM = mkEnableOption "Enable memory pressure management on user slices" // {
+        default = true;
+      };
+    };
+
     # Memory management
     disableTHP = mkEnableOption "disable Transparent HugePages" // {
       default = true;
@@ -117,6 +137,29 @@ in
       };
     }
 
+    # zRam Configuration
+    (mkIf cfg.zram.enable {
+      zramSwap = {
+        enable = true;
+        memoryPercent = cfg.zram.memoryPercent;
+        # Zstd provides the best balance of speed and compression ratio
+        algorithm = "zstd"; 
+        priority = 100;
+      };
+      # When using zram, it's often beneficial to increase swappiness
+      # because swapping to RAM is significantly faster than disk.
+      boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 60;
+    })
+
+    # systemd-oomd Configuration
+    (mkIf cfg.oomKiller.enable {
+      systemd.oomd = {
+        enable = true;
+        enableUserSlices = cfg.oomKiller.enableManagedOOM;
+        enableRootSlice = false;
+      };
+    })
+
     # Transparent HugePages
     (mkIf cfg.disableTHP {
       boot.kernelParams = [ "transparent_hugepage=never" ];
@@ -155,7 +198,7 @@ in
     {
       # NVMe drives ignore these settings
       boot.kernel.sysctl = {
-        "vm.page-cluster" = 3;
+        "vm.page-cluster" = if cfg.zram.enable then 0 else 3; # Optimization for zram
         "vm.read_ahead_kb" = cfg.readahead;
       };
     }

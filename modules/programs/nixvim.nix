@@ -7,12 +7,12 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption mkOption types;
-  cfg = config.framework.programs.neovim;
+  cfg = config.framework.programs.nixvim;
   primaryUser = config.framework.primaryUser;
 in
 {
-  options.framework.programs.neovim = {
-    enable = mkEnableOption "Whether to enable neovim";
+  options.framework.programs.nixvim = {
+    enable = mkEnableOption "Whether to enable nixvim";
 
     default = mkEnableOption "Whether to set neovim as the default editor" // {
       default = true;

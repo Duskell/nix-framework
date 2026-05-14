@@ -63,6 +63,7 @@ in
 
         modesetting.enable = true;
         nvidiaSettings = true;
+        forceFullCompositionPipeline = true;
 
         powerManagement.enable = cfg.powerManagement.enable;
         powerManagement.finegrained = cfg.powerManagement.finegrained;
