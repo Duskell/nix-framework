@@ -128,7 +128,7 @@ in
       qt = {
         enable = true;
         platformTheme.name = lib.mkDefault "gtk";
-        style.name = "adwaita-dark";
+        style.name = lib.mkDefault "adwaita-dark";
       };
     };
   };
