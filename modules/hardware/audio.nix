@@ -20,11 +20,12 @@ in
           };
           jack.enable = lib.mkEnableOption "Use JACK applications";
         };
-        default = {};
-        description = "Pipewire settings";
       };
 
+      default = {};
+      description = "Pipewire settings";
     };
+
     rtkit.enable = lib.mkEnableOption "Enable RealtimeKit for audio purposes" // {
       default = true;
     };
