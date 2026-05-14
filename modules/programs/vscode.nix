@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.framework.programs.dev.vscode;
+  cfg = config.framework.programs.vscode;
   primaryUser = config.framework.primaryUser;
 in
 {
-  options.framework.programs.dev.vscode = {
+  options.framework.programs.vscode = {
     enable = lib.mkEnableOption "install visual studio code";
   };
 
