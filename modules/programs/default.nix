@@ -11,5 +11,6 @@ inputs: {
     ./vscode.nix
     ./dev.nix
     ./nixvim.nix
+    ./stylix.nix
   ];
 }
