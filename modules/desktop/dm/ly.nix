@@ -18,7 +18,7 @@ in
       description = "the ly package to use";
     };
 
-    config = mkOption {
+    options = mkOption {
       type = lib.attrsets;
       default = {};
       description = "extra settings merged in and overwriting defaults in config.ini.";
@@ -30,7 +30,7 @@ in
     wayland = if chosenEnv != null then chosenEnv.wayland else false;
   in mkIf (config.framework.desktop.enable && chosenEnv.dm == "ly") {
     services.displayManager.ly.enable = true;
-    services.displayManager.ly.settings = cfg.config;
+    services.displayManager.ly.settings = cfg.options;
     services.displayManager.ly.package = cfg.package;
     services.displayManager.ly.x11Support = !wayland;
   };
