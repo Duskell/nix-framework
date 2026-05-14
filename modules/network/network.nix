@@ -69,15 +69,15 @@ in
     (lib.mkIf cfg.dns {
       services.resolved = {
         enable = true;
-        dnssec = cfg.dnssecMode;
-        dnsovertls = "opportunistic";
-        fallbackDns = [
+        DNSSEC = cfg.dnssecMode;
+        DNSOverTLS = "opportunistic";
+        FallbackDNS = [
           "1.1.1.2"
           "1.0.0.2"
           "2606:4700:4700::1112"
           "2606:4700:4700::1002"
         ];
-        domains = [ "~." ]; 
+        Domains = [ "~." ]; 
       };
 
       networking.nameservers = cfg.dnsServers;

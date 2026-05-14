@@ -122,6 +122,9 @@ in
       XCURSOR_SIZE = "${toString cfg.cursor.size}";
     };
 
+    #
+    gtk.gtk4.theme = null;
+
     home-manager.users.${config.framework.primaryUser} = {
       stylix.targets = lib.genAttrs cfg.disabledTargets (name: { enable = false; });
       
