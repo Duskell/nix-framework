@@ -60,10 +60,10 @@ in
           if integratedGPU.vendor == gpus.vendors.intel then [
             intel-media-driver
             libvdpau-va-gl
-            vaapiVdpau
+            libva-vdpau-driver
           ] else if integratedGPU.vendor == gpus.vendors.amd then [
             libvdpau-va-gl
-            vaapiVdpau
+            
           ] else [];
       })
 
