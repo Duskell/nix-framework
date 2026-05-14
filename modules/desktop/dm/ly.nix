@@ -19,7 +19,7 @@ in
     };
 
     options = mkOption {
-      type = lib.attrsets;
+      type = lib.types.attrsOf lib.types.anything;
       default = {};
       description = "extra settings merged in and overwriting defaults in config.ini.";
     };
