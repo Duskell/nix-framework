@@ -5,7 +5,7 @@
   ...
 }@inputs:
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.framework.boot;
 in
 {
@@ -76,7 +76,7 @@ in
       ];
     })
 
-    (mkIf config.framework.hardware.intel.enable {
+    (mkIf config.framework.hardware.cpu.intel.enable {
       boot.kernelParams = [
         "intel_pstate=active"
         "intel_iommu=on"

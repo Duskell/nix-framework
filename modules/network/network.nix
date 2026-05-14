@@ -71,7 +71,7 @@ in
         enable = true;
         dnssec = cfg.dnssecMode;
         dnsovertls = "opportunistic";
-        fallbackDNS = [
+        fallbackDns = [
           "1.1.1.2"
           "1.0.0.2"
           "2606:4700:4700::1112"
