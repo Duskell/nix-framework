@@ -5,8 +5,9 @@
   ...
 }:
 let
-  cfg = config.framework.programs.vscode;
-  primaryUser = config.framework.primaryUser;
+  osConfig = config.framework;
+  cfg = osConfig.framework.programs.vscode;
+  primaryUser = osConfig.framework.primaryUser;
 in
 {
   options.framework.programs.vscode = {
