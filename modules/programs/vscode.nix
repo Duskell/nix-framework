@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  framework,
   ...
 }:
 let
