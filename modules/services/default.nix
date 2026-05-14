@@ -8,5 +8,6 @@ inputs: {
     ./copyparty.nix
     ./fail2ban.nix
     ./openssh.nix
+    ./podman.nix
   ];
 }
