@@ -11,6 +11,8 @@ let
   cfg = config.framework.programs.stylix;
 in
 {
+  imports = [ inputs.stylix.nixosModules.stylix ];
+  
   options.framework.programs.stylix = {
     enable = lib.mkEnableOption "Enable high-level Stylix theming engine";
 
@@ -70,8 +72,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    imports = [ inputs.stylix.nixosModules.stylix ];
-
     stylix = {
       enable = true;
       image = cfg.wallpaper;
