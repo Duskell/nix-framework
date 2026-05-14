@@ -12,18 +12,16 @@ let
 in
 {
   options.framework.desktop.i3 = {
-    enable = lib.mkEnableOption "install i3 tiling desktop environment";
-
     themes = {
-    #   vinyl = lib.mkEnableOption "install the Vinyl theme";
+      # vinyl = lib.mkEnableOption "install the Vinyl theme";
     };
   };
 
   config =
     let
-      de = desktops.environmentByName config.framework.desktop.environment;
+      desktop = config.framework.desktop;
     in
-    mkIf cfg.enable (mkMerge [
+    mkIf (desktop.enable && desktop.environment == "i3") (mkMerge [
 
       {
         # Install i3

@@ -75,6 +75,11 @@ in
       environment.sessionVariables = {
         GSK_RENDERER = "ngl";
       };
+
+      boot.kernelParams = [
+        "nvidia-drm.modeset=1"
+        "nvidia-drm.fbdev=1"
+      ] ++ lib.optional cfg.powerManagement.enable "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
     }
 
     (mkIf config.services.xserver.enable {

@@ -39,8 +39,9 @@ in
     let
       de = desktops.environmentByName config.framework.desktop.environment;
       wayland = desktops.usesWayland de;
+      desktop = config.framework.desktop;
     in
-    mkIf cfg.enable (mkMerge [
+    mkIf (desktop.enable && desktop.environment == "i3")  (mkMerge [
 
       {
         # Install KDE Plasma.

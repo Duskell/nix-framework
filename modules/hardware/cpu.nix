@@ -14,17 +14,20 @@ in
       Whether to enable cpu settings
     '' //  { default = true; };
 
-    intel.enable = mkEnable ''
+    intel.enable = mkEnableOption ''
       If u have an intel cpu. Also enable some intel specific boot options
     '';
+
     intel.updateMicrocode = mkEnableOption ''
       Whether to enable the updating of microcode
-    '';
+    '' //  { default = true; };
   };
 
   config = mkIf cfg.enable {
     hardware.cpu = {
-      intel.updateMicrocode = cfg.intel.updateMicrocode;
+      intel = mkIf cfg.intel.enable {
+        updateMicrocode = cfg.intel.updateMicrocode;
+      };
     };
   };
 }

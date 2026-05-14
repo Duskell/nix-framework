@@ -18,12 +18,18 @@ in
       default = null;
       description = "the main graphics card installed in the system";
     };
+    igpu = lib.mkOption {
+      type = lib.types.nullOr (lib.types.enum (builtins.attrNames gpus.cards));
+      default = null;
+      description = "optional integrated graphics card for hardware acceleration";
+    };
     vulkan = lib.mkEnableOption "Enable Vulkan";
   };
 
   config =
     let
       primaryGPU = gpus.cardByName cfg.card;
+      integratedGPU = gpus.cardByName cfg.igpu;
     in
     mkIf cfg.enable (mkMerge [
 
@@ -46,8 +52,19 @@ in
       (mkIf (gpus.isNvidia primaryGPU) {
         framework.drivers.nvidia = {
           enable = true;
-          useOpenKernelDrivers = primaryGPU.drivers.nvidia-open;
         };
+      })
+
+      (mkIf (integratedGPU != null) {
+        hardware.graphics.extraPackages = with pkgs; 
+          if integratedGPU.vendor == gpus.vendors.intel then [
+            intel-media-driver
+            libvdpau-va-gl
+            vaapiVdpau
+          ] else if integratedGPU.vendor == gpus.vendors.amd then [
+            libvdpau-va-gl
+            vaapiVdpau
+          ] else [];
       })
 
       # Enable Vulkan packages.

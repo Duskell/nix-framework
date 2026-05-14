@@ -11,7 +11,12 @@ rec {
     nvidia-t1000 = {
       vendor       = vendors.nvidia;
       architecture = "turing";
-    }
+    };
+
+    intel-uhd-630 = {
+      vendor       = vendors.intel;
+      architecture = "gen9";
+    };
   };
 
   # cardByName :: string -> (attrset | null)

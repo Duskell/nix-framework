@@ -21,6 +21,9 @@ in
       services.syncthing = {
         enable = true;
         openDefaultPorts = true;
+        user = config.framework.primaryUser;
+        dataDir = "/home/${config.framework.primaryUser}/Sync";
+        configDir = "/home/${config.framework.primaryUser}/.config/syncthing";
       };
     }
 

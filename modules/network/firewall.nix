@@ -24,6 +24,7 @@ in
 
   config = mkMerge [
     (lib.mkIf cfg.enable {
+      networking.nftables.enable = true;
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 22 ] ++ cfg.allowedTCPPorts;

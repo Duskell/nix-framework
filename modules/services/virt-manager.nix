@@ -36,7 +36,7 @@ in
 
     # Add trusted users to the libvirtd group.
     {
-      users.groups.libvirtd.members = cfg.trusted-users;
+      users.groups.libvirtd.members = [ config.framework.primaryUser ] ++ cfg.trusted-users;
     }
   ]);
 }

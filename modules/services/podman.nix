@@ -54,7 +54,7 @@ in
 
     # Add trusted users to the Docker group.
     (mkIf cfg.dockerComp.enable {
-      users.groups.podman.members = cfg.dockerComp.trusted-users;
+      users.groups.podman.members = [ config.framework.primaryUser ] ++ cfg.dockerComp.trusted-users;
     })
   ]);
 }

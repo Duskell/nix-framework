@@ -8,10 +8,10 @@
 let
   inherit (lib) mkIf mkMerge;
   inherit (framework.lib.webwrap) mkChromiumApp;
-  cfg = config.framework.programs.proton.proton-mail;
+  cfg = config.framework.programs.proton.mail;
 in
 {
-  options.framework.programs.proton.proton-mail = {
+  options.framework.programs.proton.mail = {
     enable = lib.mkEnableOption "install a ProtonMail wrapper";
 
     package = lib.mkOption {

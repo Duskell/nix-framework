@@ -9,13 +9,18 @@ in
     
     dnsServers = mkOption {
       type = types.listOf types.str;
-      default = [ "8.8.8.8" "8.8.4.4" ];
-      description = "List of DNS servers to use (requires dns = true)";
+      default = [
+        "9.9.9.9"
+        "149.112.112.112"
+        "2620:fe::fe"
+        "2620:fe::9"
+      ];
+      description = "List of DNS servers to use";
     };
 
     dnssecMode = mkOption {
-      type = types.enum [ "no" "allow-downgrade" "yes" ];
-      default = "yes";
+      type = types.enum [ "false" "allow-downgrade" "true" ];
+      default = "allow-downgrade";
       description = "DNSSEC validation mode";
     };
 
@@ -32,7 +37,7 @@ in
     forwarding = mkOption {
       type = types.enum [ "none" "ipv4" "ipv6" "both" ];
       default = "none";
-      description = "Enable packet forwarding (useful for routers/VPNs)";
+      description = "Enable packet forwarding";
     };
 
     connectionTracking = mkOption {
@@ -53,24 +58,11 @@ in
       default = {};
       description = "Netfilter connection tracking settings";
     };
-
-    mtu = mkOption {
-      type = types.nullOr types.int;
-      default = null;
-      description = "Global MTU size (leave null for automatic detection)";
-    };
   };
 
   config = mkMerge [
 
-    # Enable networking.
     {
-      # Configure network proxy if necessary
-      # networking.proxy.default = "http://user:password@proxy:port/";
-      # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-      # Pick only one of the below networking options.
-      # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
       networking.networkmanager.enable = true;
     }
 
@@ -79,20 +71,16 @@ in
         enable = true;
         dnssec = cfg.dnssecMode;
         dnsovertls = "opportunistic";
-        fallbackDns = [
-          "9.9.9.9"
-          "149.112.112.112"
-          "2620:fe::fe"
-          "2620:fe::9"
+        fallbackDNS = [
+          "1.1.1.2"
+          "1.0.0.2"
+          "2606:4700:4700::1112"
+          "2606:4700:4700::1002"
         ];
+        domains = [ "~." ]; 
       };
 
-      # Set custom DNS servers if not using defaults
-      networking.nameservers = 
-        if cfg.dnsServers != [ "8.8.8.8" "8.8.4.4" ] 
-        then cfg.dnsServers 
-        else [ ];
-
+      networking.nameservers = cfg.dnsServers;
       networking.networkmanager.dns = "systemd-resolved";
     })
 
@@ -108,12 +96,10 @@ in
       networking.networkmanager.wifi.macAddress = "random";
     })
 
-    # IPv6 configuration
     {
       networking.enableIPv6 = cfg.ipv6.enable;
     }
 
-    # IP forwarding for routing/VPN use
     (lib.mkIf (cfg.forwarding != "none") (
       let
         ipv4 = cfg.forwarding == "ipv4" || cfg.forwarding == "both";
@@ -127,17 +113,16 @@ in
       }
     ))
 
-    # Connection tracking settings
     {
       boot.kernel.sysctl = {
         "net.netfilter.nf_conntrack_max" = cfg.connectionTracking.maxConnections;
         "net.ipv4.netfilter.ip_conntrack_tcp_timeout_established" = cfg.connectionTracking.tcpTimeout;
+        "net.ipv4.tcp_fastopen" = 3; # TODO make this configurable
+        "net.core.default_qdisc" = "fq";
+        "net.ipv4.tcp_congestion_control" = "bbr";
+        "net.core.rmem_max" = 16777216; # TODO make this configurable
+        "net.core.wmem_max" = 16777216; # TODO make this configurable
       };
     }
-
-    # MTU configuration (if specified)
-    (lib.mkIf (cfg.mtu != null) {
-      networking.interfaces = lib.mapAttrs (_: v: { mtu = cfg.mtu; }) config.networking.interfaces;
-    })
   ];
 }

@@ -73,7 +73,7 @@ in
 
     # Set trusted users.
     {
-      nix.settings.trusted-users = cfg.trusted-users;
+      nix.settings.trusted-users = [ config.framework.primaryUser ] ++ cfg.trusted-users;
     }
   ];
 }
