@@ -6,8 +6,8 @@
 }:
 let
   osConfig = config.framework;
-  cfg = osConfig.framework.programs.vscode;
-  primaryUser = osConfig.framework.primaryUser;
+  cfg = osConfig.programs.vscode;
+  primaryUser = osConfig.primaryUser;
 in
 {
   options.framework.programs.vscode = {
@@ -19,7 +19,7 @@ in
     home-manager.users.${primaryUser} =
       { config, ... }:
       lib.mkMerge [
-        (lib.mkIf osConfig.framework.programs.stylix.enable {programs.stylix.targets.vscode.enable = false;})
+        (lib.mkIf osConfig.programs.stylix.enable {programs.stylix.targets.vscode.enable = false;})
 
         {
           programs.vscode = {
