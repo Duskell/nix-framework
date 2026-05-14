@@ -40,6 +40,8 @@ in
         home.stateVersion = config.system.stateVersion;
 
         news.display = mkIf cfg.silentNews "silent";
+
+        programs.home-manager.enable = true;
       };
     };
   };
