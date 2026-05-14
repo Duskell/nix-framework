@@ -67,7 +67,7 @@ in
     }
 
     (lib.mkIf cfg.dns {
-      services.Resolved = {
+      services.resolved.settings.Resolve = {
         enable = true;
         DNSSEC = cfg.dnssecMode;
         DNSOverTLS = "opportunistic";
