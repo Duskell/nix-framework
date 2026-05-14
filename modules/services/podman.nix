@@ -40,7 +40,7 @@ in
       virtualisation.containers.enable = true; 
       virtualisation.podman.enable = true;
       virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
-      virtualisation.podman.dockerCompat = cfg.dockerComp;
+      virtualisation.podman.dockerCompat.enable = cfg.dockerComp;
       virtualisation.podman.dockerSocket.enable = cfg.dockerComp;
 
       environment.systemPackages = with pkgs; ([
