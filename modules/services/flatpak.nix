@@ -18,7 +18,7 @@ in
     '';
 
     remotes = lib.mkOption {
-      type = lib.type.anything;
+      type = lib.types.anything;
       default = [];
       description = ''
         The extra remotes to add besides the default: "flathub"
@@ -26,7 +26,7 @@ in
     };
 
     packages = lib.mkOption {
-      type = lib.type.anything;
+      type = lib.types.anything;
       default = [];
       description = ''
         List of flatpak packages to add
