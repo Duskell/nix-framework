@@ -13,7 +13,7 @@ in
 {
   options.framework.desktop.ly = {
     package = mkOption {
-      type = lib.package;
+      type = lib.types.package;
       default = pkgs.ly;
       description = "the ly package to use";
     };
