@@ -22,7 +22,7 @@ in
         configDirName = "proton";
         url = "https://calendar.proton.me/u/0/";
 
-        icon = "${./assets/icons/proton-calendar.png}";
+        icon = "${framework}/assets/icons/proton-calendar.png";
       };
     };
   };
