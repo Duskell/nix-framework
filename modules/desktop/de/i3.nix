@@ -38,6 +38,16 @@ in
           xdg-desktop-portal-gtk
         ];
 
+        xdg.portal.config = {
+          common = {
+            default = [ "gtk" ];
+
+            "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+            "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+            "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+          };
+        };
+
         programs.partition-manager.enable = true;
       }
 
