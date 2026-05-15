@@ -22,7 +22,7 @@ in
         configDirName = "proton";
         url = "https://mail.proton.me/u/0";
 
-        icon = "${./assets/proton-mail.png}";
+        icon = "${./assets/icons/proton-mail.png}";
       };
     };
   };
