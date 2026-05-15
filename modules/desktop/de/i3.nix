@@ -34,6 +34,10 @@ in
             i3lock
         ];
 
+        xdg.portal.extraPortals = with pkgs; [
+          xdg-desktop-portal-gtk
+        ];
+
         programs.partition-manager.enable = true;
       }
 
