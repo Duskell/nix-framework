@@ -27,7 +27,7 @@ in
 
   config = let
     chosenEnv = desktops.environmentByName config.framework.desktop.environment;
-    wayland = if chosenEnv != null then chosenEnv.wayland else false;
+    wayland = if chosenEnv != null then desktops.usesWayland chosenEnv else false;
   in mkIf (config.framework.desktop.enable && chosenEnv.dm == "ly") {
     services.displayManager.ly.enable = true;
     services.displayManager.ly.settings = cfg.options;
