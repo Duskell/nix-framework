@@ -30,6 +30,12 @@ in
       default = "/home/${primaryUser}/background.png";
       description = "Wallpaper to set. Only use if stylix is disabled.";
     };
+
+    modKey = mkOption {
+      type = types.string;
+      default = "Mod4";
+      description = "The modifier key to use for i3 keybindings (e.g., Mod4 for the Super/Windows key).";
+    };
   };
 
   config = mkIf (desktop.enable && desktop.environment == "i3") {
@@ -105,7 +111,7 @@ in
         package = cfg.package;
         
         config = {
-          modifier = "Mod4";
+          modifier = cfg.modKey;
           bars = [ ];
           window.border = 0;
 
@@ -121,10 +127,10 @@ in
             "XF86MonBrightnessDown" = "exec brightnessctl set 4%-";
             "XF86MonBrightnessUp"   = "exec brightnessctl set 4%+";
             
-            "${modifier}+Return"    = "exec alacritty";
-            "${modifier}+Space"     = "exec vicinae"; 
-            "${modifier}+b"         = "exec firefox";
-            "${modifier}+Shift+x"   = "exec systemctl suspend";
+            "${cfg.modKey}+Return"    = "exec alacritty";
+            "${cfg.modKey}+Space"     = "exec vicinae"; 
+            "${cfg.modKey}+b"         = "exec firefox";
+            "${cfg.modKey}+Shift+x"   = "exec systemctl suspend";
           };
 
           startup = [
