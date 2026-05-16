@@ -24,6 +24,12 @@ in
       default = pkgs.i3;
       description = "The i3 package to use.";
     };
+
+    wallpaper = mkOption {
+      type = types.path;
+      default = "/home/${primaryUser}/background.png";
+      description = "Wallpaper to set. Only use if stylix is disabled.";
+    };
   };
 
   config = mkIf (desktop.enable && desktop.environment == "i3") {
@@ -94,12 +100,11 @@ in
     };
     
     home-manager.users.${primaryUser} = {
-
       xsession.windowManager.i3 = {
         enable = true;
         package = cfg.package;
         
-        config = rec {
+        config = {
           modifier = "Mod4";
           bars = [ ];
           window.border = 0;
@@ -115,9 +120,10 @@ in
             "XF86AudioRaiseVolume"  = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%+";
             "XF86MonBrightnessDown" = "exec brightnessctl set 4%-";
             "XF86MonBrightnessUp"   = "exec brightnessctl set 4%+";
-            "${modifier}+Return"    = "exec ${pkgs.alacritty}/bin/alacritty";
-            "${modifier}+Space"     = "exec vicinae";
-            "${modifier}+b"         = "exec ${pkgs.firefox}/bin/firefox";
+            
+            "${modifier}+Return"    = "exec alacritty";
+            "${modifier}+Space"     = "exec vicinae"; 
+            "${modifier}+b"         = "exec firefox";
             "${modifier}+Shift+x"   = "exec systemctl suspend";
           };
 
@@ -128,7 +134,8 @@ in
               notification = false;
             }
             {
-              command = "${pkgs.feh}/bin/feh --bg-scale ~/background.png";
+              # Ensure ~/background.png exists, or use an absolute path
+              command = "feh --bg-scale ${if config.framework.stylix.enable then "${config.framework.stylix.backgroundImage}" else cfg.wallpaper}";
               always = true;
               notification = false;
             }
