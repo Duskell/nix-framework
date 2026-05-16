@@ -113,7 +113,7 @@ in {
           modifier = cfg.modKey;
           bars = [];
           window.border = 0;
-          windows.titlebar = false;
+          window.titlebar = false;
 
           floating.border = 0;
           floating.titlebar = false;
