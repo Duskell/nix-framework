@@ -26,7 +26,6 @@ in
             scale = 0;
             notification_limit = 5;
             
-            font = "Sans 10";
             corner_radius = 15; 
             frame_width = 2;
             frame_color = "#740096";
