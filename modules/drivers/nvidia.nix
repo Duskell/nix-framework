@@ -32,6 +32,7 @@ in {
       type = lib.types.submodule {
         options = {
           enable = lib.mkEnableOption "enable Prime";
+          offload = lib.mkEnableOption "enable offloading instead of sync";
           intelBusId = lib.mkOption {
             type = lib.types.str;
             default = "PCI:0:2:0";
@@ -97,17 +98,14 @@ in {
 
     (mkIf cfg.prime.enable {
       hardware.nvidia.prime = {
-        offload.enable = true;
+        sync = !cfg.prime.offload;
+        offload.enable = cfg.prime.offload;
         offload.offloadCmdMainProgram = "prime-run";
-        offload.enableOffloadCmd = true;
+        offload.enableOffloadCmd = cfg.prime.offload;
 
         intelBusId = cfg.prime.intelBusId;
         nvidiaBusId = cfg.prime.nvidiaBusId;
       };
-    })
-
-    (mkIf cfg.prime.enable {
-      hardware.nvidia.prime.sync.enable = true;
     })
   ]);
 }
