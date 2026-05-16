@@ -72,9 +72,9 @@ in {
         };
       };
       services = {
-        #flameshot = {
-        #  enable = mkDefault true;
-        #};
+        flameshot = {
+          enable = mkDefault true;
+        };
         polybar = {
           enable = mkDefault true;
         };
@@ -113,6 +113,10 @@ in {
           modifier = cfg.modKey;
           bars = [];
           window.border = 0;
+          windows.titlebar = false;
+
+          floating.border = 0;
+          floating.titlebar = false;
 
           gaps = {
             inner = 15;
@@ -127,19 +131,23 @@ in {
             "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
 
             "${cfg.modKey}+Return" = "exec alacritty";
-            "${cfg.modKey}+Space" = "exec vicinae open";
+            "${cfg.modKey}+space" = "exec vicinae open";
             "${cfg.modKey}+b" = "exec firefox";
             "${cfg.modKey}+Shift+x" = "exec systemctl suspend";
           };
 
           startup = [
+            (mkIf config.framework.vicinae.enable {
+              command = "vicinae server";
+              always = true;
+              notification = false;
+            })
             {
               command = "systemctl --user restart polybar.service";
-              always = true;
+              always = false;
               notification = false;
             }
             {
-              # Ensure ~/background.png exists, or use an absolute path
               command = "feh --bg-scale ${
                 if config.framework.programs.stylix.enable
                 then "${config.framework.programs.stylix.wallpaper}"

@@ -4,17 +4,14 @@
   lib,
   pkgs,
   ...
-}@inputs:
-let
+} @ inputs: let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.framework.drivers.nvidia;
-in
-{
-
+in {
   options.framework.drivers.nvidia = {
     enable = lib.mkEnableOption "install NVIDIA drivers";
     package = lib.mkOption {
-      default = (import ../patches/linux-nvidia-595.nix inputs);
+      default = import ../patches/linux-nvidia-595.nix inputs;
       description = "the NVIDIA kernel packages";
     };
 
@@ -54,7 +51,6 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-
     # Enable NVIDIA GPU drivers.
     {
       nixpkgs.config.allowUnfree = true;
@@ -77,14 +73,16 @@ in
         GSK_RENDERER = "ngl";
       };
 
-      boot.kernelParams = [
-        "nvidia-drm.modeset=1"
-        "nvidia-drm.fbdev=1"
-      ] ++ lib.optional cfg.powerManagement.enable "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
+      boot.kernelParams =
+        [
+          "nvidia-drm.modeset=1"
+          "nvidia-drm.fbdev=1"
+        ]
+        ++ lib.optional cfg.powerManagement.enable "nvidia.NVreg_PreserveVideoMemoryAllocations=1";
     }
 
     (mkIf config.services.xserver.enable {
-      services.xserver.videoDrivers = [ "nvidia" ];
+      services.xserver.videoDrivers = ["nvidia"];
     })
 
     # Allow Plymouth to take over ASAP.
@@ -108,5 +106,8 @@ in
       };
     })
 
+    (mkIf cfg.prime.enable {
+      hardware.nvidia.prime.sync.enable = true;
+    })
   ]);
 }
