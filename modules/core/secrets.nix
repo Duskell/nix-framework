@@ -1,27 +1,36 @@
-{ inputs, config, lib, pkgs, framework, ... }:
-let
-  cfg = config.framework.core.secrets;
-in
 {
-  imports = [ inputs.agenix.nixosModules.default ];
+  inputs,
+  config,
+  lib,
+  pkgs,
+  framework,
+  ...
+}: let
+  cfg = config.framework.core.secrets;
+in {
+  imports = [inputs.agenix.nixosModules.default];
 
   options.framework.core.secrets = {
-    enable = lib.mkEnableOption "enable agenix secrets management" // {
-      default = true;
-    };
-    cli = lib.mkEnableOption "enable agenix cli" // {
-      default = true;
-    };
+    enable =
+      lib.mkEnableOption "enable agenix secrets management"
+      // {
+        default = true;
+      };
+    cli =
+      lib.mkEnableOption "enable agenix cli"
+      // {
+        default = true;
+      };
 
     # list of secrets to add later
     items = lib.mkOption {
       description = "custom managed secrets";
       default = {};
-      type = lib.types.attrsOf (lib.types.submodule ( { name, ... }: {
+      type = lib.types.attrsOf (lib.types.submodule ({name, ...}: {
         options = {
           file = lib.mkOption {
             type = lib.types.str;
-            default = "${framework}/secrets/${name}.age"; 
+            default = "${framework}/secrets/${name}.age";
           };
           path = lib.mkOption {
             type = lib.types.str;
@@ -37,7 +46,7 @@ in
           };
           group = lib.mkOption {
             type = lib.types.str;
-            default = config.framework.primaryUser;
+            default = "users";
           };
         };
       }));
@@ -46,16 +55,19 @@ in
 
   config = lib.mkIf config.framework.core.secrets.enable {
     # make agenix use the machine's inherent SSH host key for decryption
-    age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
-    environment.systemPackages = lib.optional  config.framework.core.secrets.cli inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    environment.systemPackages = lib.optional config.framework.core.secrets.cli inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-    age.secrets = lib.mapAttrs (name: secretConfig: {
-      file = secretConfig.file;
-      path = secretConfig.path;
-      mode = secretConfig.mode;
-      owner = secretConfig.owner;
-      group = secretConfig.group;
-    }) cfg.items;
+    age.secrets =
+      lib.mapAttrs (name: secretConfig: {
+        file = secretConfig.file;
+        path = secretConfig.path;
+        mode = secretConfig.mode;
+        owner = secretConfig.owner;
+        group = secretConfig.group;
+      })
+      cfg.items;
   };
 }
+
