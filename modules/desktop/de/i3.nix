@@ -127,7 +127,7 @@ in {
             "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
 
             "${cfg.modKey}+Return" = "exec alacritty";
-            "${cfg.modKey}+Space" = "exec vicinae";
+            "${cfg.modKey}+Space" = "exec vicinae open";
             "${cfg.modKey}+b" = "exec firefox";
             "${cfg.modKey}+Shift+x" = "exec systemctl suspend";
           };
@@ -154,4 +154,3 @@ in {
     };
   };
 }
-
