@@ -4,19 +4,19 @@
   pkgs,
   framework,
   ...
-}@inputs:
-let
-  inherit (lib)
+} @ inputs: let
+  inherit
+    (lib)
     mkIf
     mkOption
     mkDefault
-    types;
+    types
+    ;
   inherit (framework.lib) desktops;
   cfg = config.framework.desktop.i3;
   desktop = config.framework.desktop;
   primaryUser = config.framework.primaryUser;
-in
-{
+in {
   options.framework.desktop.i3 = {
     package = mkOption {
       type = types.package;
@@ -41,7 +41,7 @@ in
     services.xserver.windowManager.i3 = {
       enable = true;
       package = cfg.package;
-      extraPackages = with pkgs; [ i3lock-color ];
+      extraPackages = with pkgs; [i3lock-color];
     };
 
     environment.systemPackages = with pkgs; [
@@ -53,15 +53,15 @@ in
 
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+      extraPortals = with pkgs; [xdg-desktop-portal-gtk];
       config.common = {
-        default = [ "gtk" ];
-        "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-        "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
-        "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+        default = ["gtk"];
+        "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
+        "org.freedesktop.impl.portal.OpenURI" = ["gtk"];
+        "org.freedesktop.impl.portal.Settings" = ["gtk"];
       };
     };
-    
+
     framework = {
       programs = {
         thunar = {
@@ -72,9 +72,9 @@ in
         };
       };
       services = {
-        flameshot = {
-          enable = mkDefault true;
-        };
+        #flameshot = {
+        #  enable = mkDefault true;
+        #};
         polybar = {
           enable = mkDefault true;
         };
@@ -92,9 +92,9 @@ in
 
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -103,15 +103,15 @@ in
         TimeoutStopSec = 10;
       };
     };
-    
+
     home-manager.users.${primaryUser} = {
       xsession.windowManager.i3 = {
         enable = true;
         package = cfg.package;
-        
+
         config = {
           modifier = cfg.modKey;
-          bars = [ ];
+          bars = [];
           window.border = 0;
 
           gaps = {
@@ -120,16 +120,16 @@ in
           };
 
           keybindings = {
-            "XF86AudioMute"         = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            "XF86AudioLowerVolume"  = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%-";
-            "XF86AudioRaiseVolume"  = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%+";
+            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%-";
+            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%+";
             "XF86MonBrightnessDown" = "exec brightnessctl set 4%-";
-            "XF86MonBrightnessUp"   = "exec brightnessctl set 4%+";
-            
-            "${cfg.modKey}+Return"    = "exec alacritty";
-            "${cfg.modKey}+Space"     = "exec vicinae"; 
-            "${cfg.modKey}+b"         = "exec firefox";
-            "${cfg.modKey}+Shift+x"   = "exec systemctl suspend";
+            "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
+
+            "${cfg.modKey}+Return" = "exec alacritty";
+            "${cfg.modKey}+Space" = "exec vicinae";
+            "${cfg.modKey}+b" = "exec firefox";
+            "${cfg.modKey}+Shift+x" = "exec systemctl suspend";
           };
 
           startup = [
@@ -140,7 +140,11 @@ in
             }
             {
               # Ensure ~/background.png exists, or use an absolute path
-              command = "feh --bg-scale ${if config.framework.programs.stylix.enable then "${config.framework.programs.stylix.wallpaper}" else cfg.wallpaper}";
+              command = "feh --bg-scale ${
+                if config.framework.programs.stylix.enable
+                then "${config.framework.programs.stylix.wallpaper}"
+                else cfg.wallpaper
+              }";
               always = true;
               notification = false;
             }
@@ -150,3 +154,4 @@ in
     };
   };
 }
+
