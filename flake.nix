@@ -111,6 +111,12 @@
             kde-kwin-effects-forceblur-wayland = kde-kwin-effects-better-blur-dx-wayland;
             kde-kwin-effects-forceblur-x11 = kde-kwin-effects-better-blur-dx-x11;
             copyparty = inputs.copyparty.overlays.default;
+
+            # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
+            # See https://github.com/NixOS/nixpkgs/issues/514113
+            openldap = prev.openldap.overrideAttrs {
+              doCheck = !prev.stdenv.hostPlatform.isi686;
+            };
           }
         );
       };
