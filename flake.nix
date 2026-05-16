@@ -97,30 +97,28 @@
 
       # overlays provides nixpkgs overlays.
       overlays = {
-        default = final: prev: (overlays.externals prev final) // (overlays.packages prev final);
+        default = final: prev: (overlays.externals final prev) // (overlays.packages prev final);
 
         packages = (import ./packages/overlay.nix);
-        externals = final: prev:
-        let
-          system = prev.stdenv.hostPlatform.system;
-          host-platform = prev.stdenv.hostPlatform;
-          better-blur-wayland = inputs.kwin-effects-better-blur-dx.packages.${system}.default;
-          better-blur-x11 = inputs.kwin-effects-better-blur-dx.packages.${system}.x11;
-          base-ldap = prev.openldap;
-        in
-        {
-          kde-kwin-effects-better-blur-dx-wayland = better-blur-wayland;
-          kde-kwin-effects-better-blur-dx-x11 = better-blur-x11;
-          kde-kwin-effects-forceblur-wayland = better-blur-wayland;
-          kde-kwin-effects-forceblur-x11 = better-blur-x11;
-          copyparty = inputs.copyparty.overlays.default;
+        externals = (
+          final: prev:
+          let
+            system = prev.stdenv.hostPlatform.system;
+          in
+          rec {
+            kde-kwin-effects-better-blur-dx-wayland = inputs.kwin-effects-better-blur-dx.packages.${system}.default;
+            kde-kwin-effects-better-blur-dx-x11 = inputs.kwin-effects-better-blur-dx.packages.${system}.x11;
+            kde-kwin-effects-forceblur-wayland = kde-kwin-effects-better-blur-dx-wayland;
+            kde-kwin-effects-forceblur-x11 = kde-kwin-effects-better-blur-dx-x11;
+            copyparty = inputs.copyparty.overlays.default;
 
-          # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
-          # See https://github.com/NixOS/nixpkgs/issues/514113
-          openldap = base-ldap.overrideAttrs {
-            doCheck = !host-platform.isi686;
-          };
-        };
+            # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
+            # See https://github.com/NixOS/nixpkgs/issues/514113
+            openldap = prev.openldap.overrideAttrs {
+              doCheck = !prev.stdenv.hostPlatform.isi686;
+            };
+          }
+        );
       };
 
       # nixosModules provides NixOS modules.
