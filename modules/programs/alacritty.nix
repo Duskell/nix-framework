@@ -31,13 +31,20 @@ in
 
           settings = {
             window = {
-              padding = {
-                x = 12;
-                y = 12;
-              };
+              title = "Terminal";
 
+              padding = { y = 5; };
+              dimensions = {
+                lines = 75;
+                columns = 100;
+              };
               blur = true;
             };
+
+            background_opacity = 0.3;
+
+            shell = { program = "${pkgs.bash}/bin/bash"; };
+
           };
         };
       };

@@ -12,5 +12,7 @@ inputs: {
     ./dev.nix
     ./nixvim.nix
     ./stylix.nix
+    ./thunar.nix
+    ./vicinae.nix
   ];
 }

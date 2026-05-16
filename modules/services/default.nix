@@ -9,5 +9,10 @@ inputs: {
     ./fail2ban.nix
     ./openssh.nix
     ./podman.nix
+    ./flameshot.nix
+    ./picom.nix
+    ./polybar.nix
+    ./redshift.nix
+    ./dunst.nix
   ];
 }

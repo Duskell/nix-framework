@@ -10,7 +10,7 @@ let
 in
 {
   options.framework.services.ssh = {
-    enable = mkEnableOption "enable openssh server";
+    enable = mkEnableOption "enable openssh" // {default = true;};
 
     passAuth = mkEnableOption "enable authentication via a password";
   };

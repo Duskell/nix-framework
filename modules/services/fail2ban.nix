@@ -15,12 +15,10 @@ in
     ssh.enable = mkEnableOption "enable jail for ssh";
   };
 
-  config = mkMerge [
-    {
-      services.fail2ban.enable = cfg.enable;
-      services.fail2ban.jails.ssh = {
-        enabled = cfg.ssh.enable;
-      };
-    }
-  ];
+  config = {
+    services.fail2ban.enable = cfg.enable;
+    services.fail2ban.jails.ssh = {
+      enabled = cfg.ssh.enable;
+    };
+  };
 }

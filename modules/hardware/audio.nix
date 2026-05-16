@@ -15,10 +15,9 @@ in
     pipewire = lib.mkOption {
       type = lib.types.submodule {
         options = {
-          enable = lib.mkEnableOption "Use Pipewire, the modern sound subsystem" // {
-            default = true;
-          };
+          enable = lib.mkEnableOption "Use Pipewire, the modern sound subsystem" // {default=true;};
           jack.enable = lib.mkEnableOption "Use JACK applications";
+          wireplumber.enable = lib.mkEnableOption "enable wireplumber" // {default=true;};
         };
       };
 
@@ -46,6 +45,7 @@ in
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
+        wireplumber.enable = cfg.pipewire.wireplumber.enable;
       };
       }
 
