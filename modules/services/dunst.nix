@@ -30,13 +30,13 @@ in
             frame_width = 2;
             frame_color = "#740096";
           };
-          urgency_low = {
-            background = "#1e1e2e";
-            foreground = "#cdd6f4";
-          };
+          # urgency_low = {
+          #   background = "#1e1e2e";
+          #   foreground = "#cdd6f4";
+          # };
           urgency_normal = {
-            background = "#1e1e2e";
-            foreground = "#cdd6f4";
+            # background = "#1e1e2e";
+            # foreground = "#cdd6f4";
             timeout = 6;
           };
         };
