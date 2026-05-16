@@ -137,7 +137,7 @@ in {
           };
 
           startup = [
-            (mkIf config.framework.vicinae.enable {
+            (mkIf config.framework.programs.vicinae.enable {
               command = "vicinae server";
               always = true;
               notification = false;
