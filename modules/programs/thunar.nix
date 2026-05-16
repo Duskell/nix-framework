@@ -21,7 +21,7 @@ in
       thunar-archive-plugin
       thunar-volman
     ];
-    services.gvfs.enable = cfg.thunar.enable; # Mount, trash, and other functionalities
-    services.tumbler.enable = cfg.thunar.enable; # Thumbnail support for images
+    services.gvfs.enable = mkDefault true; # Mount, trash, and other functionalities
+    services.tumbler.enable = mkDefault true; # Thumbnail support for images
   };
 }
