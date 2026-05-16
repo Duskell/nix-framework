@@ -10,8 +10,7 @@ let
     mkIf
     mkOption
     mkDefault
-    types
-    ;
+    types;
   inherit (framework.lib) desktops;
   cfg = config.framework.desktop.i3;
   desktop = config.framework.desktop;
@@ -32,7 +31,7 @@ in
     };
 
     modKey = mkOption {
-      type = types.string;
+      type = types.str;
       default = "Mod4";
       description = "The modifier key to use for i3 keybindings (e.g., Mod4 for the Super/Windows key).";
     };
