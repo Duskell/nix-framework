@@ -47,6 +47,7 @@ in {
     environment.systemPackages = with pkgs; [
       xdg-desktop-portal-gtk
       autorandr
+      arandr
       brightnessctl
       feh
     ];
@@ -119,7 +120,7 @@ in {
           floating.titlebar = false;
 
           gaps = {
-            inner = 15;
+            inner = 20;
             outer = 5;
           };
 
