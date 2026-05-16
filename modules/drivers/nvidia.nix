@@ -98,7 +98,7 @@ in {
 
     (mkIf cfg.prime.enable {
       hardware.nvidia.prime = {
-        sync = !cfg.prime.offload;
+        sync.enable = !cfg.prime.offload;
         offload.enable = cfg.prime.offload;
         offload.offloadCmdMainProgram = "prime-run";
         offload.enableOffloadCmd = cfg.prime.offload;
