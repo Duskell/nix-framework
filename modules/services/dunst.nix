@@ -16,7 +16,7 @@ in
   config = mkIf cfg.enable {
     home-manager.users.${config.framework.primaryUser} = {
       services.dunst = {
-        enable = cfg.dunst.enable;
+        enable = true;
         settings = {
           global = {
             width = 350;
