@@ -140,7 +140,7 @@ in
             }
             {
               # Ensure ~/background.png exists, or use an absolute path
-              command = "feh --bg-scale ${if config.framework.stylix.enable then "${config.framework.stylix.backgroundImage}" else cfg.wallpaper}";
+              command = "feh --bg-scale ${if config.framework.programs.stylix.enable then "${config.framework.programs.stylix.backgroundImage}" else cfg.wallpaper}";
               always = true;
               notification = false;
             }
