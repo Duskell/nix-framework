@@ -36,6 +36,8 @@ in
 
   config = lib.mkIf cfg.enable (mkMerge [
     {
+      services.flatpak.enable = true;
+
       home-manager.users.${primaryUser} =
         { ... }:
         let 
