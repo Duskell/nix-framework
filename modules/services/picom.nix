@@ -3,12 +3,10 @@
   lib,
   pkgs,
   ...
-}@inputs:
-let
+} @ inputs: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.framework.services.picom;
-in
-{
+in {
   options.framework.services.picom = {
     enable = mkEnableOption "enable picom, a compositor for X11";
   };
@@ -21,12 +19,12 @@ in
 
       # Fading
       fade = true;
-      fadeSteps = [ 0.09 0.09 ];
+      fadeSteps = [0.09 0.09];
       fadeDelta = 5;
 
       # Shadows
       shadow = true;
-      shadowOffsets = [ (-7) (-7) ];
+      shadowOffsets = [(-7) (-7)];
       shadowOpacity = 0.7;
       shadowExclude = [
         "window_type *= 'normal' && ! name ~= ''"
@@ -38,7 +36,7 @@ in
 
       # Opacity
       activeOpacity = 1.0;
-      inactiveOpacity = 0.8;
+      inactiveOpacity = 1.0;
       menuOpacity = 0.8;
 
       settings = {
@@ -46,10 +44,10 @@ in
 
         blur-method = "dual_kawase";
         blur-strength = 5;
-        
-        blur-background-exclude = [ 
-          "window_type = 'dock'" 
-          "window_type = 'desktop'" 
+
+        blur-background-exclude = [
+          "window_type = 'dock'"
+          "window_type = 'desktop'"
         ];
 
         shadow-radius = 7;
@@ -62,3 +60,4 @@ in
     };
   };
 }
+
