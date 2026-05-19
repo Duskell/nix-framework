@@ -5,19 +5,17 @@
   pkgs,
   framework,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.framework.programs.thunar;
-in
-{
+in {
   options.framework.programs.thunar = {
     enable = lib.mkEnableOption "install Thunar";
   };
 
   config = lib.mkIf cfg.enable {
-    programs.thunar.enable =  true;
-    programs.thunar.plugins = with pkgs.xfce; [
+    programs.thunar.enable = true;
+    programs.thunar.plugins = with pkgs; [
       thunar-archive-plugin
       thunar-volman
     ];
@@ -25,3 +23,4 @@ in
     services.tumbler.enable = mkDefault true; # Thumbnail support for images
   };
 }
+
