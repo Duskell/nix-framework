@@ -188,6 +188,11 @@ in {
           };
 
           startup = [
+            {
+              command = "autorandr --change built-in";
+              always = false;
+              notification = false;
+            }
             (mkIf config.framework.programs.vicinae.enable {
               command = "vicinae server";
               always = true;
