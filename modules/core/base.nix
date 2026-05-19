@@ -3,12 +3,10 @@
   lib,
   pkgs,
   ...
-}@inputs:
-let
+} @ inputs: let
   inherit (lib) mkIf mkMerge mkEnableOption mkOption types;
   cfg = config.framework.core;
-in
-{
+in {
   options.framework.primaryUser = lib.mkOption {
     type = lib.types.str;
     description = "The main user of the system";
@@ -34,9 +32,11 @@ in
     };
 
     git = {
-      enable = mkEnableOption "configure git" // {
-        default = true;
-      };
+      enable =
+        mkEnableOption "configure git"
+        // {
+          default = true;
+        };
 
       userName = mkOption {
         type = types.str;
