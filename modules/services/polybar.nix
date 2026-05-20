@@ -4,12 +4,10 @@
   pkgs,
   framework,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.framework.services.polybar;
-in
-{
+in {
   options.framework.services.polybar = {
     enable = lib.mkEnableOption "enable Polybar";
   };
@@ -17,9 +15,8 @@ in
   # Created By @icanwalkonwater
   # Edited and ported to Nix by Th0rgal
 
-  config = mkIf cfg.enable ({
-    home-manager.users.${config.framework.primaryUser} = 
-    let
+  config = mkIf cfg.enable {
+    home-manager.users.${config.framework.primaryUser} = let
       ac = "#1E88E5";
       mf = "#383838";
 
@@ -43,7 +40,6 @@ in
 
       # Red
       urgency = "#e74c3c";
-
     in {
       services.polybar = {
         enable = true;
@@ -140,8 +136,7 @@ in
 
           "module/distro-icon" = {
             type = "custom/script";
-            exec =
-              "${pkgs.coreutils}/bin/uname -r | ${pkgs.coreutils}/bin/cut -d- -f1";
+            exec = "${pkgs.coreutils}/bin/uname -r | ${pkgs.coreutils}/bin/cut -d- -f1";
             interval = 999999999;
 
             format = " <label>";
@@ -234,7 +229,7 @@ in
 
             format = "<label>";
             format-padding = 4;
-            format-foreground = fg;
+            format-foreground = secondary;
 
             label = "%time%";
           };
@@ -526,5 +521,6 @@ in
         };
       };
     };
-  });
+  };
 }
+
