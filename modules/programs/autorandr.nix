@@ -12,6 +12,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.autorandr.enable = true;
+
     home-manager.users.${primtaryUser} = {
       programs.autorandr = {
         enable = true;

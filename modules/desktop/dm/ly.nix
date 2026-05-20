@@ -4,13 +4,11 @@
   pkgs,
   framework,
   ...
-}@inputs:
-let
+} @ inputs: let
   inherit (lib) mkIf mkMerge mkOption;
   inherit (framework.lib) desktops;
   cfg = config.framework.desktop.ly;
-in
-{
+in {
   options.framework.desktop.ly = {
     package = mkOption {
       type = lib.types.package;
@@ -27,11 +25,21 @@ in
 
   config = let
     chosenEnv = desktops.environmentByName config.framework.desktop.environment;
-    wayland = if chosenEnv != null then desktops.usesWayland chosenEnv else false;
-  in mkIf (config.framework.desktop.enable && chosenEnv.dm == "ly") {
-    services.displayManager.ly.enable = true;
-    services.displayManager.ly.settings = cfg.options;
-    services.displayManager.ly.package = cfg.package;
-    services.displayManager.ly.x11Support = !wayland;
-  };
+    wayland =
+      if chosenEnv != null
+      then desktops.usesWayland chosenEnv
+      else false;
+  in
+    mkIf (config.framework.desktop.enable && chosenEnv.dm == "ly") {
+      services.displayManager.ly.enable = true;
+      services.displayManager.ly.settings =
+        {
+          save = true;
+          load = true;
+        }
+        // cfg.options;
+      services.displayManager.ly.package = cfg.package;
+      services.displayManager.ly.x11Support = !wayland;
+    };
 }
+
