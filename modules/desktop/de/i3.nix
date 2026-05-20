@@ -35,6 +35,12 @@ in {
       default = "Mod4";
       description = "The modifier key to use for i3 keybindings (e.g., Mod4 for the Super/Windows key).";
     };
+
+    startup = mkOption {
+      type = types.listOf types.attrs;
+      default = [];
+      description = "The commands to run at startup";
+    };
   };
 
   config = mkIf (desktop.enable && desktop.environment == "i3") {
@@ -187,32 +193,39 @@ in {
             "${cfg.modKey}+m" = "exec i3lock-color";
           };
 
-          startup = [
-            {
-              command = "autorandr --change built-in";
-              always = false;
-              notification = false;
-            }
-            (mkIf config.framework.programs.vicinae.enable {
-              command = "vicinae server";
-              always = true;
-              notification = false;
-            })
-            {
-              command = "systemctl --user restart polybar.service";
-              always = false;
-              notification = false;
-            }
-            {
-              command = "feh --bg-scale ${
-                if config.framework.programs.stylix.enable
-                then "${config.framework.programs.stylix.wallpaper}"
-                else cfg.wallpaper
-              }";
-              always = true;
-              notification = false;
-            }
-          ];
+          startup =
+            [
+              (mkIf config.framework.programs.vicinae.enable {
+                command = "vicinae server";
+                always = false;
+                notification = false;
+              })
+              {
+                command = "systemctl --user import-environment DISPLAY XAUTHORITY";
+                always = false;
+                notification = false;
+              }
+              {
+                command = "systemctl --user start graphical-session.target";
+                always = false;
+                notification = false;
+              }
+              {
+                command = "systemctl --user restart polybar.service";
+                always = false;
+                notification = false;
+              }
+              {
+                command = "feh --bg-scale ${
+                  if config.framework.programs.stylix.enable
+                  then "${config.framework.programs.stylix.wallpaper}"
+                  else cfg.wallpaper
+                }";
+                always = true;
+                notification = false;
+              }
+            ]
+            ++ cfg.startup;
         };
       };
     };
