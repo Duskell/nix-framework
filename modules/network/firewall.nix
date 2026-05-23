@@ -28,6 +28,7 @@ in
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 22 ] ++ cfg.allowedTCPPorts;
+        allowedUDPPorts = [ ] ++ cfg.allowedUDPPorts;
       };
     })
   ];

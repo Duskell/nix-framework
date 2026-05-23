@@ -1,14 +1,18 @@
-{ inputs, config, lib, framework, ... }:
-let
+{
+  inputs,
+  config,
+  lib,
+  framework,
+  ...
+}: let
   inherit (lib) mkIf mkOption types mkEnableOption;
   cfg = config.framework.core.hm;
-in
-{
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+in {
+  imports = [inputs.home-manager.nixosModules.home-manager];
 
   options.framework.core.hm = {
-    enable = mkEnableOption "Home Manager configuration" // { default = true; };
-    
+    enable = mkEnableOption "Home Manager configuration" // {default = true;};
+
     backupExtension = mkOption {
       type = types.str;
       default = "hm-backup";
@@ -16,11 +20,11 @@ in
 
     modules = mkOption {
       type = types.listOf types.deferredModule;
-      default = [ ];
+      default = [];
       description = "List of Home Manager modules to load for the primary user.";
     };
 
-    silentNews = mkEnableOption "Silence Home Manager news" // { default = true; };
+    silentNews = mkEnableOption "Silence Home Manager news" // {default = true;};
   };
 
   config = mkIf cfg.enable {
@@ -29,20 +33,23 @@ in
       useUserPackages = true;
       backupFileExtension = cfg.backupExtension;
 
-      extraSpecialArgs = { 
+      extraSpecialArgs = {
         inherit framework inputs;
         sysConfig = config;
       };
-      
+
       users.${config.framework.primaryUser} = {
-        imports = cfg.modules; 
-        
+        imports = cfg.modules;
+
         home.stateVersion = config.system.stateVersion;
 
         news.display = mkIf cfg.silentNews "silent";
+
+        xsession.target.enable = true;
 
         programs.home-manager.enable = true;
       };
     };
   };
 }
+

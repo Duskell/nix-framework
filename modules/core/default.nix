@@ -4,5 +4,7 @@ inputs: {
     ./packages.nix
     ./secrets.nix
     ./home-manager.nix
+    ./shell.nix
   ];
 }
+

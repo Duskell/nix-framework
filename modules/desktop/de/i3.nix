@@ -2,9 +2,9 @@
   config,
   lib,
   pkgs,
-  framework,
+  # framework,
   ...
-} @ inputs: let
+}: let
   inherit
     (lib)
     mkIf
@@ -12,7 +12,7 @@
     mkDefault
     types
     ;
-  inherit (framework.lib) desktops;
+  # inherit (framework.lib) desktops;
   cfg = config.framework.desktop.i3;
   desktop = config.framework.desktop;
   primaryUser = config.framework.primaryUser;
@@ -112,6 +112,14 @@ in {
     };
 
     home-manager.users.${primaryUser} = {
+      home.file.".xprofile".text = ''
+        if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+          . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+        elif [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
+          . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+        fi
+      '';
+
       xsession.windowManager.i3 = {
         enable = true;
         package = cfg.package;
