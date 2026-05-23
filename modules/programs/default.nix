@@ -14,5 +14,7 @@ inputs: {
     ./stylix.nix
     ./thunar.nix
     ./vicinae.nix
+    ./autorandr.nix
   ];
 }
+
