@@ -3,21 +3,17 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   osConfig = config.framework;
   cfg = osConfig.programs.vscode;
   primaryUser = osConfig.primaryUser;
-in
-{
+in {
   options.framework.programs.vscode = {
     enable = lib.mkEnableOption "install visual studio code";
   };
 
   config = lib.mkIf cfg.enable {
-
-    home-manager.users.${primaryUser} =
-      { config, ... }:
+    home-manager.users.${primaryUser} = {config, ...}:
       lib.mkMerge [
         (lib.mkIf osConfig.programs.stylix.enable {stylix.targets.vscode.enable = false;})
 
@@ -108,20 +104,19 @@ in
               ];
             };
 
-            profiles.default.extensions =
-              with pkgs.vscode-extensions;
+            profiles.default.extensions = with pkgs.vscode-extensions;
               [
                 pkief.material-icon-theme
                 ecmel.vscode-html-css
                 ms-dotnettools.csharp
                 ms-dotnettools.vscodeintellicode-csharp
                 ritwickdey.liveserver
-                ms-python.python
+                # commented out for now as Jedi-language-server had some issues upstream
+                # ms-python.python
                 mechatroner.rainbow-csv
                 visualstudiotoolsforunity.vstuc
                 bbenoist.nix
                 bmewburn.vscode-intelephense-client
-
               ]
               ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
                 {
@@ -148,9 +143,10 @@ in
                   version = "1.4.8";
                   hash = "sha256-6ymqo2qOZolehS+AN4j8LM8Ksdt3Jux3GmNz+FYjkpw=";
                 }
-            ];
-         };
+              ];
+          };
         }
       ];
   };
 }
+
