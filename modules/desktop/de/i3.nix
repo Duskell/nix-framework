@@ -203,6 +203,11 @@ in {
 
           startup =
             [
+              (mkIf config.framework.programs.autorandr.enable {
+                command = "autorandr --load common --force && sleep 1 && autorandr --change";
+                always = false;
+                notification = false;
+              })
               (mkIf config.framework.programs.vicinae.enable {
                 command = "vicinae server";
                 always = false;
