@@ -45,11 +45,8 @@ in {
 
         news.display = mkIf cfg.silentNews "silent";
 
-        xsession.target.enable = true;
-
         programs.home-manager.enable = true;
       };
     };
   };
 }
-
