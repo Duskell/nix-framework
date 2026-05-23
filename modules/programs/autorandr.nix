@@ -8,7 +8,7 @@
   primtaryUser = config.framework.primtaryUser;
 in {
   options.framework.programs.autorandr = {
-    enable = lib.mkEnableOptions "enable autorandr";
+    enable = lib.mkEnableOption "enable autorandr";
   };
 
   config = lib.mkIf cfg.enable {
