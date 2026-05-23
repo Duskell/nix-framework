@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.framework.programs.autorandr;
-  primtaryUser = config.framework.primtaryUser;
+  primaryUser = config.framework.primaryUser;
 in {
   options.framework.programs.autorandr = {
     enable = lib.mkEnableOption "enable autorandr";
@@ -14,7 +14,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.autorandr.enable = true;
 
-    home-manager.users.${primtaryUser} = {
+    home-manager.users.${primaryUser} = {
       programs.autorandr = {
         enable = true;
       };
