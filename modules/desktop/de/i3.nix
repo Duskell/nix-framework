@@ -204,7 +204,7 @@ in {
           startup =
             [
               (mkIf config.framework.programs.autorandr.enable {
-                command = "autorandr --load common --force && sleep 1 && autorandr --change";
+                command = "autorandr --change built-in && sleep 1 && autorandr --change";
                 always = false;
                 notification = false;
               })
