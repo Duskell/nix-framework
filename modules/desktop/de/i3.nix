@@ -30,6 +30,12 @@ in {
       description = "Wallpaper to set. Only use if stylix is disabled.";
     };
 
+    wallpaperMode = mkOption {
+      type = types.enum ["center" "scale" "fill" "max" "tile"];
+      default = "scale";
+      description = "Had no better solution to feh modes. Applies even with stylix.";
+    };
+
     modKey = mkOption {
       type = types.str;
       default = "Mod4";
@@ -229,7 +235,7 @@ in {
                 notification = false;
               }
               {
-                command = "feh --bg-scale ${
+                command = "feh --bg-${cfg.wallpaperMode} ${
                   if config.framework.programs.stylix.enable
                   then "${config.framework.programs.stylix.wallpaper}"
                   else cfg.wallpaper
