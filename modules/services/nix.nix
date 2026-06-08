@@ -26,6 +26,12 @@ in {
         default = false;
       };
 
+    dirty-git =
+      lib.mkEnableOption "enable git repo is dirty warning"
+      // {
+        default = false;
+      };
+
     trusted-users = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       description = "trusted users";
@@ -35,6 +41,7 @@ in {
     cache.devenv.enable = lib.mkEnableOption "enable devenv binary cache";
     cache.vicinae.enable = lib.mkEnableOption "enable vicinae binary cache";
     cache.hyprland.enable = lib.mkEnableOption "enable hyprland binary cache";
+    cache.cachyos-kernel.enable = lib.mkEnableOption "enable cachyos-kernel binary cache";
   };
 
   config = mkMerge [
@@ -82,10 +89,16 @@ in {
       };
     })
 
+    (mkIf cfg.cache.cachyos-kernel.enable {
+      nix.settings = {
+        extra-substituters = ["https://attic.xuyh0120.win/lantian"];
+        extra-trusted-public-keys = ["lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
+      };
+    })
+
     # Set trusted users.
     {
       nix.settings.trusted-users = [config.framework.primaryUser] ++ cfg.trusted-users;
     }
   ];
 }
-
