@@ -4,14 +4,12 @@
   pkgs,
   framework,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge mkDefault;
   inherit (framework.lib) desktops;
   cfg = config.framework.desktop;
-in
-{
-  imports = [ 
+in {
+  imports = [
     ./de
     ./dm
   ];
@@ -26,15 +24,14 @@ in
     };
   };
 
-  config =
-    let
-      de = desktops.environmentByName cfg.environment;
-      wayland = desktops.usesWayland de;
-    in
+  config = let
+    de = desktops.environmentByName cfg.environment;
+    wayland = desktops.usesWayland de;
+  in
     mkIf cfg.enable (mkMerge [
-
       {
-        services.displayManager.defaultSession = de.flavor;
+        # Temporary solution, until another case comes up
+        services.displayManager.defaultSession = "none+" + de.flavor;
       }
 
       # Enable Wayland and install wayland-related packages.
@@ -54,3 +51,4 @@ in
       })
     ]);
 }
+

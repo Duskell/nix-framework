@@ -5,14 +5,12 @@
   inputs,
   framework,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkOption types mkDefault;
   cfg = config.framework.programs.stylix;
-in
-{
-  imports = [ inputs.stylix.nixosModules.stylix ];
-  
+in {
+  imports = [inputs.stylix.nixosModules.stylix];
+
   options.framework.programs.stylix = {
     enable = lib.mkEnableOption "Enable high-level Stylix theming engine";
 
@@ -29,7 +27,7 @@ in
     };
 
     polarity = mkOption {
-      type = types.enum [ "dark" "light" "either" ];
+      type = types.enum ["dark" "light" "either"];
       default = "dark";
     };
 
@@ -57,16 +55,28 @@ in
 
     fonts = {
       sizes = {
-        applications = mkOption { type = types.int; default = 12; };
-        terminal = mkOption { type = types.int; default = 13; };
-        desktop = mkOption { type = types.int; default = 11; };
-        popups = mkOption { type = types.int; default = 11; };
+        applications = mkOption {
+          type = types.int;
+          default = 12;
+        };
+        terminal = mkOption {
+          type = types.int;
+          default = 13;
+        };
+        desktop = mkOption {
+          type = types.int;
+          default = 11;
+        };
+        popups = mkOption {
+          type = types.int;
+          default = 11;
+        };
       };
     };
 
     disabledTargets = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [];
       description = "List of targets to disable (e.g., [ 'vscode' 'discord' ])";
     };
   };
@@ -77,7 +87,7 @@ in
       image = cfg.wallpaper;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
       polarity = cfg.polarity;
-      
+
       opacity = {
         terminal = cfg.opacity.terminal;
         popups = cfg.opacity.popups;
@@ -123,9 +133,9 @@ in
     };
 
     home-manager.users.${config.framework.primaryUser} = {
-      stylix.targets = lib.genAttrs cfg.disabledTargets (name: { enable = false; });
-      
-      gtk.gtk4.theme = null;
+      stylix.targets = lib.genAttrs cfg.disabledTargets (name: {enable = false;});
+
+      # gtk.gtk4.theme = null;
       qt = {
         enable = true;
         platformTheme.name = lib.mkDefault "gtk";
@@ -134,3 +144,4 @@ in
     };
   };
 }
+
