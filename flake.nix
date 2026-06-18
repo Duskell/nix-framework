@@ -2,7 +2,7 @@
 # Original Copyright (C) 2025 eth-p
 #
 # Copyright (C) 2026 Duskell
-# Repo: https://github.com/Duskell/nix-config
+# Repo: https://github.com/Duskell/nix-framework
 {
   description = ''
     The NixOS flake framework used on all my machines.
@@ -15,7 +15,6 @@
     };
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -46,7 +45,6 @@
     };
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft = {
       url = "github:Infinidoge/nix-minecraft";
