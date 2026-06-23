@@ -158,7 +158,7 @@ in {
                   (builtins.replaceStrings ["$MOD"] [cfg.modKey] name)
                   (builtins.replaceStrings ["$MOD"] [cfg.modKey] value)
               )
-              cfg.keybindings;
+              cfg.keybinds;
           in
             {
               "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
