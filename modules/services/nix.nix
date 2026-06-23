@@ -67,9 +67,9 @@ in {
       programs.command-not-found.enable = true;
     })
 
-    # Show potential packages for unknown commands.
-    (mkIf cfg.dirty-git {
-      nix.settings.warn-dirty = true;
+    # Warns when the git tree is dirty.
+    (mkIf (!cfg.dirty-git) {
+      nix.settings.warn-dirty = false;
     })
 
     # Enable devenv binary cache.

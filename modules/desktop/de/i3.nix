@@ -47,6 +47,12 @@ in {
       default = [];
       description = "The commands to run at startup";
     };
+
+    keybinds = mkOption {
+      type = types.attrs;
+      default = {};
+      description = "Custom keybinds that overwrite the i3 defaults. $MOD is replaced with the modKey set.";
+    };
   };
 
   config = mkIf (desktop.enable && desktop.environment == "i3") {
@@ -144,68 +150,80 @@ in {
             outer = 5;
           };
 
-          keybindings = {
-            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%-";
-            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%+";
-            "XF86MonBrightnessDown" = "exec brightnessctl set 4%-";
-            "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
-            "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+          keybindings = let
+            processedUserBinds =
+              lib.mapAttrs' (
+                name: value:
+                  lib.nameValuePair
+                  (builtins.replaceStrings ["$MOD"] [cfg.modKey] name)
+                  (builtins.replaceStrings ["$MOD"] [cfg.modKey] value)
+              )
+              cfg.keybindings;
+          in
+            {
+              "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%-";
+              "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%+";
+              "XF86MonBrightnessDown" = "exec brightnessctl set 4%-";
+              "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
+              "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
 
-            "${cfg.modKey}+Return" = "exec alacritty";
-            "${cfg.modKey}+space" = "exec vicinae open";
-            "${cfg.modKey}+b" = "exec firefox";
-            "${cfg.modKey}+Shift+x" = "exec systemctl suspend";
-            "${cfg.modKey}+Shift+q" = "kill";
-            "${cfg.modKey}+Shift+r" = "restart";
+              "${cfg.modKey}+Return" = "exec alacritty";
+              "${cfg.modKey}+space" = "exec vicinae open";
+              "${cfg.modKey}+b" = "exec firefox";
+              "${cfg.modKey}+Shift+x" = "exec systemctl suspend";
+              "${cfg.modKey}+Shift+q" = "kill";
+              "${cfg.modKey}+Shift+r" = "restart";
 
-            "${cfg.modKey}+h" = "focus left";
-            "${cfg.modKey}+j" = "focus down";
-            "${cfg.modKey}+k" = "focus up";
-            "${cfg.modKey}+l" = "focus right";
+              #"${cfg.modKey}+h" = "focus left";
+              #"${cfg.modKey}+j" = "focus down";
+              #"${cfg.modKey}+k" = "focus up";
+              #"${cfg.modKey}+l" = "focus right";
 
-            "${cfg.modKey}+Shift+h" = "move left";
-            "${cfg.modKey}+Shift+j" = "move down";
-            "${cfg.modKey}+Shift+k" = "move up";
-            "${cfg.modKey}+Shift+l" = "move right";
+              "${cfg.modKey}+Shift+h" = "move left";
+              "${cfg.modKey}+Shift+j" = "move down";
+              "${cfg.modKey}+Shift+k" = "move up";
+              "${cfg.modKey}+Shift+l" = "move right";
 
-            "${cfg.modKey}+Shift+v" = "split v";
-            "${cfg.modKey}+Shift+b" = "split h";
+              "${cfg.modKey}+Shift+v" = "split v";
+              "${cfg.modKey}+Shift+b" = "split h";
 
-            "${cfg.modKey}+f" = "fullscreen toggle";
+              "${cfg.modKey}+f" = "fullscreen toggle";
 
-            "${cfg.modKey}+s" = "layout stacking";
-            "${cfg.modKey}+w" = "layout tabbed";
-            "${cfg.modKey}+e" = "layout toggle split";
+              "${cfg.modKey}+s" = "layout stacking";
+              "${cfg.modKey}+w" = "layout tabbed";
+              "${cfg.modKey}+e" = "layout toggle split";
 
-            "${cfg.modKey}+Shift+space" = "floating toggle";
+              "${cfg.modKey}+Shift+space" = "floating toggle";
 
-            "${cfg.modKey}+1" = "workspace 1";
-            "${cfg.modKey}+2" = "workspace 2";
-            "${cfg.modKey}+3" = "workspace 3";
-            "${cfg.modKey}+4" = "workspace 4";
-            "${cfg.modKey}+5" = "workspace 5";
-            "${cfg.modKey}+6" = "workspace 6";
-            "${cfg.modKey}+7" = "workspace 7";
-            "${cfg.modKey}+8" = "workspace 8";
-            "${cfg.modKey}+9" = "workspace 9";
-            "${cfg.modKey}+0" = "workspace 10";
+              "${cfg.modKey}+1" = "workspace 1";
+              "${cfg.modKey}+2" = "workspace 2";
+              "${cfg.modKey}+3" = "workspace 3";
+              "${cfg.modKey}+4" = "workspace 4";
+              "${cfg.modKey}+5" = "workspace 5";
+              "${cfg.modKey}+6" = "workspace 6";
+              "${cfg.modKey}+7" = "workspace 7";
+              "${cfg.modKey}+8" = "workspace 8";
+              "${cfg.modKey}+9" = "workspace 9";
+              "${cfg.modKey}+0" = "workspace 10";
 
-            "${cfg.modKey}+Shift+1" = "move container to workspace 1";
-            "${cfg.modKey}+Shift+2" = "move container to workspace 2";
-            "${cfg.modKey}+Shift+3" = "move container to workspace 3";
-            "${cfg.modKey}+Shift+4" = "move container to workspace 4";
-            "${cfg.modKey}+Shift+5" = "move container to workspace 5";
-            "${cfg.modKey}+Shift+6" = "move container to workspace 6";
-            "${cfg.modKey}+Shift+7" = "move container to workspace 7";
-            "${cfg.modKey}+Shift+8" = "move container to workspace 8";
-            "${cfg.modKey}+Shift+9" = "move container to workspace 9";
-            "${cfg.modKey}+Shift+0" = "move container to workspace 10";
+              "${cfg.modKey}+Shift+1" = "move container to workspace 1";
+              "${cfg.modKey}+Shift+2" = "move container to workspace 2";
+              "${cfg.modKey}+Shift+3" = "move container to workspace 3";
+              "${cfg.modKey}+Shift+4" = "move container to workspace 4";
+              "${cfg.modKey}+Shift+5" = "move container to workspace 5";
+              "${cfg.modKey}+Shift+6" = "move container to workspace 6";
+              "${cfg.modKey}+Shift+7" = "move container to workspace 7";
+              "${cfg.modKey}+Shift+8" = "move container to workspace 8";
+              "${cfg.modKey}+Shift+9" = "move container to workspace 9";
+              "${cfg.modKey}+Shift+0" = "move container to workspace 10";
 
-            "Print" = "exec flameshot gui";
+              "Print" = "exec flameshot gui";
 
-            "${cfg.modKey}+m" = "exec i3lock-color";
-          };
+              "${cfg.modKey}+l" = "exec i3lock-color";
+              "${cfg.modKey}+m" = "exec pear-desktop";
+            }
+            // processedUserBinds;
 
           startup =
             [
