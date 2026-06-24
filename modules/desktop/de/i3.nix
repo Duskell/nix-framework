@@ -173,7 +173,7 @@ in {
               "${cfg.modKey}+b" = "exec firefox";
               "${cfg.modKey}+Shift+x" = "exec systemctl suspend";
               "${cfg.modKey}+Shift+q" = "kill";
-              "${cfg.modKey}+Shift+r" = "restart";
+              "${cfg.modKey}+Shift+r" = "exec --no-startup-id autorandr --change && restart";
 
               #"${cfg.modKey}+h" = "focus left";
               #"${cfg.modKey}+j" = "focus down";

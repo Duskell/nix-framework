@@ -6,15 +6,16 @@
   makeWrapper,
 }:
 stdenv.mkDerivation {
-  pname = "toogle-touchpad";
+  pname = "toggle-touchpad";
   version = "1.0";
   src = ./bash;
   buildInputs = [bash subversion];
   nativeBuildInputs = [makeWrapper];
   installPhase = ''
     mkdir -p $out/bin
-    cp toggle-touchpad.sh $out/bin/toggle-touchpad.sh
-    wrapProgram $out/bin/toggle-touchpad.sh \
+    cp toggle-touchpad.sh $out/bin/toggle-touchpad
+    chmod +x $out/bin/toggle-touchpad
+    wrapProgram $out/bin/toggle-touchpad \
       --prefix PATH : ${lib.makeBinPath [bash subversion]}
   '';
 }
