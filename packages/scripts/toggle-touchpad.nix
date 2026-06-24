@@ -1,7 +1,7 @@
 {
   stdenv,
   lib,
-  bash,
+  libnotify,
   subversion,
   makeWrapper,
 }:
@@ -21,6 +21,6 @@ stdenv.mkDerivation {
     patchShebangs $out/bin/toggle-touchpad
 
     wrapProgram $out/bin/toggle-touchpad \
-      --prefix PATH : ${lib.makeBinPath [subversion]}
+      --prefix PATH : ${lib.makeBinPath [subversion libnotify]}
   '';
 }
