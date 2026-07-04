@@ -32,7 +32,6 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = cfg.backupExtension;
-      home.enableNixpkgsReleaseCheck = false;
 
       extraSpecialArgs = {
         inherit framework inputs;
@@ -43,6 +42,7 @@ in {
         imports = cfg.modules;
 
         home.stateVersion = config.system.stateVersion;
+        home.enableNixpkgsReleaseCheck = false;
 
         news.display = mkIf cfg.silentNews "silent";
 
