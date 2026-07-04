@@ -8,7 +8,7 @@
   cfg = config.framework.core;
 in {
   options.framework.primaryUser = lib.mkOption {
-    type = lib.types.str;
+    type = types.str;
     description = "The main user of the system";
   };
 

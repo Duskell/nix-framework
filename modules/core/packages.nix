@@ -6,9 +6,7 @@
 }: let
   inherit (lib) mkIf mkMerge mkEnableOption optionals;
   cfg = config.framework.core.pkgs;
-
-  hasEditor = config.framework.programs.nixvim.default;
-  # || config.framework.programs.helix.default; Here as a reference
+  fwDefaults = config.framework.defaults;
 in {
   options.framework.core.pkgs = {
     disk-utils.enable = mkEnableOption "disk utilities" // {default = true;};
@@ -37,9 +35,13 @@ in {
     }
 
     # Fallback Editor
-    (mkIf (!hasEditor) {
+    (mkIf (fwDefaults.editor == "nano") {
       environment.systemPackages = [pkgs.nano];
-      environment.variables.EDITOR = "nano";
+    })
+
+    # Fallback Browser
+    (mkIf (fwDefaults.browser == "firefox" && config.framework.desktop.enable) {
+      environment.systemPackages = [pkgs.firefox];
     })
 
     {
@@ -68,4 +70,3 @@ in {
     }
   ];
 }
-

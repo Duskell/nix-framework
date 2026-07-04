@@ -36,6 +36,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    framework.defaults.editor = mkIf cfg.default {
+      cmd = "nvim";
+      desktop = "nvim";
+    };
+
     home-manager.users.${primaryUser} = {
       imports = [inputs.nixvim.homeModules.nixvim];
 
@@ -50,4 +55,3 @@ in {
     };
   };
 }
-
