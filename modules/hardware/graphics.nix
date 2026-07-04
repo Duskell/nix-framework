@@ -4,13 +4,11 @@
   pkgs,
   framework,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge;
   inherit (framework.lib) gpus;
   cfg = config.framework.hardware.graphics;
-in
-{
+in {
   options.framework.hardware.graphics = {
     enable = lib.mkEnableOption "enable graphics stack";
     card = lib.mkOption {
@@ -26,13 +24,11 @@ in
     vulkan = lib.mkEnableOption "Enable Vulkan";
   };
 
-  config =
-    let
-      primaryGPU = gpus.cardByName cfg.card;
-      integratedGPU = gpus.cardByName cfg.igpu;
-    in
+  config = let
+    primaryGPU = gpus.cardByName cfg.card;
+    integratedGPU = gpus.cardByName cfg.igpu;
+  in
     mkIf cfg.enable (mkMerge [
-
       # Enable graphics support.
       {
         hardware.graphics.enable = true;
@@ -46,6 +42,9 @@ in
         };
 
         xdg.portal.enable = true;
+
+        # Needed for new default, placed here by a lack of better ideas
+        gtk.gtk4.theme = null;
       }
 
       # Enable NVIDIA drivers.
@@ -56,15 +55,19 @@ in
       })
 
       (mkIf (integratedGPU != null) {
-        hardware.graphics.extraPackages = with pkgs; 
-          if integratedGPU.vendor == gpus.vendors.intel then [
+        hardware.graphics.extraPackages = with pkgs;
+          if integratedGPU.vendor == gpus.vendors.intel
+          then [
             intel-media-driver
             libvdpau-va-gl
             libva-vdpau-driver
-          ] else if integratedGPU.vendor == gpus.vendors.amd then [
+          ]
+          else if integratedGPU.vendor == gpus.vendors.amd
+          then [
             libvdpau-va-gl
             libva-vdpau-driver
-          ] else [];
+          ]
+          else [];
       })
 
       # Enable Vulkan packages.
@@ -74,10 +77,10 @@ in
           vulkan-validation-layers
           vulkan-tools
         ];
-          hardware.graphics.extraPackages32 = with pkgs.pkgsi686Linux; [
+        hardware.graphics.extraPackages32 = with pkgs.pkgsi686Linux; [
           vulkan-loader
         ];
       })
-
     ]);
 }
+

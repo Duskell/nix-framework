@@ -84,6 +84,7 @@ in {
   config = mkIf cfg.enable {
     stylix = {
       enable = true;
+      enableReleaseChecks = false;
       image = cfg.wallpaper;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
       polarity = cfg.polarity;
@@ -144,4 +145,3 @@ in {
     };
   };
 }
-

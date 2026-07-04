@@ -32,6 +32,7 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = cfg.backupExtension;
+      home.enableNixpkgsReleaseCheck = false;
 
       extraSpecialArgs = {
         inherit framework inputs;

@@ -7,7 +7,7 @@
   python3,
   copyDesktopItems,
   nodejs,
-  pnpm_10,
+  pnpm_11,
   fetchPnpmDeps,
   pnpmConfigHook,
   makeDesktopItem,
@@ -31,7 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    pnpm = pnpm_10;
+    pnpm = pnpm_11;
     fetcherVersion = 3;
     hash = "";
   };
@@ -42,7 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
       python3
       nodejs
       pnpmConfigHook
-      pnpm_10
+      pnpm_11
     ]
     ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [copyDesktopItems];
 

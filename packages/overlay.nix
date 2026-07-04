@@ -24,5 +24,5 @@ in
     gpu-screen-recorder-notification = final.callPackage ./gpu-screen-recorder-notification/package.nix {};
     vinyl-theme = final.callPackage ./vinyl-theme/package.nix {};
     plymouth-themes = final.callPackage ./plymouth-theme-importer/package.nix {};
-    pear-desktop = final.callPackage ./pear-desktop/package.nix {};
+    local-pear-desktop = final.callPackage ./pear-desktop/package.nix {};
   }
