@@ -143,12 +143,6 @@ in {
       '';
       description = "Raw downstream picom.settings attributes. Merged directly with options.";
     };
-
-    extraConfig = mkOption {
-      type = types.lines;
-      default = "";
-      description = "Raw configuration text appended to the final generated file.";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -171,7 +165,6 @@ in {
         menuOpacity
         opacityRules
         settings
-        extraConfig
         ;
     };
   };
