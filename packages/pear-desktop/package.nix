@@ -26,7 +26,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   patches = [
     # MPRIS's DesktopEntry property needs to match the desktop entry basename
-    ./fix-mpris-desktop-entry.patch
+    # ./fix-mpris-desktop-entry.patch
   ];
 
   pnpmDeps = fetchPnpmDeps {
