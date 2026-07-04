@@ -42,9 +42,6 @@ in {
         };
 
         xdg.portal.enable = true;
-
-        # Needed for new default, placed here by a lack of better ideas
-        gtk.gtk4.theme = null;
       }
 
       # Enable NVIDIA drivers.
@@ -83,4 +80,3 @@ in {
       })
     ]);
 }
-
