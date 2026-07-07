@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.dbus.packages = mkIf (cfg.default) mkDefault [pkgs.xfce.thunar];
+    services.dbus.packages = mkIf cfg.default mkDefault [pkgs.xfce.thunar];
     programs.thunar.enable = true;
     programs.thunar.plugins = with pkgs; [
       thunar-archive-plugin
