@@ -9,9 +9,15 @@
 in {
   options.framework.programs.alacritty = {
     enable = lib.mkEnableOption "install alacritty terminal";
+    default = lib.mkEnableOption "add alacritty as the default terminal" // {default = true;};
   };
 
   config = lib.mkIf cfg.enable {
+    framework.defaults.terminal = lib.inheritmkIf cfg.default {
+      cmd = "alacritty";
+      desktop = "alacritty";
+    };
+
     xdg.terminal-exec = {
       enable = true;
       settings = {

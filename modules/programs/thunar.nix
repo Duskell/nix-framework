@@ -11,6 +11,7 @@
 in {
   options.framework.programs.thunar = {
     enable = lib.mkEnableOption "install Thunar";
+    default = lib.mkEnableOption "add Thunar as  the default file-editor" // {default = true;};
   };
 
   config = lib.mkIf cfg.enable {
@@ -23,4 +24,3 @@ in {
     services.tumbler.enable = mkDefault true; # Thumbnail support for images
   };
 }
-

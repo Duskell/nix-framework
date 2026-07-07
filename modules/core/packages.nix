@@ -35,13 +35,21 @@ in {
     }
 
     # Fallback Editor
-    (mkIf (fwDefaults.editor == "nano") {
+    (mkIf (fwDefaults.editor == null) {
       environment.systemPackages = [pkgs.nano];
+      framework.defaults.editor = {
+        cmd = "nano";
+        desktop = null;
+      };
     })
 
     # Fallback Browser
-    (mkIf (fwDefaults.browser == "firefox" && config.framework.desktop.enable) {
+    (mkIf (fwDefaults.browser == null && config.framework.desktop.enable) {
       environment.systemPackages = [pkgs.firefox];
+      framework.defaults.browser = {
+        cmd = "firefox";
+        desktop = "Firefox";
+      };
     })
 
     {

@@ -16,7 +16,7 @@
         description = "The exact executable command line string (e.g., 'alacritty', 'vicinae open').";
       };
       desktop = mkOption {
-        type = types.str;
+        type = types.nullOr types.str;
         description = "The exact name of the desktop entry file without extension (e.g., 'Alacritty', 'firefox').";
       };
     };
