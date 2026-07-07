@@ -15,7 +15,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    framework.defaults.browser = mkIf cfg.default {
+    framework.defaults.launcher = mkIf cfg.default {
       cmd = "vicinae toggle";
       desktop = null;
     };
