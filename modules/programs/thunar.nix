@@ -22,7 +22,7 @@ in {
       thunar-volman
     ];
 
-    framework.defaults.file-manager = {
+    framework.defaults.fileManager = {
       cmd = "thunar";
       desktop = "thunar";
     };
