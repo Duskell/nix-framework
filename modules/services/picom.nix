@@ -114,7 +114,7 @@ in {
 
     # --- Structural Settings & Escape Hatches ---
     settings = mkOption {
-      type = types.attrsOf types.deferredAttribute;
+      type = types.attrsOf types.anything;
       default = {
         corner-radius = 15;
 
