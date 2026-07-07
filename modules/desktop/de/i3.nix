@@ -185,7 +185,7 @@ in {
               )
               cfg.keybinds;
 
-            coreBinds = {
+            staticBinds = {
               "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
               "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%-";
               "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 4%+";
@@ -240,8 +240,12 @@ in {
               "${cfg.modKey}+Shift+9" = "move container to workspace 9";
               "${cfg.modKey}+Shift+0" = "move container to workspace 10";
             };
+            dynamicBinds =
+              (lib.optionalAttrs (fwDefaults.terminal != null) {"${cfg.modKey}+Return" = "exec ${fwDefaults.terminal.cmd}";})
+              // (lib.optionalAttrs (fwDefaults.browser != null) {"${cfg.modKey}+b" = "exec ${fwDefaults.browser.cmd}";})
+              // (lib.optionalAttrs (fwDefaults.launcher != null) {"${cfg.modKey}+space" = "exec ${fwDefaults.launcher.cmd}";});
           in
-            coreBinds // processedUserBinds;
+            staticBinds // dynamicBinds // processedUserBinds;
 
           startup =
             [
