@@ -9,7 +9,7 @@
   cfg = config.framework.programs.xarchiver;
   primaryUser = config.framework.primaryUser;
 in {
-  options.framework.programs.thunar = {
+  options.framework.programs.xarchiver = {
     enable = lib.mkEnableOption "install xArchiver";
     default = lib.mkEnableOption "add xArchiver as the default compressed-archive handler" // {default = true;};
   };
