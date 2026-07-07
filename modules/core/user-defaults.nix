@@ -64,7 +64,10 @@ in {
       xdg.mimeApps = {
         enable = true;
         defaultApplications = let
-          bindMime = app: "${app.desktop}.desktop";
+          bindMime = app:
+            if app ? desktop && app.desktop != null
+            then "${app.desktop}.desktop"
+            else "";
         in
           lib.filterAttrs (name: val: val != "") (
             {
