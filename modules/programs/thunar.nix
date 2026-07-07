@@ -14,8 +14,8 @@ in {
     default = lib.mkEnableOption "add Thunar as  the default file-editor" // {default = true;};
   };
 
-  config = lib.mkIf cfg.enable {
-    services.dbus.packages = lib.mkif (cfg.default) mkDefault [pkgs.xfce.thunar];
+  config = mkIf cfg.enable {
+    services.dbus.packages = mkIf (cfg.default) mkDefault [pkgs.xfce.thunar];
     programs.thunar.enable = true;
     programs.thunar.plugins = with pkgs; [
       thunar-archive-plugin
