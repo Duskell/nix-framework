@@ -15,6 +15,6 @@ inputs: {
     ./thunar.nix
     ./vicinae.nix
     ./autorandr.nix
+    ./xarchiver.nix
   ];
 }
-
