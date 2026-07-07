@@ -13,7 +13,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    framework.defaults.terminal = lib.inheritmkIf cfg.default {
+    framework.defaults.terminal = lib.mkIf cfg.default {
       cmd = "alacritty";
       desktop = "alacritty";
     };
