@@ -34,23 +34,25 @@ in {
       };
     }
 
-    # Fallback Editor
-    (mkIf (fwDefaults.editor == null) {
-      environment.systemPackages = [pkgs.nano];
-      framework.defaults.editor = {
+    {
+      # Fallback Editor
+      framework.defaults.editor = lib.mkDefault {
         cmd = "nano";
         desktop = null;
       };
-    })
 
-    # Fallback Browser
-    (mkIf (fwDefaults.browser == null && config.framework.desktop.enable) {
-      environment.systemPackages = [pkgs.firefox];
-      framework.defaults.browser = {
+      environment.systemPackages = lib.mkIf (config.framework.defaults.editor.cmd == "nano") [pkgs.nano];
+    }
+
+    {
+      # Fallback Browser
+      framework.defaults.browser = lib.mkIf config.framework.desktop.enable (lib.mkDefault {
         cmd = "firefox";
         desktop = "Firefox";
-      };
-    })
+      });
+
+      environment.systemPackages = lib.mkIf (config.framework.desktop.enable && config.framework.defaults.browser.cmd == "firefox") [pkgs.firefox];
+    }
 
     {
       programs.bash.enable = true;
