@@ -43,6 +43,14 @@ in {
       type = types.nullOr appType;
       default = null;
     };
+    pdf = mkOption {
+      type = types.nullOr appType;
+      default = null;
+    };
+    zip = mkOption {
+      type = types.nullOr appType;
+      default = null;
+    };
 
     extraMimeEntries = mkOption {
       type = types.attrsOf types.str;
@@ -57,9 +65,11 @@ in {
       VISUAL = mkIf (cfg.editor != null) cfg.editor.cmd;
       BROWSER = mkIf (cfg.browser != null) cfg.browser.cmd;
       TERMINAL = mkIf (cfg.terminal != null) cfg.terminal.cmd;
+
+      DG_DATA_HOME = "$HOME/.local/share";
+      FILEMANAGER = mkIf (cfg.fileManager != null) cfg.fileManager.cmd;
     };
 
-    # 2. XDG Graphical Integration (Only evaluated if a desktop environment is active)
     home-manager.users.${primaryUser} = mkIf (desktop.enable && primaryUser != null) {
       xdg.mimeApps = {
         enable = true;
@@ -71,16 +81,39 @@ in {
         in
           lib.filterAttrs (name: val: val != "") (
             {
+              "x-scheme-handler/ssh" = mkIf (cfg.terminal != null) (bindMime cfg.terminal);
+              "x-scheme-handler/telnet" = mkIf (cfg.terminal != null) (bindMime cfg.terminal);
+
               "text/html" = mkIf (cfg.browser != null) (bindMime cfg.browser);
               "x-scheme-handler/http" = mkIf (cfg.browser != null) (bindMime cfg.browser);
               "x-scheme-handler/https" = mkIf (cfg.browser != null) (bindMime cfg.browser);
               "x-scheme-handler/about" = mkIf (cfg.browser != null) (bindMime cfg.browser);
               "x-scheme-handler/unknown" = mkIf (cfg.browser != null) (bindMime cfg.browser);
 
+              "application/pdf" = mkIf (cfg.browser != null) lib.mkDefault (bindMime cfg.browser);
+              "application/pdf" = mkIf (cfg.browser != null) (bindMime cfg.pdf);
+
               "text/plain" = mkIf (cfg.editor != null) (bindMime cfg.editor);
               "application/x-zerosize" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "text/markdown" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "application/json" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "text/css" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "text/javascript" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+
+              "text/x-chdr" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "text/x-csrc" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "text/x-java" = mkIf (cfg.editor != null) (bindMime cfg.editor);
+              "text/x-python" = mkIf (cfg.editor != null) (bindMime cfg.editor);
 
               "inode/directory" = mkIf (cfg.fileManager != null) (bindMime cfg.fileManager);
+              "x-scheme-handler/file" = mkIf (cfg.fileManager != null) (bindMime cfg.fileManager);
+
+              "application/zip" = mkIf (cfg.zip != null) (bindMime cfg.zip);
+              "application/x-tar" = mkIf (cfg.zip != null) (bindMime cfg.zip);
+              "application/x-compressed-tar" = mkIf (cfg.zip != null) (bindMime cfg.zip);
+              "application/x-bzip-compressed-tar" = mkIf (cfg.zip != null) (bindMime cfg.zip);
+              "application/x-lzma-compressed-tar" = mkIf (cfg.zip != null) (bindMime cfg.zip);
+              "application/x-xz-compressed-tar" = mkIf (cfg.zip != null) (bindMime cfg.zip);
             }
             // cfg.extraMimeEntries
           );

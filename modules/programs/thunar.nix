@@ -15,11 +15,18 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.dbus.packages = lib.mkif (cfg.default) mkDefault [pkgs.xfce.thunar];
     programs.thunar.enable = true;
     programs.thunar.plugins = with pkgs; [
       thunar-archive-plugin
       thunar-volman
     ];
+
+    framework.defaults.file-manager = {
+      cmd = "thunar";
+      desktop = "thunar";
+    };
+
     services.gvfs.enable = mkDefault true; # Mount, trash, and other functionalities
     services.tumbler.enable = mkDefault true; # Thumbnail support for images
   };
