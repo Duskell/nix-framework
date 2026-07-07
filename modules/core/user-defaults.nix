@@ -90,8 +90,12 @@ in {
               "x-scheme-handler/about" = mkIf (cfg.browser != null) (bindMime cfg.browser);
               "x-scheme-handler/unknown" = mkIf (cfg.browser != null) (bindMime cfg.browser);
 
-              "application/pdf" = mkIf (cfg.browser != null) lib.mkDefault (bindMime cfg.browser);
-              "application/pdf" = mkIf (cfg.browser != null) (bindMime cfg.pdf);
+              "application/pdf" =
+                if (cfg.pdf != null)
+                then (bindMime cfg.pdf)
+                else if (cfg.browser != null)
+                then (bindMime cfg.browser)
+                else "";
 
               "text/plain" = mkIf (cfg.editor != null) (bindMime cfg.editor);
               "application/x-zerosize" = mkIf (cfg.editor != null) (bindMime cfg.editor);
