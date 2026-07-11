@@ -207,7 +207,7 @@ in {
     font-0 = font_0;
     font-1 = font_1;
 
-    modules-right = "pulseaudio space mic";
+    modules-right = "audio space mic";
 
     enable-ipc = true;
 
@@ -373,7 +373,7 @@ in {
     animation-low-framerate = 200;
   };
 
-  "module/pulseaudio" = {
+  "module/audio" = {
     type = "internal/pulseaudio";
     format-volume = "<label-volume>";
     format-volume-prefix = "󰕾 ";

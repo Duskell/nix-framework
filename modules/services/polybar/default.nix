@@ -31,17 +31,26 @@ in {
         nerd-fonts.symbols-only
       ];
 
-      services.polybar = {
+      services.polybar = let
+        finalConfig =
+          if cfg.theme == "custom"
+          then cfg.settings
+          else (import ./themes/${cfg.theme}.nix {inherit pkgs framework config;}) // cfg.settings;
+
+        allKeys = builtins.attrNames finalConfig;
+        barKeys = builtins.filter (key: builtins.substring 0 4 key == "bar/") allKeys;
+
+        barNames = map (key: builtins.substring 4 (builtins.stringLength key) key) barKeys;
+
+        dynamicScript = lib.strings.concatStringsSep " " (map (name: "polybar -q -r ${name} &") barNames);
+      in {
         enable = true;
 
         package = pkgs.polybar;
 
-        script = "polybar -q -r top & polybar -q -r bottom &";
+        script = dynamicScript;
 
-        config =
-          if cfg.theme == "custom"
-          then cfg.settings
-          else (import ./themes/${cfg.theme}.nix {inherit pkgs framework config;}) // cfg.settings;
+        config = finalConfig;
       };
     };
   };
