@@ -36,10 +36,12 @@ in {
         {
           save = true;
           load = true;
+          animation = "dur_file";
+          dur_file_path = framework + "/assets/ly-animations/blackhole-smooth-240x67.dur";
+          full_color = true;
         }
         // cfg.options;
       services.displayManager.ly.package = cfg.package;
       services.displayManager.ly.x11Support = !wayland;
     };
 }
-

@@ -11,8 +11,9 @@ inputs: {
     ./podman.nix
     ./flameshot.nix
     ./picom.nix
-    ./polybar.nix
+    ./polybar
     ./redshift.nix
     ./dunst.nix
   ];
 }
+

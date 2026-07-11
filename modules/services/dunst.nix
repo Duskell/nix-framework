@@ -3,44 +3,50 @@
   lib,
   pkgs,
   ...
-}@inputs:
-let
-  inherit (lib) mkIf  mkEnableOption;
+} @ inputs: let
+  inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.framework.services.dunst;
-in
-{
+in {
   options.framework.services.dunst = {
     enable = mkEnableOption "enable dunst";
+    settings = mkOption {
+      type = types.attrsOf types.anything;
+      default = {};
+      description = "options set here are writter directly into the config file";
+    };
   };
 
   config = mkIf cfg.enable {
     home-manager.users.${config.framework.primaryUser} = {
       services.dunst = {
         enable = true;
-        settings = {
-          global = {
-            width = 350;
-            height = 200;
-            origin = "top-right";
-            offset = "20x50";
-            scale = 0;
-            notification_limit = 5;
-            
-            corner_radius = 15; 
-            frame_width = 2;
-            frame_color = "#740096";
-          };
-          # urgency_low = {
-          #   background = "#1e1e2e";
-          #   foreground = "#cdd6f4";
-          # };
-          urgency_normal = {
-            # background = "#1e1e2e";
-            # foreground = "#cdd6f4";
-            timeout = 6;
-          };
-        };
+        settings =
+          {
+            global = {
+              width = 350;
+              height = 200;
+              origin = "top-right";
+              offset = "20x50";
+              scale = 0;
+              notification_limit = 5;
+
+              corner_radius = 15;
+              frame_width = 2;
+              frame_color = "#740096";
+            };
+            # urgency_low = {
+            #   background = "#1e1e2e";
+            #   foreground = "#cdd6f4";
+            # };
+            urgency_normal = {
+              # background = "#1e1e2e";
+              # foreground = "#cdd6f4";
+              timeout = 6;
+            };
+          }
+          // cfg.settings;
       };
     };
   };
 }
+

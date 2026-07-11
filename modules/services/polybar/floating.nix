@@ -1,0 +1,442 @@
+# Created By @hussainhareb
+# Edited and Ported to Nix By Duskell
+{
+  pkgs,
+  framework,
+}: let
+  background = "#1e1e2e";
+  nix_color = "#0f94d2";
+  music_color = "#25d865";
+  white = "#f5f3e1";
+  mauve = "#490761";
+  mauving = "#c867eb";
+  grey = "#a19e95";
+  greying = "#474642";
+  really_white = "#ffffff";
+  blue = "#89d1fa";
+  background_alt = "#373b41";
+  foreground = "#fcf5bd";
+  primary = "#f0c674";
+  secondary = "#8abeb7";
+  alert = "#a54242";
+  disabled = "#707880";
+  border_color = "#00000000";
+
+  height = "32pt";
+  radius = 8;
+
+  font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12";
+  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=20";
+  font_1 = "Symbols Nerd Font Mono:size=12";
+in {
+  #---------------------BARS--------------------#
+
+  "bar/power" = {
+    width = "3.3%";
+    offset-x = "0%";
+    height = height;
+    radius = radius;
+
+    background = background;
+    foreground = foreground;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0_1;
+    font-1 = font_1;
+
+    modules-left = "nix";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+  };
+
+  "bar/clock" = {
+    width = "10%";
+    offset-x = "3.3%";
+    height = height;
+    radius = radius;
+
+    background = background;
+    foreground = foreground;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-left = "date";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+  };
+
+  "bar/yt-music" = {
+    width = "20%";
+    offset-x = "13.3%";
+    height = height;
+    radius = radius;
+
+    background = background;
+    foreground = foreground;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-left = "ytm space yt-music";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+
+    cursor-click = "pointer";
+  };
+
+  "bar/workspaces" = {
+    width = "15.8%";
+    offset-x = "42.1%";
+    height = height;
+    radius = radius;
+
+    background = background;
+    foreground = foreground;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-left = "xworkspaces";
+
+    cursor-click = "pointer";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+  };
+
+  "bar/cava" = {
+    width = "15.2%";
+    offset-x = "60%";
+    height = height;
+    radius = radius;
+
+    background = background;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-left = "cava";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+
+    cursor-click = "pointer";
+  };
+
+  "bar/weather" = {
+    width = "5%";
+    offset-x = "78%";
+    height = height;
+    radius = radius;
+
+    background = background;
+    foreground = foreground;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-left = "weather";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+
+    cursor-click = "pointer";
+  };
+
+  "bar/sound" = {
+    width = "8%";
+    offset-x = "83%";
+    height = height;
+    radius = radius;
+
+    background = background;
+    foreground = foreground;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-right = "pulseaudio space mic";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+
+    cursor-click = "pointer";
+  };
+
+  "bar/settings" = {
+    width = "9%";
+    offset-x = "91%";
+    height = height;
+    radius = radius;
+
+    border-size = "5pt";
+    border-color = border_color;
+
+    padding-left = 1;
+    padding-right = 1;
+
+    font-0 = font_0;
+    font-1 = font_1;
+
+    modules-right = "battery space backlight space wlan";
+
+    enable-ipc = true;
+
+    wm-restack = "generic";
+
+    cursor-click = "pointer";
+  };
+
+  #--------------------MODULES--------------------#
+
+  "module/nix" = {
+    type = "custom/text";
+    content = "";
+    content-font = 2;
+    content-foreground = nix_color;
+    content-margin = 0;
+    click-left = "polybar-floating-power";
+  };
+
+  "module/date" = {
+    type = "internal/date";
+    interval = 1;
+    date = " %I:%M %p|%d-%m";
+    label = "%date%";
+    label-foreground = foreground;
+  };
+
+  "module/ytm" = {
+    type = "custom/text";
+    content = "󰫔";
+    content-font = 2;
+    content-foreground = music_color;
+    content-margin = 0;
+  };
+
+  "module/yt-music" = {
+    type = "custom/script";
+    exec = "polybar-floating-ytm";
+    interval = 1;
+    format = "<label>";
+    label = "%output%";
+    click-left = "polybar-floating-ytm";
+  };
+
+  "module/xworkspaces" = {
+    type = "internal/xworkspaces";
+
+    label-active = "";
+    label-active-padding = 1;
+    label-active-foreground = greying;
+    label-active-font = 1;
+
+    label-occupied = "";
+    label-occupied-padding = 1;
+    label-occupied-foreground = greying;
+    label-occupied-font = 1;
+
+    label-empty = "";
+    label-empty-background = background;
+    label-empty-padding = 1;
+    label-empty-font = 1;
+  };
+
+  "module/cava" = {
+    type = "custom/script";
+    exec = "${pkgs.python3}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 27 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
+    tail = true;
+  };
+
+  "module/wlan" = {
+    "inherit" = "network-base";
+    interface-type = "wireless";
+
+    interval = 1;
+    format-connected-prefix-foreground = white;
+    format-connected-foreground = white;
+    format-connected = "<label-connected>";
+    label-connected = "󰖩";
+    label-connected-padding = 0;
+
+    format-disconnected = "<label-disconnected>";
+    format-disconnected-padding = 0;
+    label-disconnected = "󰖪";
+    label-disconnected-foreground = white;
+    label-disconnected-padding = 0;
+  };
+
+  "module/backlight" = {
+    type = "internal/backlight";
+    card = "nvidia_0";
+    use-actual-brightness = true;
+    enable-scroll = true;
+    format = "<ramp> <label>";
+    format-foreground = white;
+    label = "%percentage%%";
+  };
+
+  "module/battery" = {
+    type = "internal/battery";
+    full-at = 99;
+    low-at = 20;
+    battery = "BAT0";
+    adapter = "ADP1";
+    poll-interval = 5;
+    format-charging-foreground = foreground;
+    format-discharging-foreground = foreground;
+    format-charging = "<animation-charging><label-charging>";
+    format-discharging = "<ramp-capacity><label-discharging>";
+    label-charging = "%percentage%%";
+    label-discharging = "%percentage%%";
+    label-full = "Full";
+    label-low = "LOW";
+
+    ramp-capacity-0 = " ";
+    ramp-capacity-1 = " ";
+    ramp-capacity-2 = " ";
+    ramp-capacity-3 = " ";
+    ramp-capacity-4 = " ";
+
+    bar-capacity-width = 10;
+
+    animation-charging-0 = " ";
+    animation-charging-1 = " ";
+    animation-charging-2 = " ";
+    animation-charging-3 = " ";
+    animation-charging-4 = " ";
+    animation-charging-framerate = 750;
+
+    animation-discharging-0 = " ";
+    animation-discharging-1 = " ";
+    animation-discharging-2 = " ";
+    animation-discharging-3 = " ";
+    animation-discharging-4 = " ";
+
+    animation-discharging-framerate = 500;
+
+    animation-low-0 = "!";
+    animation-low-1 = "";
+    animation-low-framerate = 200;
+  };
+
+  "module/pulseaudio" = {
+    type = "internal/pulseaudio";
+    format-volume = "<label-volume>";
+    format-volume-prefix = "󰕾 ";
+    format-volume-foreground = blue;
+    format-volume-prefix-foreground = blue;
+    label-volume = "%percentage%%";
+
+    label-muted = "󰖁 %percentage%%";
+    label-muted-foreground = disabled;
+  };
+
+  "module/mic" = {
+    type = "internal/pulseaudio";
+    use-ui-max = false;
+    source = "@DEFAULT_AUDIO_SOURCE@";
+    format-volume = "<label-volume>";
+    format-volume-prefix = "󰍬 ";
+    format-volume-foreground = blue;
+    format-volume-prefix-foreground = blue;
+    label-volume = "%percentage%%";
+    format-muted = "<label-muted>";
+
+    label-muted = "󰍭 Muted";
+    label-muted-foreground = disabled;
+  };
+
+  "module/weather" = {
+    type = "custom/script";
+    exec = "${pkgs.python3}/bin/python3 ${framework}/assets/scripts/get-weather.py";
+    interval = 1800;
+    format-foreground = really_white;
+    format = "<label>";
+    label = "%output%%";
+  };
+
+  "module/cpu" = {
+    type = "internal/cpu";
+    interval = 2;
+    format-prefix = "CPU ";
+    format-prefix-foreground = primary;
+    label = "%percentage:2%%";
+  };
+
+  "network-base" = {
+    type = "internal/network";
+    interval = 5;
+    format-connected = "<label-connected>";
+    format-disconnected = "<label-disconnected>";
+    label-disconnected = "%{F#F0C674}%ifname%%{F#707880} disconnected";
+  };
+
+  "module/eth" = {
+    "inherit" = "network-base";
+    interface-type = "wired";
+    label-connected = "%{F#F0C674}%ifname%%{F-} %local_ip%";
+  };
+
+  "settings" = {
+    screenchange-reload = true;
+    pseudo-transparency = true;
+  };
+
+  "module/space" = {
+    type = "custom/text";
+    content = " ";
+  };
+}
