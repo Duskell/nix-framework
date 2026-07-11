@@ -54,7 +54,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
   };
 
   "bar/clock" = {
@@ -79,7 +79,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
   };
 
   "bar/yt-music" = {
@@ -104,7 +104,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
 
     cursor-click = "pointer";
   };
@@ -133,7 +133,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
   };
 
   "bar/cava" = {
@@ -157,7 +157,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
 
     cursor-click = "pointer";
   };
@@ -184,7 +184,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
 
     cursor-click = "pointer";
   };
@@ -211,7 +211,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
 
     cursor-click = "pointer";
   };
@@ -235,7 +235,7 @@ in {
 
     enable-ipc = true;
 
-    wm-restack = "generic";
+    wm-restack = "i3";
 
     cursor-click = "pointer";
   };
