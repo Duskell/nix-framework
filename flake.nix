@@ -124,13 +124,11 @@
             postPatch =
               (oldAttrs.postPatch or "")
               + ''
-                sed -i "/'build_man'/d" setup.py
-              '';
+                # Strip both legacy distutils commands from cmdclass and sub_commands
+                sed -i -E "/'(build_man|build_i18n)'/d" setup.py
 
-            preBuild =
-              (oldAttrs.preBuild or "")
-              + ''
-                python setup.py build_i18n
+                # Remove the locale directory from data_files so wheel packaging doesn't look for it
+                sed -i "/'build\/locale'/d" setup.py
               '';
           });
 
