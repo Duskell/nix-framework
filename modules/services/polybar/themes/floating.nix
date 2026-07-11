@@ -247,7 +247,7 @@ in {
     content-font = 2;
     content-foreground = nix_color;
     content-margin = 0;
-    click-left = "polybar-floating-power";
+    click-left = "${pkgs.polybar-floating-power}/bin/polybar-floating-power";
   };
 
   "module/date" = {
@@ -268,11 +268,11 @@ in {
 
   "module/yt-music" = {
     type = "custom/script";
-    exec = "polybar-floating-ytm";
+    exec = "${pkgs.polybar-floating-ytm}/bin/polybar-floating-ytm";
     interval = 1;
     format = "<label>";
     label = "%output%";
-    click-left = "polybar-floating-ytm";
+    click-left = "${pkgs.polybar-floating-ytm}/bin/polybar-floating-ytm";
   };
 
   "module/xworkspaces" = {
@@ -296,7 +296,7 @@ in {
 
   "module/cava" = {
     type = "custom/script";
-    exec = "${pkgs.python3}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 27 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
+    exec = "${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 27 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
     tail = true;
   };
 
@@ -401,7 +401,7 @@ in {
 
   "module/weather" = {
     type = "custom/script";
-    exec = "${pkgs.python3}/bin/python3 ${framework}/assets/scripts/get-weather.py";
+    exec = "${pkgs.python312}/bin/python3 ${framework}/assets/scripts/get-weather.py";
     interval = 1800;
     format-foreground = really_white;
     format = "<label>";
