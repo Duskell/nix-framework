@@ -33,7 +33,7 @@ in {
 
         script = "polybar -q -r top & polybar -q -r bottom &";
 
-        config = default:
+        config =
           if cfg.theme == "custom"
           then cfg.settings
           else (import ./themes/${cfg.theme}.nix {inherit pkgs framework;}) // cfg.settings;
