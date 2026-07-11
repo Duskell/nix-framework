@@ -167,6 +167,9 @@ in {
           floating = {
             border = 0;
             titlebar = false;
+            criteria = [
+              {class = "Polybar";}
+            ];
           };
 
           gaps = {
