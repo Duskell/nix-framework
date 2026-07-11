@@ -124,7 +124,7 @@
             postPatch =
               (oldAttrs.postPatch or "")
               + ''
-                sed -i "/'build_man': build_man/d" setup.py
+                sed -i "/'build_man'/d" setup.py
               '';
           });
 
