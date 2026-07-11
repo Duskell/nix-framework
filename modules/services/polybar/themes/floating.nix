@@ -272,7 +272,7 @@ in {
     interval = 1;
     format = "<label>";
     label = "%output%";
-    click-left = "${pkgs.polybar-floating-ytm}/bin/polybar-floating-ytm";
+    click-left = "pear-desktop";
   };
 
   "module/xworkspaces" = {

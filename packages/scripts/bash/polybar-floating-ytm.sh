@@ -1,18 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if ! command -v playerctl &>/dev/null; then
   echo "playerctl is not installed."
   exit 1
 fi
 
-get_ytm_song_linux() {
-  playerctl -p YoutubeMusic metadata --format "{{ artist }} - {{ title }}"
-}
+if playerctl -l 2>/dev/null | grep -iq "YoutubeMusic"; then
 
-if pgrep -x "YoutubeMusic" >/dev/null; then
-  song=$(get_ytm_song_linux)
+  status=$(playerctl -p YoutubeMusic status 2>/dev/null)
 
-  if [[ -n "$song" ]]; then
+  if [[ "$status" == "Playing" ]]; then
+    song=$(playerctl -p YoutubeMusic metadata --format "{{ artist }} - {{ title }}" 2>/dev/null)
+
+    # Truncate if longer than 30 characters
     if [ ${#song} -gt 30 ]; then
       song="${song:0:30}..."
     fi
@@ -20,6 +20,7 @@ if pgrep -x "YoutubeMusic" >/dev/null; then
   else
     echo "Paused."
   fi
+
 else
   echo "Not running. Click to open"
 fi
