@@ -58,7 +58,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -108,23 +111,23 @@
           kde-kwin-effects-forceblur-x11 = kde-kwin-effects-better-blur-dx-x11;
           copyparty = inputs.copyparty.overlays.default;
 
-          vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
-            cmakeFlags =
-              (oldAttrs.cmakeFlags or [])
-              ++ [
-                "-DUPDATE_DEPS=OFF"
-              ];
-          });
+          #vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
+          #  cmakeFlags =
+          #    (oldAttrs.cmakeFlags or [])
+          #    ++ [
+          #      "-DUPDATE_DEPS=OFF"
+          #  ];
+          #});
 
-          arandr = prev.arandr.override {
-            python3Packages = prev.python312Packages;
-          };
+          #arandr = prev.arandr.override {
+          #  python3Packages = prev.python312Packages;
+          #};
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
-          openldap = prev.openldap.overrideAttrs {
-            doCheck = !prev.stdenv.hostPlatform.isi686;
-          };
+          #openldap = prev.openldap.overrideAttrs {
+          # doCheck = !prev.stdenv.hostPlatform.isi686;
+          #};
         }
       );
     };
