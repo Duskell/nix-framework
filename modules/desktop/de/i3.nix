@@ -175,6 +175,7 @@ in {
           gaps = {
             inner = cfg.gaps.inner;
             outer = cfg.gaps.outer;
+            top = 50;
           };
 
           keybindings = let
