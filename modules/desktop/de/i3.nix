@@ -263,7 +263,7 @@ in {
                 notification = false;
               })
               {
-                command = "systemctl --user import-environment DISPLAY XAUTHORITY";
+                command = "systemctl --user import-environment DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS";
                 always = false;
                 notification = false;
               }

@@ -277,7 +277,7 @@ in {
 
   "module/yt-music" = {
     type = "custom/script";
-    exec = "${pkgs.polybar-floating-ytm}/bin/polybar-floating-ytm";
+    exec = "${pkgs.polybar-floating-ytm}/bin/polybar-floating-ytm 2>~/polybar-ytm-error.log";
     interval = 1;
     format = "<label>";
     label = "%output%";
@@ -316,7 +316,7 @@ in {
 
   "module/cava" = {
     type = "custom/script";
-    exec = "PATH=${pkgs.lib.makeBinPath [pkgs.cava]}:$PATH ${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 27 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
+    exec = "PATH=${pkgs.lib.makeBinPath [pkgs.cava]}:$PATH ${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 26 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
     tail = true;
   };
 
