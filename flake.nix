@@ -126,6 +126,12 @@
               + ''
                 sed -i "/'build_man'/d" setup.py
               '';
+
+            preBuild =
+              (oldAttrs.preBuild or "")
+              + ''
+                python setup.py build_i18n
+              '';
           });
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
