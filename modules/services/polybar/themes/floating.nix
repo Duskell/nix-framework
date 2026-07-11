@@ -3,6 +3,7 @@
 {
   pkgs,
   framework,
+  config,
 }: let
   background = "#1e1e2e";
   nix_color = "#0f94d2";

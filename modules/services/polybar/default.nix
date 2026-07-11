@@ -26,6 +26,11 @@ in {
 
   config = mkIf cfg.enable {
     home-manager.users.${config.framework.primaryUser} = {
+      home.packages = with pkgs; [
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.symbols-only
+      ];
+
       services.polybar = {
         enable = true;
 
@@ -36,7 +41,7 @@ in {
         config =
           if cfg.theme == "custom"
           then cfg.settings
-          else (import ./themes/${cfg.theme}.nix {inherit pkgs framework;}) // cfg.settings;
+          else (import ./themes/${cfg.theme}.nix {inherit pkgs framework config;}) // cfg.settings;
       };
     };
   };
