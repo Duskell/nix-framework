@@ -119,9 +119,15 @@
           #  ];
           #});
 
-          #arandr = prev.arandr.override {
-          #  python3Packages = prev.python312Packages;
-          #};
+          arandr = prev.arandr.overrideAttrs (oldAttrs: {
+            # Remove the custom build_man step that crashes on Setuptools >= 81
+            postPatch =
+              (oldAttrs.postPatch or "")
+              + ''
+                substituteInPlace setup.py \
+                  --replace-fail "cmdclass={'build_man': build_man}," ""
+              '';
+          });
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113

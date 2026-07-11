@@ -99,9 +99,7 @@ in {
     environment.systemPackages = with pkgs; [
       xdg-desktop-portal-gtk
       autorandr
-      (pkgs.arandr.override {
-        python3Packages = pkgs.python314Packages;
-      })
+      arandr
       brightnessctl
       feh
     ];
