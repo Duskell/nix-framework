@@ -111,13 +111,13 @@
           kde-kwin-effects-forceblur-x11 = kde-kwin-effects-better-blur-dx-x11;
           copyparty = inputs.copyparty.overlays.default;
 
-          #vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
-          #  cmakeFlags =
-          #    (oldAttrs.cmakeFlags or [])
-          #    ++ [
-          #      "-DUPDATE_DEPS=OFF"
-          #  ];
-          #});
+          vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
+            cmakeFlags =
+              (oldAttrs.cmakeFlags or [])
+              ++ [
+                "-DUPDATE_DEPS=OFF"
+              ];
+          });
 
           pythonPackagesExtensions =
             prev.pythonPackagesExtensions
