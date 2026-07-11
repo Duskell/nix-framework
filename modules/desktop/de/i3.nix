@@ -100,7 +100,7 @@ in {
       xdg-desktop-portal-gtk
       autorandr
       (pkgs.arandr.override {
-        python3Packages = pkgs.python312Packages;
+        python3Packages = pkgs.python314Packages;
       })
       brightnessctl
       feh
