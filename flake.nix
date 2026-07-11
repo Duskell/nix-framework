@@ -119,19 +119,6 @@
           #  ];
           #});
 
-          arandr = prev.arandr.overrideAttrs (oldAttrs: {
-            # Remove the custom build_man step that crashes on Setuptools >= 81
-            postPatch =
-              (oldAttrs.postPatch or "")
-              + ''
-                # Strip both legacy distutils commands from cmdclass and sub_commands
-                sed -i -E "/'(build_man|build_i18n)'/d" setup.py
-
-                # Remove the locale directory from data_files so wheel packaging doesn't look for it
-                sed -i "/'build\/locale'/d" setup.py
-              '';
-          });
-
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
           #openldap = prev.openldap.overrideAttrs {

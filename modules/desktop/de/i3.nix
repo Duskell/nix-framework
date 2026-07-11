@@ -99,7 +99,6 @@ in {
     environment.systemPackages = with pkgs; [
       xdg-desktop-portal-gtk
       autorandr
-      arandr
       brightnessctl
       feh
     ];
