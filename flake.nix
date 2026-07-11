@@ -124,8 +124,7 @@
             postPatch =
               (oldAttrs.postPatch or "")
               + ''
-                substituteInPlace setup.py \
-                  --replace-fail "cmdclass={'build_man': build_man}," ""
+                sed -i "/'build_man': build_man/d" setup.py
               '';
           });
 
