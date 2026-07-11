@@ -1,9 +1,8 @@
 {
   stdenv,
   lib,
-  libnotify,
-  subversion,
   makeWrapper,
+  playerctl,
 }:
 stdenv.mkDerivation {
   pname = "polybar-floating-ytm";
@@ -21,6 +20,6 @@ stdenv.mkDerivation {
     patchShebangs $out/bin/polybar-floating-ytm
 
     wrapProgram $out/bin/polybar-floating-ytm \
-      --prefix PATH : ${lib.makeBinPath [subversion libnotify]}
+      --prefix PATH : ${lib.makeBinPath [playerctl]}
   '';
 }

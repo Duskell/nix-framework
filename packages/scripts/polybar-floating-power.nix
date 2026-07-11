@@ -1,8 +1,6 @@
 {
   stdenv,
   lib,
-  libnotify,
-  subversion,
   makeWrapper,
 }:
 stdenv.mkDerivation {
@@ -21,6 +19,6 @@ stdenv.mkDerivation {
     patchShebangs $out/bin/polybar-floating-power
 
     wrapProgram $out/bin/polybar-floating-power \
-      --prefix PATH : ${lib.makeBinPath [subversion libnotify]}
+      --prefix PATH : ${lib.makeBinPath []}
   '';
 }

@@ -46,7 +46,10 @@ in {
       in {
         enable = true;
 
-        package = pkgs.polybar.override {i3Support = true;};
+        package = pkgs.polybar.override {
+          i3Support = true;
+          pulseSupport = true;
+        };
 
         script = dynamicScript;
 

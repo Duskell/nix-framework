@@ -6,8 +6,8 @@
   config,
 }: let
   background = "#1e1e2e";
-  nix_color = "#0f94d2";
-  music_color = "#25d865";
+  nix_color = "#4d6eb7";
+  music_color = "#f60000";
   white = "#f5f3e1";
   mauve = "#490761";
   mauving = "#c867eb";
@@ -27,8 +27,8 @@
   radius = 8;
 
   font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12";
-  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=20";
-  font_1 = "Symbols Nerd Font Mono:size=12";
+  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=25";
+  font_1 = "Symbols Nerd Font Mono:size=15";
 in {
   #---------------------BARS--------------------#
 
@@ -285,27 +285,38 @@ in {
   };
 
   "module/xworkspaces" = {
-    type = "internal/xworkspaces";
+    type = "internal/i3";
 
-    label-active = "";
-    label-active-padding = 1;
-    label-active-foreground = greying;
-    label-active-font = 1;
+    index-sort = true;
 
-    label-occupied = "";
-    label-occupied-padding = 1;
-    label-occupied-foreground = greying;
-    label-occupied-font = 1;
+    pin-workspaces = true;
 
-    label-empty = "";
-    label-empty-background = background;
-    label-empty-padding = 1;
-    label-empty-font = 1;
+    # Focused / Active Workspace
+    label-focused = "";
+    label-focused-padding = 1;
+    label-focused-foreground = greying;
+    label-focused-font = 1;
+
+    # Unfocused / Background Workspace
+    label-unfocused = "";
+    label-unfocused-padding = 1;
+    label-unfocused-foreground = greying;
+    label-unfocused-font = 1;
+
+    # Visible but not focused
+    label-visible = "";
+    label-visible-padding = 1;
+    label-visible-font = 1;
+
+    label-urgent = "";
+    label-urgent-padding = 1;
+    label-urgent-foreground = alert;
+    label-urgent-font = 1;
   };
 
   "module/cava" = {
     type = "custom/script";
-    exec = "${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 27 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
+    exec = "PATH=${pkgs.lib.makeBinPath [pkgs.cava]}:$PATH ${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 27 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
     tail = true;
   };
 
@@ -335,6 +346,11 @@ in {
     format = "<ramp> <label>";
     format-foreground = white;
     label = "%percentage%%";
+
+    ramp-0 = "󰃞";
+    ramp-1 = "󰃝";
+    ramp-2 = "󰃟";
+    ramp-3 = "󰃠";
   };
 
   "module/battery" = {
@@ -410,7 +426,9 @@ in {
 
   "module/weather" = {
     type = "custom/script";
-    exec = "${pkgs.python312}/bin/python3 ${framework}/assets/scripts/get-weather.py";
+    exec = let
+      pythonEnv = pkgs.python312.withPackages (ps: [ps.requests]);
+    in "${pythonEnv}/bin/python3 ${framework}/assets/scripts/get-weather.py";
     interval = 1800;
     format-foreground = really_white;
     format = "<label>";
