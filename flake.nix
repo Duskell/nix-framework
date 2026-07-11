@@ -119,6 +119,17 @@
           #  ];
           #});
 
+          pythonPackagesExtensions =
+            prev.pythonPackagesExtensions
+            ++ [
+              (pyFinal: pyPrev: {
+                patool = pyPrev.patool.overridePythonAttrs (oldAttrs: {
+                  # Upstream unit tests break against modern MIME databases and missing sandbox CLI tools
+                  doCheck = false;
+                });
+              })
+            ];
+
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
           #openldap = prev.openldap.overrideAttrs {
