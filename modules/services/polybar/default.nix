@@ -52,7 +52,7 @@ in {
         };
 
         script = ''
-          export PATH="${lib.makeBinPath (with pkgs; [coreutils procps gnugrep gnused playerctl cava vicinae])}:$PATH"
+          export PATH="${lib.makeBinPath (with pkgs; [coreutils procps gnugrep gnused playerctl cava vicinae python312])}:$PATH"
           ${dynamicScript}
         '';
         config = finalConfig;
