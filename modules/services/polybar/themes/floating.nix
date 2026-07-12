@@ -39,6 +39,7 @@ in {
     border-size = "5pt";
     border-color = border_color;
     background = border_color;
+    wm-restack = "i3";
     override-redirect = false;
   };
 
