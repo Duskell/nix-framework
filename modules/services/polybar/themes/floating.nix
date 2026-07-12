@@ -5,7 +5,7 @@
   framework,
   config,
 }: let
-  background = "#1e1e2e";
+  background = "#CC1e1e2e";
   nix_color = "#4d6eb7";
   music_color = "#f60000";
   white = "#f5f3e1";
@@ -16,7 +16,7 @@
   really_white = "#ffffff";
   blue = "#89d1fa";
   background_alt = "#373b41";
-  foreground = "#CC1e1e2e";
+  foreground = "#fcf5bd";
   primary = "#f0c674";
   secondary = "#8abeb7";
   alert = "#a54242";
