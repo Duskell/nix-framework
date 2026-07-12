@@ -8,12 +8,12 @@ iface=$(ip route | awk '/^default/ {print $5}' | head -n1)
 
 # If the interface starts with 'e' (eth0, eno1, enp3s0, etc.)
 if [[ "$iface" == e* ]]; then
-  echo "󰈀"
+  echo "󰈀 "
 
 # If the interface starts with 'w' (wlan0, wlp2s0, etc.)
 elif [[ "$iface" == w* ]]; then
-  echo "󰖩"
+  echo "󰖩 "
 
 else
-  echo "󰖪"
+  echo "󰖪 "
 fi

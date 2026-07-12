@@ -225,7 +225,7 @@ in {
   };
 
   "bar/settings" = {
-    width = "9.2%";
+    width = "9.8%";
     offset-x = "90.2%";
     height = height;
     radius = radius;
