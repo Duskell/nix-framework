@@ -101,6 +101,7 @@ in {
       autorandr
       brightnessctl
       feh
+      i3lock-blur
     ];
 
     xdg.portal = {
@@ -175,7 +176,6 @@ in {
           gaps = {
             inner = cfg.gaps.inner;
             outer = cfg.gaps.outer;
-            top = 50;
           };
 
           keybindings = let

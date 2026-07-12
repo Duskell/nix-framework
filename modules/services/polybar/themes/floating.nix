@@ -33,6 +33,15 @@
 in {
   #---------------------BARS--------------------#
 
+  "bar/spacer" = {
+    width = "100%";
+    height = 32;
+    border-size = "5pt";
+    border-color = border_color;
+    background = border_color;
+    override-redirect = false;
+  };
+
   "bar/power" = {
     width = "3.3%";
     offset-x = "0%";
