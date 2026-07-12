@@ -321,10 +321,10 @@ in {
     label-visible-padding = 1;
     label-visible-font = 1;
 
-    label-urgent = "";
-    label-urgent-padding = 1;
-    label-urgent-foreground = alert;
-    label-urgent-font = 1;
+    #label-urgent = "";
+    #label-urgent-padding = 1;
+    #label-urgent-foreground = alert;
+    #label-urgent-font = 1;
   };
 
   "module/cava" = {
