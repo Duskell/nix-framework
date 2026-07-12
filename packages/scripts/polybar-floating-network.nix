@@ -4,15 +4,12 @@
   makeWrapper,
   pkgs,
 }: let
-  name = "polybar-floating-power";
+  name = "polybar-floating-network";
 
   runtimeInputs = with pkgs; [
+    gawk
     coreutils
-    procps
-    gnused
-    vicinae
-    mpc-cli
-    alsa-utils
+    iproute2
   ];
 in
   stdenv.mkDerivation {

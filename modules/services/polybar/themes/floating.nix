@@ -16,7 +16,7 @@
   really_white = "#ffffff";
   blue = "#89d1fa";
   background_alt = "#373b41";
-  foreground = "#fcf5bd";
+  foreground = "#CC1e1e2e";
   primary = "#f0c674";
   secondary = "#8abeb7";
   alert = "#a54242";
@@ -229,6 +229,9 @@ in {
     height = height;
     radius = radius;
 
+    background = background;
+    foreground = foreground;
+
     border-size = "5pt";
     border-color = border_color;
 
@@ -238,7 +241,7 @@ in {
     font-0 = font_0;
     font-1 = font_1;
 
-    modules-right = "battery space backlight space wlan";
+    modules-right = "battery space backlight space network";
 
     enable-ipc = true;
 
@@ -320,22 +323,13 @@ in {
     tail = true;
   };
 
-  "module/wlan" = {
-    "inherit" = "network-base";
-    interface-type = "wireless";
-
+  "module/network" = {
+    type = "custom/script";
+    exec = "${pkgs.polybar-floating-network}/bin/polybar-floating-network";
     interval = 1;
-    format-connected-prefix-foreground = white;
-    format-connected-foreground = white;
-    format-connected = "<label-connected>";
-    label-connected = "󰖩";
-    label-connected-padding = 0;
-
-    format-disconnected = "<label-disconnected>";
-    format-disconnected-padding = 0;
-    label-disconnected = "󰖪";
-    label-disconnected-foreground = white;
-    label-disconnected-padding = 0;
+    format-foreground = white;
+    format = "<label>";
+    label = "%output%";
   };
 
   "module/backlight" = {
@@ -436,20 +430,6 @@ in {
     format-prefix = "CPU ";
     format-prefix-foreground = primary;
     label = "%percentage:2%%";
-  };
-
-  "network-base" = {
-    type = "internal/network";
-    interval = 5;
-    format-connected = "<label-connected>";
-    format-disconnected = "<label-disconnected>";
-    label-disconnected = "%{F#F0C674}%ifname%%{F#707880} disconnected";
-  };
-
-  "module/eth" = {
-    "inherit" = "network-base";
-    interface-type = "wired";
-    label-connected = "%{F#F0C674}%ifname%%{F-} %local_ip%";
   };
 
   "settings" = {
