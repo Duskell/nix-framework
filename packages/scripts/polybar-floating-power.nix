@@ -11,7 +11,7 @@
     procps
     gnused
     vicinae
-    mpc-cli
+    mpc
     alsa-utils
   ];
 in
