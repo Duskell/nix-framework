@@ -131,7 +131,7 @@ in {
     font-0 = font_0;
     font-1 = font_1;
 
-    modules-left = "xworkspaces";
+    modules-center = "xworkspaces";
 
     cursor-click = "pointer";
 
@@ -242,7 +242,7 @@ in {
     font-0 = font_0;
     font-1 = font_1;
 
-    modules-right = "battery space backlight space network";
+    modules-center = "battery space backlight space network";
 
     enable-ipc = true;
 
