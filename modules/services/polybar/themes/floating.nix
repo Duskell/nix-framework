@@ -34,7 +34,7 @@ in {
   #---------------------BARS--------------------#
 
   "bar/spacer" = {
-    width = "100%";
+    width = "0.1%";
     height = 32;
     border-size = "5pt";
     border-color = border_color;
