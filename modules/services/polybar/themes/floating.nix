@@ -50,7 +50,7 @@ in {
     font-0 = font_0_1;
     font-1 = font_1;
 
-    modules-center = "nix";
+    modules-left = "nix";
 
     enable-ipc = true;
 
@@ -169,7 +169,7 @@ in {
 
   "bar/weather" = {
     width = "5%";
-    offset-x = "78%";
+    offset-x = "77%";
     height = height;
     radius = radius;
 
@@ -185,7 +185,7 @@ in {
     font-0 = font_0;
     font-1 = font_1;
 
-    modules-left = "weather";
+    modules-center = "weather";
 
     enable-ipc = true;
 
@@ -196,8 +196,8 @@ in {
   };
 
   "bar/sound" = {
-    width = "8%";
-    offset-x = "83%";
+    width = "9%";
+    offset-x = "82%";
     height = height;
     radius = radius;
 
