@@ -11,8 +11,7 @@
   white = "#f5f3e1";
   mauve = "#490761";
   mauving = "#c867eb";
-  grey = "#a19e95";
-  greying = "#474642";
+  grey = "#dddddd";
   really_white = "#ffffff";
   blue = "#89d1fa";
   background_alt = "#373b41";
@@ -297,13 +296,12 @@ in {
     # Focused / Active Workspace
     label-focused = "";
     label-focused-padding = 1;
-    label-focused-foreground = greying;
     label-focused-font = 1;
 
     # Unfocused / Background Workspace
     label-unfocused = "";
     label-unfocused-padding = 1;
-    label-unfocused-foreground = greying;
+    label-unfocused-foreground = grey;
     label-unfocused-font = 1;
 
     # Visible but not focused
