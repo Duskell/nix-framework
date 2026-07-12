@@ -29,7 +29,7 @@
   font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=20;5";
   font_1 = "Symbols Nerd Font Mono:size=12;3";
 
-  override = false;
+  override = true;
 in {
   #---------------------BARS--------------------#
 
