@@ -170,7 +170,7 @@ in {
 
   "bar/weather" = {
     width = "5%";
-    offset-x = "75%";
+    offset-x = "75.2%";
     height = height;
     radius = radius;
 
@@ -198,7 +198,7 @@ in {
 
   "bar/sound" = {
     width = "10%";
-    offset-x = "80%";
+    offset-x = "80.2%";
     height = height;
     radius = radius;
 
@@ -225,8 +225,8 @@ in {
   };
 
   "bar/settings" = {
-    width = "10%";
-    offset-x = "90%";
+    width = "9.2%";
+    offset-x = "90.2%";
     height = height;
     radius = radius;
 
