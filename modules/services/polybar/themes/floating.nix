@@ -26,9 +26,9 @@
   height = "32pt";
   radius = 8;
 
-  font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12";
-  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=25";
-  font_1 = "Symbols Nerd Font Mono:size=12";
+  font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12;5";
+  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=25;3";
+  font_1 = "Symbols Nerd Font Mono:size=12;3";
 in {
   #---------------------BARS--------------------#
 
@@ -44,13 +44,13 @@ in {
     border-size = "5pt";
     border-color = border_color;
 
-    padding-left = 1;
-    padding-right = 1;
+    padding-left = 0;
+    padding-right = 0;
 
     font-0 = font_0_1;
     font-1 = font_1;
 
-    modules-left = "nix";
+    modules-center = "nix";
 
     enable-ipc = true;
 
@@ -253,7 +253,7 @@ in {
   "module/nix" = {
     type = "custom/text";
     content = "";
-    content-font = 2;
+    content-font = 1;
     content-foreground = nix_color;
     content-margin = 0;
     click-left = "${pkgs.polybar-floating-power}/bin/polybar-floating-power 2>~/polybar-power-error.log";
@@ -405,23 +405,18 @@ in {
     format-volume-prefix-foreground = blue;
     label-volume = "%percentage%%";
 
-    label-muted = "󰖁 %percentage%%";
+    label-muted = "󰖁 Muted";
     label-muted-foreground = disabled;
   };
 
   "module/mic" = {
-    type = "internal/pulseaudio";
-    use-ui-max = false;
-    source = "@DEFAULT_AUDIO_SOURCE@";
-    format-volume = "<label-volume>";
-    format-volume-prefix = "󰍬 ";
-    format-volume-foreground = blue;
-    format-volume-prefix-foreground = blue;
-    label-volume = "%percentage%%";
-    format-muted = "<label-muted>";
-
-    label-muted = "󰍭 Muted";
-    label-muted-foreground = disabled;
+    type = "custom/script";
+    exec = "${pkgs.polybar-floating-mic}/bin/polybar-floating-mic";
+    interval = 1;
+    format-foreground = blue;
+    format = "<label>";
+    label = "%output%";
+    click-left = "${pkgs.polybar-floating-mic}/bin/polybar-floating-mic 1";
   };
 
   "module/weather" = {
