@@ -48,6 +48,7 @@ in {
         cfg.settings
         {
           enable = true;
+          enableMan = false;
           version.enableNixpkgsReleaseCheck = false;
           colorschemes.${cfg.colorScheme}.enable = true;
         }
