@@ -130,6 +130,11 @@
               })
             ];
 
+          # A fix for
+          nixos-render-docs = prev.nixos-render-docs.overrideAttrs (oldAttrs: {
+            patches = [];
+          });
+
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
           #openldap = prev.openldap.overrideAttrs {
