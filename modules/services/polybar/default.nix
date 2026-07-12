@@ -52,8 +52,26 @@ in {
         };
 
         script = dynamicScript;
-
         config = finalConfig;
+
+        extraCmds = ''
+          export PATH="${lib.makeBinPath (with pkgs; [
+            coreutils
+            gnugrep
+            gnused
+            playerctl
+            cava
+          ])}:$PATH"
+        '';
+
+        settings = {
+          Service = {
+            EnvironmentFile = "-%t/systemd/user.control.d/environment";
+          };
+          Install = {
+            WantedBy = ["graphical-session.target"];
+          };
+        };
       };
     };
   };

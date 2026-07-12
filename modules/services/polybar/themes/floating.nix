@@ -256,7 +256,7 @@ in {
     content-font = 2;
     content-foreground = nix_color;
     content-margin = 0;
-    click-left = "${pkgs.polybar-floating-power}/bin/polybar-floating-power";
+    click-left = "${pkgs.polybar-floating-power}/bin/polybar-floating-power 2>~/polybar-power-error.log";
   };
 
   "module/date" = {
@@ -316,7 +316,7 @@ in {
 
   "module/cava" = {
     type = "custom/script";
-    exec = "PATH=${pkgs.lib.makeBinPath [pkgs.cava]}:$PATH ${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 26 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo";
+    exec = "${pkgs.python312}/bin/python3 ${framework}/assets/scripts/cava.py -f 60 -b 26 -e 00FFFF,66FFFF,99FFFF,CCE5FF,E6CCFF,FFB3FF,FF80FF,FF00FF -c stereo 2>~/polybar-cava-error.log";
     tail = true;
   };
 
@@ -340,7 +340,7 @@ in {
 
   "module/backlight" = {
     type = "internal/backlight";
-    card = "nvidia_0";
+    card = "intel_backlight";
     use-actual-brightness = true;
     enable-scroll = true;
     format = "<ramp> <label>";
