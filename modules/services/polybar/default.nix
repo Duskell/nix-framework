@@ -51,15 +51,11 @@ in {
           pulseSupport = true;
         };
 
-        script = dynamicScript;
+        script = ''
+          export PATH="${lib.makeBinPath (with pkgs; [coreutils procps gnugrep gnused playerctl cava vicinae])}:$PATH"
+          ${dynamicScript}
+        '';
         config = finalConfig;
-      };
-
-      systemd.user.services.polybar = {
-        Service = {
-          Environment = "PATH=${lib.makeBinPath (with pkgs; [coreutils gnugrep gnused playerctl cava])}:$PATH";
-          EnvironmentFile = "-%t/systemd/user.control.d/environment";
-        };
       };
     };
   };

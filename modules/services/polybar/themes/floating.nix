@@ -289,7 +289,7 @@ in {
 
     index-sort = true;
 
-    pin-workspaces = true;
+    pin-workspaces = false;
 
     # Focused / Active Workspace
     label-focused = "";
@@ -432,7 +432,7 @@ in {
     interval = 1800;
     format-foreground = really_white;
     format = "<label>";
-    label = "%output%%";
+    label = "%output%";
   };
 
   "module/cpu" = {

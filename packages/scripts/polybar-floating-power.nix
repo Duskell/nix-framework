@@ -2,6 +2,10 @@
   stdenv,
   lib,
   makeWrapper,
+  coreutils,
+  procps,
+  gnused,
+  vicinae,
 }:
 stdenv.mkDerivation {
   pname = "polybar-floating-power";
@@ -19,6 +23,6 @@ stdenv.mkDerivation {
     patchShebangs $out/bin/polybar-floating-power
 
     wrapProgram $out/bin/polybar-floating-power \
-      --prefix PATH : ${lib.makeBinPath []}
+      --prefix PATH : ${lib.makeBinPath [coreutils procps gnused vicinae]}
   '';
 }
