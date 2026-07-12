@@ -53,7 +53,7 @@ in {
 
     lockCommand = mkOption {
       type = types.str;
-      default = "i3lock-color";
+      default = "i3lock-blur";
       description = "Command to execute for locking the screen.";
     };
 
@@ -93,7 +93,7 @@ in {
     services.xserver.windowManager.i3 = {
       enable = true;
       package = cfg.package;
-      extraPackages = with pkgs; [i3lock-color];
+      extraPackages = with pkgs; [i3lock-blur];
     };
 
     environment.systemPackages = with pkgs; [

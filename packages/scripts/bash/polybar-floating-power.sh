@@ -34,8 +34,8 @@ $reboot)
   fi
   ;;
 $lock)
-  if command -v i3lock-color &>/dev/null; then
-    i3lock-color
+  if command -v i3lock-blur &>/dev/null; then
+    i3lock-blur
   fi
   ;;
 $suspend)

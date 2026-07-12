@@ -13,6 +13,7 @@
     vicinae
     mpc
     alsa-utils
+    i3lock-blur
   ];
 in
   stdenv.mkDerivation {
