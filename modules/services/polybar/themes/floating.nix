@@ -28,7 +28,7 @@
 
   font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12";
   font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=25";
-  font_1 = "Symbols Nerd Font Mono:size=15";
+  font_1 = "Symbols Nerd Font Mono:size=12";
 in {
   #---------------------BARS--------------------#
 
