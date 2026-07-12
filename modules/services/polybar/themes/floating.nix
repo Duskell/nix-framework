@@ -42,6 +42,7 @@ in {
     wm-restack = "i3";
     override-redirect = false;
     modules-center = "space";
+    bottom = true;
   };
 
   "bar/power" = {
