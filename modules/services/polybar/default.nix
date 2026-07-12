@@ -39,10 +39,13 @@ in {
 
         allKeys = builtins.attrNames finalConfig;
         barKeys = builtins.filter (key: builtins.substring 0 4 key == "bar/") allKeys;
-
         barNames = map (key: builtins.substring 4 (builtins.stringLength key) key) barKeys;
 
-        dynamicScript = lib.strings.concatStringsSep " " (map (name: "polybar -q -r ${name} &") barNames);
+        spacerBars = builtins.filter (name: name == "spacer") barNames;
+        islandBars = builtins.filter (name: name != "spacer") barNames;
+
+        launchSpacer = lib.strings.concatStringsSep "\n" (map (name: "polybar -q -r ${name} &") spacerBars);
+        launchIslands = lib.strings.concatStringsSep "\n" (map (name: "polybar -q -r ${name} &") islandBars);
       in {
         enable = true;
 
@@ -53,8 +56,11 @@ in {
 
         script = ''
           export PATH="${lib.makeBinPath (with pkgs; [coreutils procps gnugrep gnused playerctl cava vicinae python312])}:$PATH"
-          ${dynamicScript}
+          ${launchSpacer}
+          ${lib.optionalString (spacerBars != []) "sleep 0.5"}
+          ${launchIslands}
         '';
+
         config = finalConfig;
       };
     };
