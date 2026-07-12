@@ -26,8 +26,8 @@
   height = "32pt";
   radius = 8;
 
-  font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12;5";
-  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=25;3";
+  font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12;3";
+  font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=20;5";
   font_1 = "Symbols Nerd Font Mono:size=12;3";
 in {
   #---------------------BARS--------------------#
