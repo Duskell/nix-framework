@@ -41,6 +41,7 @@ in {
     background = border_color;
     wm-restack = "i3";
     override-redirect = false;
+    modules-center = "spacer";
   };
 
   "bar/power" = {
