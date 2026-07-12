@@ -39,10 +39,8 @@ in {
     border-size = "5pt";
     border-color = border_color;
     background = border_color;
-    wm-restack = "i3";
     override-redirect = false;
     modules-center = "space";
-    bottom = true;
   };
 
   "bar/power" = {
@@ -446,7 +444,7 @@ in {
 
   "settings" = {
     screenchange-reload = true;
-    pseudo-transparency = true;
+    pseudo-transparency = false;
   };
 
   "module/space" = {
