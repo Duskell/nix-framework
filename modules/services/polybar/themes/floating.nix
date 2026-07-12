@@ -28,6 +28,8 @@
   font_0 = "JetBrainsMono Nerd Font:weight=bold:size=12;3";
   font_0_1 = "JetBrainsMono Nerd Font:weight=bold:size=20;5";
   font_1 = "Symbols Nerd Font Mono:size=12;3";
+
+  override = false;
 in {
   #---------------------BARS--------------------#
 
@@ -54,7 +56,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
   };
 
   "bar/clock" = {
@@ -80,7 +82,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
   };
 
   "bar/yt-music" = {
@@ -106,7 +108,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
 
     cursor-click = "pointer";
   };
@@ -136,7 +138,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
   };
 
   "bar/cava" = {
@@ -161,7 +163,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
 
     cursor-click = "pointer";
   };
@@ -189,7 +191,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
 
     cursor-click = "pointer";
   };
@@ -217,7 +219,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
 
     cursor-click = "pointer";
   };
@@ -245,7 +247,7 @@ in {
     enable-ipc = true;
 
     wm-restack = "i3";
-    override-redirect = true;
+    override-redirect = override;
 
     cursor-click = "pointer";
   };
