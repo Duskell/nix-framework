@@ -44,13 +44,13 @@ in {
     border-size = "5pt";
     border-color = border_color;
 
-    padding-left = 0;
+    padding-left = 1;
     padding-right = 0;
 
     font-0 = font_0_1;
     font-1 = font_1;
 
-    modules-left = "nix";
+    modules-center = "nix";
 
     enable-ipc = true;
 
@@ -169,7 +169,7 @@ in {
 
   "bar/weather" = {
     width = "5%";
-    offset-x = "77%";
+    offset-x = "76%";
     height = height;
     radius = radius;
 
@@ -196,8 +196,8 @@ in {
   };
 
   "bar/sound" = {
-    width = "9%";
-    offset-x = "82%";
+    width = "10%";
+    offset-x = "81%";
     height = height;
     radius = radius;
 
@@ -213,7 +213,7 @@ in {
     font-0 = font_0;
     font-1 = font_1;
 
-    modules-right = "audio space mic";
+    modules-center = "audio space mic";
 
     enable-ipc = true;
 
@@ -252,7 +252,7 @@ in {
 
   "module/nix" = {
     type = "custom/text";
-    content = "";
+    content = " ";
     content-font = 1;
     content-foreground = nix_color;
     content-margin = 0;
@@ -406,7 +406,7 @@ in {
     label-volume = "%percentage%%";
 
     label-muted = "󰖁 Muted";
-    label-muted-foreground = disabled;
+    label-muted-foreground = blue;
   };
 
   "module/mic" = {
