@@ -6,7 +6,7 @@
   config,
 }: let
   background = "#CC1e1e2e";
-  nix_color = "#4d6eb7";
+  nix_color = "#5fb8f2";
   music_color = "#f60000";
   white = "#f5f3e1";
   mauve = "#490761";
@@ -168,7 +168,7 @@ in {
 
   "bar/weather" = {
     width = "5%";
-    offset-x = "76%";
+    offset-x = "75%";
     height = height;
     radius = radius;
 
@@ -196,7 +196,7 @@ in {
 
   "bar/sound" = {
     width = "10%";
-    offset-x = "81%";
+    offset-x = "80%";
     height = height;
     radius = radius;
 
@@ -223,8 +223,8 @@ in {
   };
 
   "bar/settings" = {
-    width = "9%";
-    offset-x = "91%";
+    width = "10%";
+    offset-x = "90%";
     height = height;
     radius = radius;
 
