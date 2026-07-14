@@ -143,6 +143,15 @@ in {
       };
     };
 
+    systemd.user.services.low-battery-warning = {
+      wantedBy = ["default.target"];
+
+      serviceConfig = {
+        ExecStart = "${pkgs.low-battery-warning}/bin/low-battery-warning";
+        Restart = "always";
+      };
+    };
+
     home-manager.users.${primaryUser} = {
       home.file.".xprofile".text = ''
         if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
@@ -274,6 +283,11 @@ in {
               }
               {
                 command = "systemctl --user restart polybar.service";
+                always = false;
+                notification = false;
+              }
+              {
+                command = "systemctl --user restart low-battery-warning.service";
                 always = false;
                 notification = false;
               }
