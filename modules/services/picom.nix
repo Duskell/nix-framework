@@ -21,13 +21,13 @@ in {
 
     backend = mkOption {
       type = types.enum ["egl" "glx" "xrender" "xr_glx_hybrid"];
-      default = "glx";
+      default = "egl";
       description = "Backend to use for rendering.";
     };
 
     vSync = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "Enable vertical synchronization to mitigate screen tearing.";
     };
 
