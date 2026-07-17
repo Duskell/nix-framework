@@ -62,6 +62,9 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-fix = {
+      url = "github:/nixpkgs/ee8b23cf07c1d80f28656c20222d2c29aa44f06d";
+    };
   };
 
   outputs = {
@@ -104,6 +107,11 @@
       externals = (
         final: prev: let
           system = prev.stdenv.hostPlatform.system;
+
+          pkgs-fix = import inputs.nixpkgs-fix {
+            inherit system;
+            config = prev.config;
+          };
         in rec {
           kde-kwin-effects-better-blur-dx-wayland = inputs.kwin-effects-better-blur-dx.packages.${system}.default;
           kde-kwin-effects-better-blur-dx-x11 = inputs.kwin-effects-better-blur-dx.packages.${system}.x11;
@@ -130,10 +138,7 @@
               })
             ];
 
-          # Applies a fix for vesktop, to bump up electron package from 40 to 42 because of EOL
-          vesktop = prev.vesktop.override {
-            electron = final.electron_42;
-          };
+          vesktop = pkgs-fix.vesktop;
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
