@@ -137,7 +137,7 @@
               ++ [
                 (final.fetchpatch {
                   url = "https://github.com/NixOS/nixpkgs/pull/542528.patch";
-                  hash = lib.fakeSha256;
+                  hash = "";
                 })
               ];
           });
