@@ -62,9 +62,7 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-fix = {
-      url = "github:/nixpkgs/ee8b23cf07c1d80f28656c20222d2c29aa44f06d";
-    };
+    nixpkgs-fix.url = "github:NixOS/nixpkgs/ee8b23cf07c1d80f28656c20222d2c29aa44f06d";
   };
 
   outputs = {
