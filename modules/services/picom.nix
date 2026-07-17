@@ -151,7 +151,7 @@ in {
 
           use-damage = false;
 
-          xrender-sync-fence = true;
+          #xrender-sync-fence = true;
 
           glx-no-stencil = true;
           glx-no-rebind-pixmap = true;
