@@ -21,7 +21,7 @@ in {
 
     backend = mkOption {
       type = types.enum ["egl" "glx" "xrender" "xr_glx_hybrid"];
-      default = "egl";
+      default = "glx";
       description = "Backend to use for rendering.";
     };
 
@@ -115,24 +115,7 @@ in {
     # --- Structural Settings & Escape Hatches ---
     settings = mkOption {
       type = types.attrsOf types.anything;
-      default = {
-        corner-radius = 15;
-
-        blur-method = "dual_kawase";
-        blur-strength = 5;
-
-        blur-background-exclude = [
-          "window_type = 'dock'"
-          "window_type = 'desktop'"
-        ];
-
-        shadow-radius = 7;
-        detect-client-opacity = true;
-        detect-rounded-corners = true;
-        detect-transient = true;
-        mark-wmwin-focused = true;
-        mark-ovredir-focused = true;
-      };
+      default = {};
       example = literalExpression ''
         {
           blur = {
@@ -146,7 +129,35 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.picom = {
+    services.picom = let
+      settings =
+        {
+          corner-radius = 15;
+
+          blur-method = "dual_kawase";
+          blur-strength = 5;
+
+          blur-background-exclude = [
+            "window_type = 'dock'"
+            "window_type = 'desktop'"
+          ];
+
+          shadow-radius = 7;
+          detect-client-opacity = true;
+          detect-rounded-corners = true;
+          detect-transient = true;
+          mark-wmwin-focused = true;
+          mark-ovredir-focused = true;
+
+          use-damage = false;
+
+          xrender-sync-fence = true;
+
+          glx-no-stencil = true;
+          glx-no-rebind-pixmap = true;
+        }
+        // cfg.settings;
+    in {
       enable = true;
       inherit
         (cfg)
