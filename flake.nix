@@ -130,17 +130,10 @@
               })
             ];
 
-          # Applies a commit early for vesktop as a patch, to bump up electron package from 40 to 42 because of EOL
-          vesktop = prev.vesktop.overrideAttrs (oldAttrs: {
-            patches =
-              (oldAttrs.patches or [])
-              ++ [
-                (final.fetchpatch {
-                  url = "https://github.com/NixOS/nixpkgs/pull/542528.patch";
-                  hash = "";
-                })
-              ];
-          });
+          # Applies a fix for vesktop, to bump up electron package from 40 to 42 because of EOL
+          vesktop = prev.vesktop.override {
+            electron = final.electron_42;
+          };
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
