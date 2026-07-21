@@ -27,8 +27,12 @@ stdenv.mkDerivation (finalAttrs: {
   patches = [
     # MPRIS's DesktopEntry property needs to match the desktop entry basename
     # ./fix-mpris-desktop-entry.patch
-    ./fix-transparency.patch
   ];
+
+  postPatch = ''
+    substituteInPlace src/index.ts \
+      --replace-fail "backgroundColor: '#000'," "backgroundColor: '#00000000', transparent: true,"
+  '';
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
