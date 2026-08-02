@@ -1,52 +1,82 @@
-{ framework, nixpkgs, ... }@inputs:
 {
-
+  framework,
+  nixpkgs,
+  ...
+} @ inputs: {
   # mkNixSystem provides a way to create a NixOS system
   # without having to set up all the manual boilerplate.
-  mkNixSystem =
-    {
-      hostname,
-      system,
-      stateVersion,
-      primaryUser,
-      modules ? [],
-    }:
-    nixpkgs.lib.nixosSystem {
-      inherit system;
+  mkNixSystem = {
+    package,
+    hostname,
+    system,
+    stateVersion,
+    primaryUser,
+    modules ? [],
+  }: let
+    lib = nixpkgs.lib;
+    validPackages = ["standard" "lix"];
+    isValidPackage = lib.elem package validPackages;
+  in
+    assert lib.assertMsg isValidPackage
+    "mkNixSystem: 'package' must be one of [${lib.concatStringsSep ", " validPackages}], but got '${package}'.";
+      lib.nixosSystem {
+        inherit system;
 
-      modules = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        framework.nixosModules.framework
+        modules =
+          [
+            inputs.lanzaboote.nixosModules.lanzaboote
+            framework.nixosModules.framework
 
-        {
-          networking.hostName = hostname;
-          system.stateVersion = stateVersion;
-        }
+            {
+              networking.hostName = hostname;
+              system.stateVersion = stateVersion;
+            }
 
-        {
-          users.users.${primaryUser} = {
-            isNormalUser = true;
-            extraGroups = [ "wheel" "networkmanager" "sshkeys" ];
-            initialPassword = "changeme";
-          };
-          framework.primaryUser = primaryUser;
-        }
+            {
+              users.users.${primaryUser} = {
+                isNormalUser = true;
+                extraGroups = ["wheel" "networkmanager" "sshkeys"];
+                initialPassword = "changeme";
+              };
+              framework.primaryUser = primaryUser;
+            }
 
-        {
-          nixpkgs.overlays = [
-            framework.overlays.default
-            framework.inputs.nix-cachyos-kernel.overlay
-          ];
-        }
-      ]
-      ++ modules;
+            {
+              nixpkgs.overlays =
+                [
+                  framework.overlays.default
+                ]
+                ++ lib.optional (package
+                  == "lix") (final: prev: {
+                  inherit
+                    (prev.lixPackageSets.stable)
+                    nixpkgs-review
+                    nix-eval-jobs
+                    nix-fast-build
+                    colmena
+                    ;
+                });
+            }
 
-      specialArgs = {
-        inherit inputs;
-        framework = framework // {
-          # placeholder
+            ({
+              pkgs,
+              lib,
+              ...
+            }:
+              lib.mkIf (package == "lix") {
+                nix.package = pkgs.lixPackageSets.stable.lix;
+              })
+          ]
+          ++ modules;
+
+        specialArgs = {
+          inherit inputs;
+          framework =
+            framework
+            // {
+              # placeholder
+            };
         };
       };
-    };
-
 }
+

@@ -62,7 +62,6 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-fix.url = "github:NixOS/nixpkgs/ee8b23cf07c1d80f28656c20222d2c29aa44f06d";
   };
 
   outputs = {
@@ -109,17 +108,13 @@
 
       packages = import ./packages/overlay.nix;
       imported = nixpkgs.lib.composeManyExtensions [
+        inputs.nix-cachyos-kernel.overlays.default
         (import ./overlays/dolphin.nix)
       ];
 
       externals = (
         final: prev: let
           system = prev.stdenv.hostPlatform.system;
-
-          pkgs-fix = import inputs.nixpkgs-fix {
-            inherit system;
-            config = prev.config;
-          };
         in rec {
           kde-kwin-effects-better-blur-dx-wayland = inputs.kwin-effects-better-blur-dx.packages.${system}.default;
           kde-kwin-effects-better-blur-dx-x11 = inputs.kwin-effects-better-blur-dx.packages.${system}.x11;
@@ -146,8 +141,6 @@
           #      });
           #      })
           #  ];
-
-          #vesktop = pkgs-fix.vesktop;
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
@@ -181,6 +174,7 @@
           };
 
           eval = lib.nixos.mkNixSystem {
+            package = "standard";
             hostname = "test";
             system = system;
             stateVersion = "25.05";
