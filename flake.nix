@@ -63,6 +63,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-fix.url = "github:NixOS/nixpkgs/ee8b23cf07c1d80f28656c20222d2c29aa44f06d";
+    dolphin-overlay = {
+      url = "github:rumboon/dolphin-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -99,9 +103,19 @@
 
     # overlays provides nixpkgs overlays.
     overlays = {
-      default = final: prev: (overlays.externals final prev) // (overlays.packages prev final);
+      default = final: prev: (overlays.externals final prev) // (overlays.imported final prev) // (overlays.packages prev final);
 
       packages = import ./packages/overlay.nix;
+      imported = final: prev: let
+        importedList = [
+          inputs.dolphin-overlay.overlays.default
+        ];
+      in
+        builtins.foldl'
+        (acc: overlayFn: acc // (overlayFn final prev))
+        {}
+        importedList;
+
       externals = (
         final: prev: let
           system = prev.stdenv.hostPlatform.system;
