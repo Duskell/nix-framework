@@ -108,7 +108,7 @@
 
       packages = import ./packages/overlay.nix;
       imported = nixpkgs.lib.composeManyExtensions [
-        inputs.nix-cachyos-kernel.overlays.default
+        inputs.nix-cachyos-kernel.overlays.pinned
         (import ./overlays/dolphin.nix)
       ];
 
