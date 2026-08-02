@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.framework.dekstop.graphics.kvantum;
+  cfg = config.framework.desktop.graphics.kvantum;
   primaryUser = config.framework.primaryUser;
 in {
   options.framework.desktop.graphics.kvantum = {
@@ -30,17 +30,19 @@ in {
     };
   };
 
-  config = {
-    qt.enable = true;
-    qt.kvantum = {
-      enable = true;
+  config = lib.mkIf cfg.enable {
+    home-manager.users.${primaryUser} = {
+      qt.enable = true;
+      qt.kvantum = {
+        enable = true;
 
-      settings =
-        {
-        }
-        // cfg.settings;
+        settings =
+          {
+          }
+          // cfg.settings;
 
-      themes = cfg.themes;
+        themes = cfg.themes;
+      };
     };
   };
 }
