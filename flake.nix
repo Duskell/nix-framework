@@ -63,10 +63,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-fix.url = "github:NixOS/nixpkgs/ee8b23cf07c1d80f28656c20222d2c29aa44f06d";
-    dolphin-overlay = {
-      url = "github:rumboon/dolphin-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -113,7 +109,7 @@
 
       packages = import ./packages/overlay.nix;
       imported = nixpkgs.lib.composeManyExtensions [
-        inputs.dolphin-overlay.overlays.default
+        (import ./overlays/dolphin.nix)
       ];
 
       externals = (
