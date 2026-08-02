@@ -95,26 +95,26 @@
         system: let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [self.overlays.packages];
+            overlays = [self.overlays.default];
           };
         in
-          nixpkgs.lib.attrsets.mapAttrs (name: value: pkgs."${name}") (self.overlays.packages pkgs pkgs)
+          nixpkgs.lib.attrsets.genAttrs
+          (builtins.attrNames (self.overlays.packages pkgs pkgs))
+          (name: pkgs."${name}")
       );
 
     # overlays provides nixpkgs overlays.
     overlays = {
-      default = final: prev: (overlays.externals final prev) // (overlays.imported prev final) // (overlays.packages prev final);
+      default = nixpkgs.lib.composeManyExtensions [
+        overlays.externals
+        overlays.imported
+        overlays.packages
+      ];
 
       packages = import ./packages/overlay.nix;
-      imported = final: prev: let
-        importedList = [
-          inputs.dolphin-overlay.overlays.default
-        ];
-      in
-        builtins.foldl'
-        (acc: overlayFn: acc // (overlayFn final prev))
-        {}
-        importedList;
+      imported = nixpkgs.lib.composeManyExtensions [
+        inputs.dolphin-overlay.overlays.default
+      ];
 
       externals = (
         final: prev: let
@@ -129,7 +129,8 @@
           kde-kwin-effects-better-blur-dx-x11 = inputs.kwin-effects-better-blur-dx.packages.${system}.x11;
           kde-kwin-effects-forceblur-wayland = kde-kwin-effects-better-blur-dx-wayland;
           kde-kwin-effects-forceblur-x11 = kde-kwin-effects-better-blur-dx-x11;
-          copyparty = inputs.copyparty.overlays.default;
+
+          copyparty = inputs.copyparty.overlays.default final prev;
 
           #vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
           #  cmakeFlags =
