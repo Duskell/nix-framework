@@ -103,7 +103,7 @@
 
     # overlays provides nixpkgs overlays.
     overlays = {
-      default = final: prev: (overlays.externals final prev) // (overlays.imported final prev) // (overlays.packages prev final);
+      default = final: prev: (overlays.externals final prev) // (overlays.imported prev final) // (overlays.packages prev final);
 
       packages = import ./packages/overlay.nix;
       imported = final: prev: let
