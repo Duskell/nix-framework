@@ -10,6 +10,7 @@
   cfg = config.framework.desktop;
 in {
   imports = [
+    ./graphics
     ./de
     ./dm
   ];

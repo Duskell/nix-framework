@@ -1,0 +1,5 @@
+inputs: {
+  imports = [
+    ./kvantum.nix
+  ];
+}

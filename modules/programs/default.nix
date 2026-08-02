@@ -16,5 +16,6 @@ inputs: {
     ./vicinae.nix
     ./autorandr.nix
     ./xarchiver.nix
+    ./dolphin.nix
   ];
 }
