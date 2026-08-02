@@ -131,26 +131,26 @@
           kde-kwin-effects-forceblur-x11 = kde-kwin-effects-better-blur-dx-x11;
           copyparty = inputs.copyparty.overlays.default;
 
-          vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
-            cmakeFlags =
-              (oldAttrs.cmakeFlags or [])
-              ++ [
-                "-DUPDATE_DEPS=OFF"
-              ];
-          });
+          #vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (oldAttrs: {
+          #  cmakeFlags =
+          #    (oldAttrs.cmakeFlags or [])
+          #    ++ [
+          #      "-DUPDATE_DEPS=OFF"
+          #    ];
+          #});
 
-          pythonPackagesExtensions =
-            prev.pythonPackagesExtensions
-            ++ [
-              (pyFinal: pyPrev: {
-                patool = pyPrev.patool.overridePythonAttrs (oldAttrs: {
-                  # Upstream unit tests break against modern MIME databases and missing sandbox CLI tools
-                  doCheck = false;
-                });
-              })
-            ];
+          #pythonPackagesExtensions =
+          #  prev.pythonPackagesExtensions
+          #  ++ [
+          #    (pyFinal: pyPrev: {
+          #      patool = pyPrev.patool.overridePythonAttrs (oldAttrs: {
+          #        # Upstream unit tests break against modern MIME databases and missing sandbox CLI tools
+          #        doCheck = false;
+          #      });
+          #      })
+          #  ];
 
-          vesktop = pkgs-fix.vesktop;
+          #vesktop = pkgs-fix.vesktop;
 
           # A fix for i686 openldap tests, which trigger and fail mistakenly, causing a cascade of rebuilds.
           # See https://github.com/NixOS/nixpkgs/issues/514113
