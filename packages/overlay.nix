@@ -26,4 +26,5 @@ in
     plymouth-themes = final.callPackage ./plymouth-theme-importer/package.nix {};
     local-pear-desktop = final.callPackage ./pear-desktop/package.nix {};
     bisq = final.callPackage ./bisq/package.nix {};
+    dolphin-quicklook = final.callPackage ./dolphin-quicklook/package.nix {};
   }
