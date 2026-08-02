@@ -13,6 +13,7 @@ in {
   options.framework.programs.dolphin = {
     enable = lib.mkEnableOption "install Dolphin";
     default = lib.mkEnableOption "add Dolphin as  the default file-editor" // {default = true;};
+    quicklook-package.enable = lib.mkEnableOption "adds quicklook functionality to Dolphin";
   };
 
   config = mkIf cfg.enable {
@@ -23,8 +24,12 @@ in {
 
     home-manager.users.${primaryUser} = {
       home.packages = with pkgs; [
-        kdePackages.dolphin
         kdePackages.qtsvg
+        (
+          if cfg.quicklook-package.enable
+          then dolphin-quicklook
+          else kdePackages.dolphin
+        )
       ];
     };
   };
