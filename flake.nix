@@ -33,7 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak = {
-      url = "github:gmodena/nix-flatpak?refs=latest";
+      url = "github:gmodena/nix-flatpak?ref=latest";
     };
     copyparty = {
       url = "github:9001/copyparty";
