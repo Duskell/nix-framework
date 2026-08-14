@@ -4,22 +4,19 @@
   pkgs,
   inputs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.framework.services.copyparty;
-in
-{
-  imports = [ inputs.copyparty.nixosModules.default ];
+in {
+  imports = [inputs.copyparty.nixosModules.default];
 
   options.framework.services.copyparty = {
     enable = lib.mkEnableOption "enable Copyparty";
   };
 
   config = lib.mkIf cfg.enable (mkMerge [
-
     {
-      environment.systemPackages = [ pkgs.copyparty ];
+      environment.systemPackages = [pkgs.copyparty];
 
       services.copyparty = {
         enable = true;
@@ -29,7 +26,7 @@ in
         # see `copyparty --help` for available options
         settings = {
           i = "0.0.0.0"; # ip
-          p = [ 3200 ]; # ports
+          p = [3200]; # ports
           # use booleans to set binary flags
           no-reload = true;
           shr = "/s";
@@ -48,15 +45,15 @@ in
         };
 
         groups = {
-          owner = [ "levente" ];
-          users = [ "attila" ];
+          owner = ["levente"];
+          users = ["attila"];
         };
 
         volumes = {
           "/internal" = {
             path = "/srv/copyparty/internal";
             access = {
-              rwmd = [ "levente" ];
+              rwmd = ["levente"];
             };
             flags = {
               norobots = true;
@@ -88,7 +85,7 @@ in
               # "d2t" disables multimedia parsers (in case the uploads are malicious)
               d2t = true;
               # skips hashing file contents if path matches *.iso
-              nohash = "\.iso$";
+              nohash = ".iso$";
 
               norobots = true;
             };
@@ -98,6 +95,6 @@ in
         openFilesLimit = 8192;
       };
     }
-
   ]);
 }
+

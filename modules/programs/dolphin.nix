@@ -25,6 +25,7 @@ in {
     home-manager.users.${primaryUser} = {
       home.packages = with pkgs; [
         kdePackages.qtsvg
+        kdePackages.kio-admin
         (
           if cfg.quicklook-package.enable
           then dolphin-quicklook
