@@ -60,6 +60,7 @@ stdenv.mkDerivation (finalAttrs: {
     kiconthemes
     qtmultimedia
     qtwebengine
+    kio-admin
   ];
 
   cmakeFlags = [
