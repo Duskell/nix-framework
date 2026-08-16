@@ -3,12 +3,10 @@
   lib,
   pkgs,
   ...
-}@inputs:
-let
+} @ inputs: let
   inherit (lib) mkIf mkMerge mkDefault;
   cfg = config.framework.boot;
-in
-{
+in {
   options.framework.boot = {
     secure-boot.enable = lib.mkEnableOption "Secure Boot using lanzaboote";
     tpm-unlock.enable = lib.mkEnableOption "use TPM to unlock LUKS-encrypted volumes";
@@ -21,7 +19,6 @@ in
   };
 
   config = mkMerge [
-
     # Use the systemd-boot EFI boot loader.
     {
       boot.loader.efi.canTouchEfiVariables = true;
@@ -46,7 +43,7 @@ in
         pkiBundle = "/var/lib/sbctl";
       };
 
-      environment.systemPackages = with pkgs; [ sbctl ];
+      environment.systemPackages = with pkgs; [sbctl];
     })
 
     # Enable features required for unlocking volumes via TPM 2.0.
@@ -54,7 +51,7 @@ in
     #   sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/the-disk
     (mkIf cfg.secure-boot.enable {
       boot.initrd.systemd.enable = true;
-      environment.systemPackages = with pkgs; [ tpm2-tss ];
+      environment.systemPackages = with pkgs; [tpm2-tss];
     })
 
     # If verbose booting is disabled, hide the syslog using Plymouth.
@@ -63,6 +60,12 @@ in
         enable = true;
         theme = mkDefault "bgrt";
       };
+
+      boot.initrd.verbose = false;
+      boot.consoleLogLevel = 0;
+
+      # Hold space during boot to bring up
+      boot.loader.timeout = 0;
 
       boot.kernelParams = [
         # Fix for broken Plymouth on NixOS with CachyOS kernel.
@@ -73,6 +76,11 @@ in
         "quiet"
         "splash"
         "rd.systemd.show_status=auto"
+        "rd.udev.log_level=3"
+        "boot.shell_on_fail"
+        "loglevel=3"
+        "udev.log_priority=3"
+        "vt.global_cursor_default=0"
       ];
     })
 
@@ -82,8 +90,8 @@ in
         "intel_iommu=on"
         "iommu=pt"
       ];
-      boot.kernelModules = [ "i915" ];
+      boot.kernelModules = ["i915"];
     })
-
   ];
 }
+
