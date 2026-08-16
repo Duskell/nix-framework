@@ -54,7 +54,6 @@ in {
   config = mkIf cfg.enable (mkMerge [
     # Enable NVIDIA GPU drivers.
     {
-      nixpkgs.config.allowUnfree = true;
       hardware.nvidia = {
         open = cfg.useOpenKernelDrivers;
 

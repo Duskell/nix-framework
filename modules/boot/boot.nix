@@ -81,6 +81,9 @@ in {
         "loglevel=3"
         "udev.log_priority=3"
         "vt.global_cursor_default=0"
+        "bgrt_disable"
+
+        "plymouth.use-simpledrm"
       ];
     })
 
@@ -94,4 +97,3 @@ in {
     })
   ];
 }
-
