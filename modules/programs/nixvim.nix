@@ -4,25 +4,30 @@
   pkgs,
   inputs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+}:
+let
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.framework.programs.nixvim;
   primaryUser = config.framework.primaryUser;
-in {
+in
+{
   options.framework.programs.nixvim = {
     enable = mkEnableOption "Whether to enable nixvim";
 
-    default =
-      mkEnableOption "Whether to set neovim as the default editor"
-      // {
-        default = true;
-      };
+    default = mkEnableOption "Whether to set neovim as the default editor" // {
+      default = true;
+    };
 
     settings = mkOption {
-      type = types.attrsOf types.anything;
-      default = {};
+      type = types.deferredModule;
+      default = { };
       description = ''
-        Arbitrary options to pass directly to Nixvim
+        Nixvim module configuration
       '';
     };
 
@@ -42,7 +47,7 @@ in {
     };
 
     home-manager.users.${primaryUser} = {
-      imports = [inputs.nixvim.homeModules.nixvim];
+      imports = [ inputs.nixvim.homeModules.nixvim ];
 
       programs.nixvim = lib.mkMerge [
         cfg.settings
