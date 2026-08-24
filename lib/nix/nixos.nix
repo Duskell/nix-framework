@@ -12,6 +12,7 @@
     stateVersion,
     primaryUser,
     modules ? [],
+    flakeInputs ? {},
   }: let
     lib = nixpkgs.lib;
     validPackages = ["standard" "lix"];
@@ -70,7 +71,7 @@
           ++ modules;
 
         specialArgs = {
-          inherit inputs;
+          inherit inputs flakeInputs;
           framework =
             framework
             // {
