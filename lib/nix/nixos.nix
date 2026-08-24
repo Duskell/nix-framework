@@ -69,14 +69,14 @@
           ]
           ++ modules;
 
-        specialArgs = {
-          inherit inputs;
-          framework =
-            framework
-            // {
-              # placeholder
-            };
-        };
+        specialArgs =
+          inputs
+          // {
+            framework =
+              framework
+              // {
+                # placeholder
+              };
+          };
       };
 }
-
