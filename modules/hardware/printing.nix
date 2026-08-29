@@ -33,7 +33,7 @@ in {
       hardware.sane.enable = true;
       hardware.sane.extraBackends = [pkgs.hplipWithPlugin];
 
-      users.users.${primaryUser}.extraGroups= ["scanner" "lp"]
+      users.users.${primaryUser}.extraGroups = ["scanner" "lp"];
     }
   ]);
 }
