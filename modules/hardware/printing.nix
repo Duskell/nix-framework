@@ -14,20 +14,19 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      # Enable CUPS to print documents.
+      # Enable CUPS to print.
       services.printing.enable = true;
       services.printing.drivers = with pkgs; [
         cups-filters
-        cups-browsed
         gutenprint
         hplipWithPlugin
-        hplip
         splix
       ];
 
-      services.ipp-usb.enable = true;
+      services.ipp-usb.enable = false;
 
       hardware.sane.enable = true;
+      hardware.sane.extraBackends = [pkgs.hplipWithPlugin];
     }
   ]);
 }
