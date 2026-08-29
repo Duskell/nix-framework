@@ -26,6 +26,8 @@ in {
         foo2zjs
       ];
 
+      environmnet.systemPackages = [pkgs.foo2zjs];
+
       services.ipp-usb.enable = false;
 
       services.udev.packages = [pkgs.hplipWithPlugin];
