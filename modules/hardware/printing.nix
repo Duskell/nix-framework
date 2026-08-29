@@ -26,7 +26,7 @@ in {
         foo2zjs
       ];
 
-      environmnet.systemPackages = [pkgs.foo2zjs];
+      environment.systemPackages = [pkgs.foo2zjs];
 
       services.ipp-usb.enable = false;
 
