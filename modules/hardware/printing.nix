@@ -4,18 +4,15 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkMerge;
   cfg = config.framework.hardware.print;
-in
-{
+in {
   options.framework.hardware.print = {
     enable = lib.mkEnableOption "Enable printing";
   };
 
   config = mkIf cfg.enable (mkMerge [
-
     {
       # Enable CUPS to print documents.
       services.printing.enable = true;
@@ -23,6 +20,7 @@ in
         cups-filters
         cups-browsed
         gutenprint
+        hplipWithPlugin
         hplip
         splix
       ];
@@ -31,6 +29,5 @@ in
 
       hardware.sane.enable = true;
     }
-
   ]);
 }
