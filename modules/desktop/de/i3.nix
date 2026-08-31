@@ -87,6 +87,12 @@ in {
       default = {};
       description = "Custom keybinds overriding defaults. '$MOD' is replaced with the configured modKey.";
     };
+
+    modes = mkOption {
+      type = types.attrsOf (types.attrsOf types.str);
+      default = {};
+      description = "Custom i3 modes.";
+    };
   };
 
   config = mkIf (desktop.enable && desktop.environment == "i3") {
@@ -302,6 +308,8 @@ in {
               }
             ]
             ++ cfg.startup;
+
+          modes = cfg.modes;
         };
       };
     };
