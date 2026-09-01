@@ -1,0 +1,42 @@
+From d1983ace4b6c95198e3665d28516e5190758b966 Mon Sep 17 00:00:00 2001
+From: Duskell <duskell@proton.me>
+Date: Tue, 1 Sep 2026 18:56:34 +0200
+Subject: [PATCH] Disable AutoUpdate
+
+---
+ source/index.ts | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/source/index.ts b/source/index.ts
+index 0e750b2..d32c0f6 100644
+--- a/source/index.ts
++++ b/source/index.ts
+@@ -16,7 +16,6 @@ import {
+ 	nativeTheme,
+ } from 'electron';
+ import {ipcMain as ipc} from 'electron-better-ipc';
+-import {autoUpdater} from 'electron-updater';
+ import electronDl from 'electron-dl';
+ import electronContextMenu from 'electron-context-menu';
+ import electronLocalshortcut from 'electron-localshortcut';
+@@ -68,17 +67,6 @@ if (!config.get('hardwareAcceleration')) {
+ 	app.disableHardwareAcceleration();
+ }
+ 
+-if (!is.development && config.get('autoUpdate')) {
+-	(async () => {
+-		const FOUR_HOURS = 1000 * 60 * 60 * 4;
+-		setInterval(async () => {
+-			await autoUpdater.checkForUpdatesAndNotify();
+-		}, FOUR_HOURS);
+-
+-		await autoUpdater.checkForUpdatesAndNotify();
+-	})();
+-}
+-
+ let mainWindow: BrowserWindow;
+ let isQuitting = false;
+ let previousMessageCount = 0;
+-- 
+2.55.0
+

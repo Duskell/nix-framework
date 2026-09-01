@@ -27,4 +27,5 @@ in
     local-pear-desktop = final.callPackage ./pear-desktop/package.nix {};
     bisq = final.callPackage ./bisq/package.nix {};
     dolphin-quicklook = final.callPackage ./dolphin-quicklook/package.nix {};
+    caprine-fork = final.callPackage ./caprine-fork/package.nix {};
   }
