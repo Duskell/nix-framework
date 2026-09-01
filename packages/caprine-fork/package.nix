@@ -21,7 +21,7 @@ buildNpmPackage rec {
 
   env.ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
 
-  npmDepsHash = "sha256-FgOHuMMUX92VHF6hdznoi7bhO/27t6+l038kmpqjctQ=";
+  npmDepsHash = "sha256-n+GNKx1m7e7B+NHG5RSlWNzIiz98spoIqByUCj349I4=";
 
   nativeBuildInputs = [copyDesktopItems];
 
