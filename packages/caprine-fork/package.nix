@@ -16,7 +16,7 @@ buildNpmPackage rec {
     owner = "bankjaneo";
     repo = "caprine";
     rev = "v${version}";
-    hash = "";
+    hash = "sha256-7iqB+gLphQzc53tS57ubH5c0gp/rZ6S2p7QTZ9oUx5c=";
   };
 
   env.ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
