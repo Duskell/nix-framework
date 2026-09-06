@@ -10,6 +10,12 @@
 in {
   options.framework.programs.vscode = {
     enable = lib.mkEnableOption "install visual studio code";
+
+    userSettings = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "User settings to merge and overwrite the default";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -21,88 +27,90 @@ in {
           programs.vscode = {
             enable = true;
 
-            profiles.default.userSettings = {
-              "workbench.colorTheme" = "Thanatos";
-              "workbench.iconTheme" = "material-icon-theme";
-              "editor.fontFamily" = "JetBrains Mono";
-              "editor.fontLigatures" = true;
-              "git.enableSmartCommit" = true;
-              "git.confirmSync" = false;
-              "editor.tabSize" = 2;
-              "chat.disableAIFeatures" = true;
-              "intelephense.stubs" = [
-                "apache"
-                "bcmath"
-                "bz2"
-                "calendar"
-                "com_dotnet"
-                "Core"
-                "ctype"
-                "curl"
-                "date"
-                "dba"
-                "dom"
-                "enchant"
-                "exif"
-                "FFI"
-                "fileinfo"
-                "filter"
-                "fpm"
-                "ftp"
-                "gd"
-                "gettext"
-                "gmp"
-                "hash"
-                "iconv"
-                "imap"
-                "intl"
-                "json"
-                "ldap"
-                "libxml"
-                "mbstring"
-                "meta"
-                "mysqli"
-                "oci8"
-                "odbc"
-                "openssl"
-                "pcntl"
-                "pcre"
-                "PDO"
-                "pgsql"
-                "Phar"
-                "posix"
-                "pspell"
-                "random"
-                "readline"
-                "Reflection"
-                "session"
-                "shmop"
-                "SimpleXML"
-                "snmp"
-                "soap"
-                "sockets"
-                "sodium"
-                "SPL"
-                "sqlite3"
-                "standard"
-                "superglobals"
-                "sysvmsg"
-                "sysvsem"
-                "sysvshm"
-                "tidy"
-                "tokenizer"
-                "uri"
-                "xml"
-                "xmlreader"
-                "xmlrpc"
-                "xmlwriter"
-                "xsl"
-                "Zend OPcache"
-                "zip"
-                "zlib"
-                "wordpress"
-              ];
-            };
+            profiles.default.userSettings =
+              {
+                "workbench.colorTheme" = "Thanatos";
+                "workbench.iconTheme" = "material-icon-theme";
+                "editor.fontFamily" = "JetBrains Mono";
+                "editor.fontLigatures" = true;
+                "git.enableSmartCommit" = true;
+                "git.confirmSync" = false;
+                "editor.tabSize" = 2;
+                "chat.disableAIFeatures" = true;
+                "intelephense.stubs" = [
+                  "apache"
+                  "bcmath"
+                  "bz2"
+                  "calendar"
+                  "com_dotnet"
+                  "Core"
+                  "ctype"
+                  "curl"
+                  "date"
+                  "dba"
+                  "dom"
+                  "enchant"
+                  "exif"
+                  "FFI"
+                  "fileinfo"
+                  "filter"
+                  "fpm"
+                  "ftp"
+                  "gd"
+                  "gettext"
+                  "gmp"
+                  "hash"
+                  "iconv"
+                  "imap"
+                  "intl"
+                  "json"
+                  "ldap"
+                  "libxml"
+                  "mbstring"
+                  "meta"
+                  "mysqli"
+                  "oci8"
+                  "odbc"
+                  "openssl"
+                  "pcntl"
+                  "pcre"
+                  "PDO"
+                  "pgsql"
+                  "Phar"
+                  "posix"
+                  "pspell"
+                  "random"
+                  "readline"
+                  "Reflection"
+                  "session"
+                  "shmop"
+                  "SimpleXML"
+                  "snmp"
+                  "soap"
+                  "sockets"
+                  "sodium"
+                  "SPL"
+                  "sqlite3"
+                  "standard"
+                  "superglobals"
+                  "sysvmsg"
+                  "sysvsem"
+                  "sysvshm"
+                  "tidy"
+                  "tokenizer"
+                  "uri"
+                  "xml"
+                  "xmlreader"
+                  "xmlrpc"
+                  "xmlwriter"
+                  "xsl"
+                  "Zend OPcache"
+                  "zip"
+                  "zlib"
+                  "wordpress"
+                ];
+              }
+              // cfg.userSettings;
 
             profiles.default.extensions = with pkgs.vscode-extensions;
               [
@@ -149,4 +157,3 @@ in {
       ];
   };
 }
-
