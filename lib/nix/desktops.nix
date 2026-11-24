@@ -24,7 +24,7 @@
     };
 
     sway = {
-      flavor = "i3";
+      flavor = "sway";
       server = servers.wayland;
       dm = displayManagers.ly;
     };
