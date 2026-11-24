@@ -292,7 +292,6 @@ in {
               {
                 command = "systemctl --user import-environment DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS";
                 always = false;
-                notification = false;
               }
               # {
               #   command = "systemctl --user start graphical-session.target";
@@ -302,7 +301,6 @@ in {
               {
                 command = "systemctl --user restart low-battery-warning.service";
                 always = false;
-                notification = false;
               }
               {
                 command = "awww img ${
@@ -311,18 +309,15 @@ in {
                   else cfg.wallpaper
                 }";
                 always = true;
-                notification = false;
               }
             ]
             # ++ lib.optional config.framework.services.kanshi.enable {
             #   command = "systemctl --user start kanshi.service";
             #   always = false;
-            #   notification = false;
             # }
             ++ lib.optional config.framework.programs.vicinae.enable {
               command = "vicinae server";
               always = false;
-              notification = false;
             }
             ++ cfg.startup;
 
