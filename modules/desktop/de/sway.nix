@@ -314,11 +314,11 @@ in {
                 notification = false;
               }
             ]
-            ++ lib.optional config.framework.programs.kanshi.enable {
-              command = "systemctl --user start kanshi.service";
-              always = false;
-              notification = false;
-            }
+            # ++ lib.optional config.framework.services.kanshi.enable {
+            #   command = "systemctl --user start kanshi.service";
+            #   always = false;
+            #   notification = false;
+            # }
             ++ lib.optional config.framework.programs.vicinae.enable {
               command = "vicinae server";
               always = false;

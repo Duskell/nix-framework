@@ -14,6 +14,6 @@ inputs: {
     ./polybar
     ./redshift.nix
     ./dunst.nix
+    ./kanshi.nix
   ];
 }
-
