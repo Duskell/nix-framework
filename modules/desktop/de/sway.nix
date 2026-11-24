@@ -304,15 +304,15 @@ in {
                 always = false;
                 notification = false;
               }
-              # {
-              #   command = "feh --bg-${cfg.wallpaperMode} ${
-              #     if config.framework.programs.stylix.enable
-              #     then "${config.framework.programs.stylix.wallpaper}"
-              #     else cfg.wallpaper
-              #   }";
-              #   always = true;
-              #   notification = false;
-              # }
+              {
+                command = "awww img ${
+                  if config.framework.programs.stylix.enable
+                  then "${config.framework.programs.stylix.wallpaper}"
+                  else cfg.wallpaper
+                }";
+                always = true;
+                notification = false;
+              }
             ]
             ++ lib.optional config.framework.programs.kanshi.enable {
               command = "systemctl --user start kanshi.service";
