@@ -18,7 +18,7 @@
     };
 
     i3 = {
-      flavor = "i3";
+      flavor = "none+i3";
       server = servers.x11;
       dm = displayManagers.ly;
     };

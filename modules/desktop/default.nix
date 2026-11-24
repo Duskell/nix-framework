@@ -31,13 +31,12 @@ in {
   in
     mkIf cfg.enable (mkMerge [
       {
-        # Temporary solution, until another case comes up
-        services.displayManager.defaultSession = "none+" + de.flavor;
+        services.displayManager.defaultSession = de.flavor;
       }
 
       # Enable Wayland and install wayland-related packages.
       (mkIf wayland {
-        services.displayManager.sddm.wayland.enable = true;
+        # services.displayManager.sddm.wayland.enable = true;
         environment.systemPackages = with pkgs; [
           wayland-utils
           wl-clipboard
