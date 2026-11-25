@@ -197,7 +197,16 @@ in {
         package = cfg.package;
         enable = true;
         checkConfig = false;
+        extraOptions =
+          if config.framework.drivers.nvidia.useOpenKernelDrivers == false
+          then ["--unsupported-gpu"]
+          else [];
         config = {
+          input = {
+            "*" = {
+              xkb_layout = "hu";
+            };
+          };
           modifier = cfg.modKey;
           bars = [];
 
