@@ -61,7 +61,6 @@ in {
         theme = mkDefault "bgrt";
       };
 
-      boot.initrd.verbose = false;
       boot.consoleLogLevel = 0;
 
       # Hold space during boot to bring up
